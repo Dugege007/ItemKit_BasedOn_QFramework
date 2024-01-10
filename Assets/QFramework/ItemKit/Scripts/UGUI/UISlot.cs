@@ -7,7 +7,8 @@ namespace QFramework
 {
     public class UISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
     {
-        public Text Name;
+        public Image Icon;
+        //public Text Name;
         public Text Count;
 
         public Slot Data { get; private set; }
@@ -20,12 +21,14 @@ namespace QFramework
 
             if (Data.Count == 0)
             {
-                Name.text = "空";
+                Icon.Hide();
+                //Name.text = "空";
                 Count.text = "";
             }
             else
             {
-                Name.text = Data.Item.Name;
+                Icon.Show();
+                //Name.text = Data.Item.Name;
                 Count.text = Data.Count.ToString();
             }
 
@@ -38,7 +41,8 @@ namespace QFramework
             mDragging = true;
 
             UGUIInventoryExample controller = FindAnyObjectByType<UGUIInventoryExample>();
-            Name.Parent(controller);
+            Icon.Parent(controller);
+            //Name.Parent(controller);
             SyncItemToMousePos();
         }
 
@@ -54,9 +58,11 @@ namespace QFramework
         {
             if (mDragging)
             {
-                Name.Parent(transform);
+                Icon.Parent(transform);
+                //Name.Parent(transform);
                 // 位置还原（坐标归零）
-                Name.LocalPositionIdentity();
+                Icon.LocalPositionIdentity();
+                //Name.LocalPositionIdentity();
 
                 // 检测鼠标是否在任意一个 UISlot 上
                 UISlot[] uiSlots = transform.parent.GetComponentsInChildren<UISlot>();
@@ -119,7 +125,8 @@ namespace QFramework
             ))
             {
                 // 将物品的名称移动到屏幕上的鼠标位置
-                Name.LocalPosition2D(localPos);
+                Icon.LocalPosition2D(localPos);
+                //Name.LocalPosition2D(localPos);
             }
         }
     }
