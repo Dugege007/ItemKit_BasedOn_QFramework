@@ -466,7 +466,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Namespace: QFramework.Example
   ScriptName: InventoryExample1
-  ScriptsFolder: Assets/Scripts/Game
+  ScriptsFolder: Assets/QFramework/ItemKit/Examples/1.OnGUIInventoryExample
   GeneratePrefab: 0
   PrefabFolder: Assets/Art/Prefab
   ArchitectureFullTypeName: 
