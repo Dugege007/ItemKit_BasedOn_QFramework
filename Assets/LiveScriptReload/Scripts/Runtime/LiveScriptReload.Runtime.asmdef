@@ -1,0 +1,19 @@
+{
+    "name": "LiveScriptReload.Runtime",
+    "rootNamespace": "",
+    "references": [
+        "GUID:b75b497805046c443a21f90e84a5ff4f",
+        "GUID:a36782c9625f82940aaed83b11299a46"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [
+        "LiveScriptReload_Enabled"
+    ],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

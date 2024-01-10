@@ -749,7 +749,8 @@ PlayerSettings:
   webGLMemoryGeometricGrowthStep: 0.2
   webGLMemoryGeometricGrowthCap: 96
   webGLPowerPreference: 2
-  scriptingDefineSymbols: {}
+  scriptingDefineSymbols:
+    Standalone: LiveScriptReload_Enabled;LiveScriptReload_IncludeInBuild_Enabled
   additionalCompilerArguments: {}
   platformArchitecture: {}
   scriptingBackend: {}

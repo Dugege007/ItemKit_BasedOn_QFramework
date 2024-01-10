@@ -1,0 +1,21 @@
+{
+    "name": "LiveScriptReload.Editor",
+    "rootNamespace": "",
+    "references": [
+        "GUID:f86a37f21921a5c408091ddf91efc019",
+        "GUID:b75b497805046c443a21f90e84a5ff4f",
+        "GUID:97dcf6b63da809f4aa9573d9e792e540",
+        "GUID:a36782c9625f82940aaed83b11299a46"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
