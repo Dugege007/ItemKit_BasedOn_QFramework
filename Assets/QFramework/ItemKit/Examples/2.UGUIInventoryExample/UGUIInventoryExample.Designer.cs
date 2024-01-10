@@ -1,4 +1,4 @@
-// Generate Id:02dc1e49-8dfa-4fc7-ba16-7c227b086994
+// Generate Id:05105138-4d88-4e89-bfec-6000cad5fb84
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -11,6 +11,26 @@ namespace QFramework.Example
 		public UISlot UISlot;
 
 		public UnityEngine.RectTransform UISlotRoot;
+
+		public UnityEngine.UI.Button BtnAddItem1;
+
+		public UnityEngine.UI.Button BtnAddItem2;
+
+		public UnityEngine.UI.Button BtnAddItem3;
+
+		public UnityEngine.UI.Button BtnAddItem4;
+
+		public UnityEngine.UI.Button BtnAddItem5;
+
+		public UnityEngine.UI.Button BtnRemoveItem1;
+
+		public UnityEngine.UI.Button BtnRemoveItem2;
+
+		public UnityEngine.UI.Button BtnRemoveItem3;
+
+		public UnityEngine.UI.Button BtnRemoveItem4;
+
+		public UnityEngine.UI.Button BtnRemoveItem5;
 
 	}
 }

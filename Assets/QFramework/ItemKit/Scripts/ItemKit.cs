@@ -26,6 +26,7 @@ namespace QFramework
             { ItemKit.Item2.Key, ItemKit.Item2 },
             { ItemKit.Item3.Key, ItemKit.Item3 },
             { ItemKit.Item4.Key, ItemKit.Item4 },
+            { ItemKit.Item5.Key, ItemKit.Item5 },
         };
 
         /// <summary>
@@ -76,7 +77,7 @@ namespace QFramework
         {
             Slot slot = FindAddableSlot(itemKey);
 
-            if (slot == null)
+            if (slot == null || slot.Count >= 99)
             {
                 Debug.Log("±³°üÂúÁË");
                 return;

@@ -10,25 +10,97 @@ namespace QFramework.Example
 		private void Start()
 		{
 			UISlot.Hide();
+            Refresh();
+
+            BtnAddItem1.onClick.AddListener(() =>
+			{
+				ItemKit.AddItem(ItemKit.Item1.Key);
+                Refresh();
+            });
+
+            BtnAddItem2.onClick.AddListener(() =>
+			{
+				ItemKit.AddItem(ItemKit.Item2.Key);
+                Refresh();
+            });
+
+            BtnAddItem3.onClick.AddListener(() =>
+			{
+				ItemKit.AddItem(ItemKit.Item3.Key);
+                Refresh();
+            });
+
+            BtnAddItem4.onClick.AddListener(() =>
+			{
+				ItemKit.AddItem(ItemKit.Item4.Key);
+                Refresh();
+            });
+
+            BtnAddItem5.onClick.AddListener(() =>
+			{
+				ItemKit.AddItem(ItemKit.Item5.Key);
+                Refresh();
+            });
+
+            BtnRemoveItem1.onClick.AddListener(() =>
+			{
+				ItemKit.RemoveItem(ItemKit.Item1.Key);
+                Refresh();
+            });
+
+            BtnRemoveItem2.onClick.AddListener(() =>
+			{
+				ItemKit.RemoveItem(ItemKit.Item2.Key);
+                Refresh();
+            });
+
+            BtnRemoveItem3.onClick.AddListener(() =>
+			{
+				ItemKit.RemoveItem(ItemKit.Item3.Key);
+                Refresh();
+            });
+
+            BtnRemoveItem4.onClick.AddListener(() =>
+			{
+				ItemKit.RemoveItem(ItemKit.Item4.Key);
+                Refresh();
+            });
+
+            BtnRemoveItem5.onClick.AddListener(() =>
+			{
+				ItemKit.RemoveItem(ItemKit.Item5.Key);
+                Refresh();
+            });
+
+            BtnRemoveItem1.onClick.AddListener(() =>
+			{
+				ItemKit.RemoveItem(ItemKit.Item1.Key);
+                Refresh();
+            });
+        }
+
+		private void Refresh()
+		{
+            UISlotRoot.DestroyChildren();   // 暂时不考虑性能优化
 
             foreach (var slot in ItemKit.Slots)
             {
-				UISlot.InstantiateWithParent(UISlotRoot)
-					.Self(self => // 拿到 Instantiate 之后的这个 UISlot
+                UISlot.InstantiateWithParent(UISlotRoot)
+                    .Self(self => // 拿到 Instantiate 之后的这个 UISlot
                     {
-						if (slot.Count == 0)
-						{
-							self.Name.text = "";
-							self.Count.text = "";
-						}
-						else
-						{
+                        if (slot.Count == 0)
+                        {
+                            self.Name.text = "";
+                            self.Count.text = "";
+                        }
+                        else
+                        {
                             self.Name.text = slot.Item.Name;
                             self.Count.text = slot.Count.ToString();
                         }
                     })
-					.Show();
+                    .Show();
             }
         }
-	}
+    }
 }
