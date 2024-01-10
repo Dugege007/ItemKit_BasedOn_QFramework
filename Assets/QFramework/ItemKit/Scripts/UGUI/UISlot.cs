@@ -10,23 +10,23 @@ namespace QFramework
         public Text Name;
         public Text Count;
 
-        public Slot SlotData { get; private set; }
+        public Slot Data { get; private set; }
 
         private bool mDragging = false;
 
-        public UISlot InitWithData(Slot slotData)
+        public UISlot InitWithData(Slot data)
         {
-            SlotData = slotData;
+            Data = data;
 
-            if (SlotData.Count == 0)
+            if (Data.Count == 0)
             {
-                Name.text = "";
+                Name.text = "空";
                 Count.text = "";
             }
             else
             {
-                Name.text = SlotData.Item.Name;
-                Count.text = SlotData.Count.ToString();
+                Name.text = Data.Item.Name;
+                Count.text = Data.Count.ToString();
             }
 
             return this;    // 返回自身，用于链式调用
@@ -34,9 +34,11 @@ namespace QFramework
 
         public void OnBeginDrag(PointerEventData eventData)
         {
-            if (mDragging) return;
+            if (mDragging || Data.Count < 1) return;
             mDragging = true;
 
+            UGUIInventoryExample controller = FindAnyObjectByType<UGUIInventoryExample>();
+            Name.Parent(controller);
             SyncItemToMousePos();
         }
 
@@ -52,6 +54,7 @@ namespace QFramework
         {
             if (mDragging)
             {
+                Name.Parent(transform);
                 // 位置还原（坐标归零）
                 Name.LocalPositionIdentity();
 
@@ -66,14 +69,35 @@ namespace QFramework
                     if (RectTransformUtility.RectangleContainsScreenPoint(rectTrans, Input.mousePosition))
                     {
                         throwItem = false;
+
+                        // 物品交换
+                        if (Data.Count > 0)
+                        {
+                            // 缓存目标栏位数据
+                            Item itemCache = uiSlot.Data.Item;
+                            int countCache = uiSlot.Data.Count;
+
+                            // 将当前栏位数据保存到目标栏位中
+                            uiSlot.Data.Item = Data.Item;
+                            uiSlot.Data.Count = Data.Count;
+
+                            // 将目标栏位数据保存到当前栏位中
+                            Data.Item = itemCache;
+                            Data.Count = countCache;
+
+                            // 刷新
+                            FindAnyObjectByType<UGUIInventoryExample>().Refresh();
+                        }
+
+                        break;
                     }
                 }
 
                 if (throwItem)
                 {
-                    SlotData.Item = null;
-                    SlotData.Count = 0;
-                    // 再刷新一下
+                    Data.Item = null;
+                    Data.Count = 0;
+                    // 刷新
                     FindAnyObjectByType<UGUIInventoryExample>().Refresh();
                 }
             }
@@ -85,10 +109,10 @@ namespace QFramework
         private void SyncItemToMousePos()
         {
             Vector3 mousePos = Input.mousePosition;
-
+            UGUIInventoryExample controller = FindAnyObjectByType<UGUIInventoryExample>();
             // 将屏幕上的点转换为位于指定 RectTransform 平面上的本地坐标系中的位置
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                transform as RectTransform, // rect：目标 RectTransform，将屏幕点转换到这个 RectTransform 定义的平面内
+                controller.transform as RectTransform, // rect：目标 RectTransform，将屏幕点转换到这个 RectTransform 定义的平面内
                 mousePos,                   // screenPoint：屏幕坐标，通常是鼠标位置或触摸位置
                 null,                       // camera：相关联的摄像机，对于 Overlay 画布可以为 null，对于 Camera 和 WorldSpace 画布应该是渲染该 UI 元素的摄像机
                 out Vector2 localPos        // localPoint：输出参数，转换后的本地坐标系中的位置
