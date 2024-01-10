@@ -18,7 +18,7 @@ namespace QFramework.Example
             public Item Item;
             public int Count;
 
-            public Slot(Item item, int count = 1)
+            public Slot(Item item, int count = 0)
             {
                 Item = item;
                 Count = count;
@@ -37,13 +37,33 @@ namespace QFramework.Example
             }
         }
 
-        private List<Slot> mSlots = new List<Slot>()
+        public Item Item1 = new Item("item_1", "物品1");
+        public Item Item2 = new Item("item_2", "物品2");
+        public Item Item3 = new Item("item_3", "物品3");
+        public Item Item4 = new Item("item_4", "物品4");
+
+        private List<Slot> mSlots = null;
+
+        private Dictionary<string, Item> mItemByKey = null;
+
+        private void Awake()
         {
-            new Slot(new Item("item_1", "物品1")),
-            new Slot(new Item("item_2", "物品2")),
-            new Slot(new Item("item_3", "物品3")),
-            new Slot(new Item("item_4", "物品4")),
-        };
+            mSlots = new List<Slot>()
+            {
+                new Slot(Item1, 1),
+                new Slot(Item2, 2),
+                new Slot(Item3, 3),
+                new Slot(Item4, 4),
+            };
+
+            mItemByKey = new Dictionary<string, Item>()
+            {
+                { Item1.Key, Item1 },
+                { Item2.Key, Item2 },
+                { Item3.Key, Item3 },
+                { Item4.Key, Item4 },
+            };
+        }
 
         private void OnGUI()
         {
@@ -62,54 +82,66 @@ namespace QFramework.Example
 
             if (GUILayout.Button("增加物品1"))
             {
-                Slot slot = mSlots.Find(s => s.Item.Key == "item_1");
-                slot.Count++;
+                Slot slot = FindAddableSlot("item_1");
+
+                if (slot == null)
+                    Debug.Log("背包满了");
+                else
+                    slot.Count++;
             }
 
             if (GUILayout.Button("增加物品2"))
             {
-                Slot slot = mSlots.Find(s => s.Item.Key == "item_2");
-                slot.Count++;
+                Slot slot = FindAddableSlot("item_2");
+
+                if (slot == null)
+                    Debug.Log("背包满了");
+                else
+                    slot.Count++;
             }
 
             if (GUILayout.Button("增加物品3"))
             {
-                Slot slot = mSlots.Find(s => s.Item.Key == "item_3");
-                slot.Count++;
+                Slot slot = FindAddableSlot("item_3");
+
+                if (slot == null)
+                    Debug.Log("背包满了");
+                else
+                    slot.Count++;
             }
 
             if (GUILayout.Button("增加物品4"))
             {
-                Slot slot = mSlots.Find(s => s.Item.Key == "item_4");
-                slot.Count++;
+                Slot slot = FindAddableSlot("item_4");
+
+                if (slot == null)
+                    Debug.Log("背包满了");
+                else
+                    slot.Count++;
             }
 
             if (GUILayout.Button("删除物品1"))
             {
                 Slot slot = FindSlotByKey("item_1");
-                if (slot != null)
-                    slot.Count--;
+                RemoveItemFromSlot(slot);
             }
 
             if (GUILayout.Button("删除物品2"))
             {
                 Slot slot = FindSlotByKey("item_2");
-                if (slot != null)
-                    slot.Count--;
+                RemoveItemFromSlot(slot);
             }
 
             if (GUILayout.Button("删除物品3"))
             {
                 Slot slot = FindSlotByKey("item_3");
-                if (slot != null)
-                    slot.Count--;
+                RemoveItemFromSlot(slot);
             }
 
             if (GUILayout.Button("删除物品4"))
             {
                 Slot slot = FindSlotByKey("item_4");
-                if (slot != null)
-                    slot.Count--;
+                RemoveItemFromSlot(slot);
             }
         }
 
@@ -117,6 +149,60 @@ namespace QFramework.Example
         {
             Slot slot = mSlots.Find(s => s.Item != null && s.Count > 0 && s.Item.Key == itemKey);
             return slot;
+        }
+
+        private Slot FindEmptySlot()
+        {
+            return mSlots.Find(s => s.Count == 0);
+        }
+
+        private Slot FindAddableSlot(string itemKey)
+        {
+            Slot slot = FindSlotByKey(itemKey);
+
+            if (slot == null)
+            {
+                slot = FindEmptySlot();
+                if (slot != null)
+                    slot.Item = mItemByKey[itemKey];
+            }
+
+            return slot;
+        }
+
+        //private Slot FindAddableSlot(string itemKey)
+        //{
+        //    // 首先尝试找到一个已包含该物品且未满的槽位
+        //    Slot slot = FindSlotByKey(itemKey);
+        //    if (slot != null && slot.Count < 99) // 假设每个槽位有最大数量限制
+        //    {
+        //        return slot;
+        //    }
+
+        //    // 如果没有找到，或者找到的槽位已满，我们找一个空的槽位
+        //    Slot emptySlot = FindEmptySlot();
+        //    if (emptySlot != null)
+        //    {
+        //        // 将物品分配给空槽位
+        //        emptySlot.Item = mItemByKey[itemKey];
+        //        return emptySlot;
+        //    }
+
+        //    // 如果没有空槽位，返回null
+        //    return null;
+        //}
+
+        private void RemoveItemFromSlot(Slot slot)
+        {
+            if (slot != null && slot.Count > 0)
+            {
+                slot.Count--;
+                if (slot.Count == 0)
+                {
+                    // 当数量减到0时，清除槽位中的物品引用
+                    slot.Item = null;
+                }
+            }
         }
     }
 }
