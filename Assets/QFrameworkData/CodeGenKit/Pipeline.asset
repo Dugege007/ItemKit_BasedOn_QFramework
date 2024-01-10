@@ -18,18 +18,25 @@ MonoBehaviour:
     GameObject: {fileID: 0}
     From: 0
     NameToFullName: []
-    BindInfos: []
-    ScriptsFolder: Assets/Scripts/Game
-    ClassName: InventoryExample1
+    BindInfos:
+    - TypeName: UISlot
+      PathToRoot: UISlot
+      MemberName: UISlot
+    - TypeName: UnityEngine.RectTransform
+      PathToRoot: UISlotRoot
+      MemberName: UISlotRoot
+    ScriptsFolder: Assets/QFramework/ItemKit/Examples/2.UGUIInventoryExample
+    ClassName: UGUIInventoryExample
     Namespace: QFramework.Example
     MainCode: "using UnityEngine;\r\nusing QFramework;\r\n\r\n// 1.\u8BF7\u5728\u83DC\u5355
       \u7F16\u8F91\u5668\u6269\u5C55/Namespace Settings \u91CC\u8BBE\u7F6E\u547D\u540D\u7A7A\u95F4\r\n//
       2.\u547D\u540D\u7A7A\u95F4\u66F4\u6539\u540E\uFF0C\u751F\u6210\u4EE3\u7801\u4E4B\u540E\uFF0C\u9700\u8981\u628A\u903B\u8F91\u4EE3\u7801\u6587\u4EF6\uFF08\u975E
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
-      QFramework.Example\r\n{\r\n\tpublic partial class InventoryExample1 : ViewController\r\n\t{\r\n\t\tvoid
+      QFramework.Example\r\n{\r\n\tpublic partial class UGUIInventoryExample : ViewController\r\n\t{\r\n\t\tvoid
       Start()\r\n\t\t{\r\n\t\t\t// Code Here\r\n\t\t}\r\n\t}\r\n}\r\n"
-    DesignerCode: "// Generate Id:d0722001-d8dc-4320-9960-fe3d34fffb8d\r\nusing UnityEngine;\r\n\r\n//
+    DesignerCode: "// Generate Id:02dc1e49-8dfa-4fc7-ba16-7c227b086994\r\nusing UnityEngine;\r\n\r\n//
       1.\u8BF7\u5728\u83DC\u5355 \u7F16\u8F91\u5668\u6269\u5C55/Namespace Settings
       \u91CC\u8BBE\u7F6E\u547D\u540D\u7A7A\u95F4\r\n// 2.\u547D\u540D\u7A7A\u95F4\u66F4\u6539\u540E\uFF0C\u751F\u6210\u4EE3\u7801\u4E4B\u540E\uFF0C\u9700\u8981\u628A\u903B\u8F91\u4EE3\u7801\u6587\u4EF6\uFF08\u975E
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
-      QFramework.Example\r\n{\r\n\tpublic partial class InventoryExample1\r\n\t{\r\n\r\n\t}\r\n}\r\n"
+      QFramework.Example\r\n{\r\n\tpublic partial class UGUIInventoryExample\r\n\t{\r\n\r\n\t\tpublic
+      UISlot UISlot;\r\n\r\n\t\tpublic UnityEngine.RectTransform UISlotRoot;\r\n\r\n\t}\r\n}\r\n"
