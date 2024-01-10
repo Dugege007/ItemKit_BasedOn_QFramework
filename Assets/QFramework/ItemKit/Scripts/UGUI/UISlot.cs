@@ -1,3 +1,4 @@
+using QFramework.Example;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -9,7 +10,27 @@ namespace QFramework
         public Text Name;
         public Text Count;
 
+        public Slot SlotData { get; private set; }
+
         private bool mDragging = false;
+
+        public UISlot InitWithData(Slot slotData)
+        {
+            SlotData = slotData;
+
+            if (SlotData.Count == 0)
+            {
+                Name.text = "";
+                Count.text = "";
+            }
+            else
+            {
+                Name.text = SlotData.Item.Name;
+                Count.text = SlotData.Count.ToString();
+            }
+
+            return this;    // 返回自身，用于链式调用
+        }
 
         public void OnBeginDrag(PointerEventData eventData)
         {
@@ -33,6 +54,28 @@ namespace QFramework
             {
                 // 位置还原（坐标归零）
                 Name.LocalPositionIdentity();
+
+                // 检测鼠标是否在任意一个 UISlot 上
+                UISlot[] uiSlots = transform.parent.GetComponentsInChildren<UISlot>();
+
+                bool throwItem = true;
+
+                foreach (var uiSlot in uiSlots)
+                {
+                    RectTransform rectTrans = uiSlot.transform as RectTransform;
+                    if (RectTransformUtility.RectangleContainsScreenPoint(rectTrans, Input.mousePosition))
+                    {
+                        throwItem = false;
+                    }
+                }
+
+                if (throwItem)
+                {
+                    SlotData.Item = null;
+                    SlotData.Count = 0;
+                    // 再刷新一下
+                    FindAnyObjectByType<UGUIInventoryExample>().Refresh();
+                }
             }
 
             mDragging = false;
