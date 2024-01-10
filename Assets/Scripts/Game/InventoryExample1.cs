@@ -1,6 +1,7 @@
 using UnityEngine;
 using QFramework;
 using System.Collections.Generic;
+using static QFramework.Example.InventoryExample1;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
@@ -41,6 +42,7 @@ namespace QFramework.Example
         public Item Item2 = new Item("item_2", "物品2");
         public Item Item3 = new Item("item_3", "物品3");
         public Item Item4 = new Item("item_4", "物品4");
+        public Item Item5 = new Item("item_5", "物品5");
 
         private List<Slot> mSlots = null;
 
@@ -80,69 +82,35 @@ namespace QFramework.Example
                 GUILayout.EndHorizontal();
             }
 
-            if (GUILayout.Button("增加物品1"))
-            {
-                Slot slot = FindAddableSlot("item_1");
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(Item1.Name);
+            if (GUILayout.Button("+")) AddItem(Item1.Key);
+            if (GUILayout.Button("-")) RemoveItem(Item1.Key);
+            GUILayout.EndHorizontal();
 
-                if (slot == null)
-                    Debug.Log("背包满了");
-                else
-                    slot.Count++;
-            }
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(Item2.Name);
+            if (GUILayout.Button("+")) AddItem(Item2.Key);
+            if (GUILayout.Button("-")) RemoveItem(Item2.Key);
+            GUILayout.EndHorizontal();
 
-            if (GUILayout.Button("增加物品2"))
-            {
-                Slot slot = FindAddableSlot("item_2");
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(Item3.Name);
+            if (GUILayout.Button("+")) AddItem(Item3.Key);
+            if (GUILayout.Button("-")) RemoveItem(Item3.Key);
+            GUILayout.EndHorizontal();
 
-                if (slot == null)
-                    Debug.Log("背包满了");
-                else
-                    slot.Count++;
-            }
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(Item4.Name);
+            if (GUILayout.Button("+")) AddItem(Item4.Key);
+            if (GUILayout.Button("-")) RemoveItem(Item4.Key);
+            GUILayout.EndHorizontal();
 
-            if (GUILayout.Button("增加物品3"))
-            {
-                Slot slot = FindAddableSlot("item_3");
-
-                if (slot == null)
-                    Debug.Log("背包满了");
-                else
-                    slot.Count++;
-            }
-
-            if (GUILayout.Button("增加物品4"))
-            {
-                Slot slot = FindAddableSlot("item_4");
-
-                if (slot == null)
-                    Debug.Log("背包满了");
-                else
-                    slot.Count++;
-            }
-
-            if (GUILayout.Button("删除物品1"))
-            {
-                Slot slot = FindSlotByKey("item_1");
-                RemoveItemFromSlot(slot);
-            }
-
-            if (GUILayout.Button("删除物品2"))
-            {
-                Slot slot = FindSlotByKey("item_2");
-                RemoveItemFromSlot(slot);
-            }
-
-            if (GUILayout.Button("删除物品3"))
-            {
-                Slot slot = FindSlotByKey("item_3");
-                RemoveItemFromSlot(slot);
-            }
-
-            if (GUILayout.Button("删除物品4"))
-            {
-                Slot slot = FindSlotByKey("item_4");
-                RemoveItemFromSlot(slot);
-            }
+            GUILayout.BeginHorizontal();
+            GUILayout.Label(Item5.Name);
+            if (GUILayout.Button("+")) AddItem(Item5.Key);
+            if (GUILayout.Button("-")) RemoveItem(Item5.Key);
+            GUILayout.EndHorizontal();
         }
 
         private Slot FindSlotByKey(string itemKey)
@@ -170,38 +138,35 @@ namespace QFramework.Example
             return slot;
         }
 
-        //private Slot FindAddableSlot(string itemKey)
-        //{
-        //    // 首先尝试找到一个已包含该物品且未满的槽位
-        //    Slot slot = FindSlotByKey(itemKey);
-        //    if (slot != null && slot.Count < 99) // 假设每个槽位有最大数量限制
-        //    {
-        //        return slot;
-        //    }
-
-        //    // 如果没有找到，或者找到的槽位已满，我们找一个空的槽位
-        //    Slot emptySlot = FindEmptySlot();
-        //    if (emptySlot != null)
-        //    {
-        //        // 将物品分配给空槽位
-        //        emptySlot.Item = mItemByKey[itemKey];
-        //        return emptySlot;
-        //    }
-
-        //    // 如果没有空槽位，返回null
-        //    return null;
-        //}
-
-        private void RemoveItemFromSlot(Slot slot)
+        private void AddItem(string itemKey, int addCount = 1)
         {
-            if (slot != null && slot.Count > 0)
+            Slot slot = FindAddableSlot(itemKey);
+
+            if (slot == null)
             {
-                slot.Count--;
-                if (slot.Count == 0)
-                {
-                    // 当数量减到0时，清除槽位中的物品引用
-                    slot.Item = null;
-                }
+                Debug.Log("背包满了");
+                return;
+            }
+
+            slot.Count += addCount;
+        }
+
+        private void RemoveItem(string itemKey, int removeCount = 1)
+        {
+            Slot slot = FindSlotByKey(itemKey);
+
+            if (slot == null || slot.Count < 1)
+            {
+                Debug.Log("背包中没有此物品");
+                return;
+            }
+
+            slot.Count -= removeCount;
+
+            if (slot.Count == 0)
+            {
+                // 当数量减到0时，清除槽位中的物品引用
+                slot.Item = null;
             }
         }
     }
