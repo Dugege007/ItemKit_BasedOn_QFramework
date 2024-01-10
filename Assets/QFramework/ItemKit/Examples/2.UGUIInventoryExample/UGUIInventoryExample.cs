@@ -12,6 +12,7 @@ namespace QFramework.Example
 			UISlot.Hide();
             Refresh();
 
+            #region 添加物品
             BtnAddItem1.onClick.AddListener(() =>
 			{
 				ItemKit.AddItem(ItemKit.Item1.Key);
@@ -41,7 +42,9 @@ namespace QFramework.Example
 				ItemKit.AddItem(ItemKit.Item5.Key);
                 Refresh();
             });
+            #endregion
 
+            #region 删除物品
             BtnRemoveItem1.onClick.AddListener(() =>
 			{
 				ItemKit.RemoveItem(ItemKit.Item1.Key);
@@ -71,15 +74,10 @@ namespace QFramework.Example
 				ItemKit.RemoveItem(ItemKit.Item5.Key);
                 Refresh();
             });
-
-            BtnRemoveItem1.onClick.AddListener(() =>
-			{
-				ItemKit.RemoveItem(ItemKit.Item1.Key);
-                Refresh();
-            });
+            #endregion
         }
 
-		private void Refresh()
+        private void Refresh()
 		{
             UISlotRoot.DestroyChildren();   // 暂时不考虑性能优化
 

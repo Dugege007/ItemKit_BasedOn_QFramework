@@ -79,6 +79,7 @@ namespace QFramework
 
             if (slot == null || slot.Count >= 99)
             {
+                slot.Count = 99;
                 Debug.Log("背包满了");
                 return;
             }
@@ -103,8 +104,9 @@ namespace QFramework
 
             slot.Count -= removeCount;
 
-            if (slot.Count == 0)
+            if (slot.Count <= 0)
             {
+                slot.Count = 0;
                 // 当数量减到0时，清除槽位中的物品引用
                 slot.Item = null;
             }
