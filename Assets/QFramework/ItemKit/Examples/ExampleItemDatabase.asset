@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-7527358241207691515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Key: 
+  Name: 
+  Icon: {fileID: 0}
+--- !u!114 &-4924622028312993815
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Key: 
+  Name: 
+  Icon: {fileID: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14,6 +44,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NameSpace: QFramework.Example
   ItemConfigs:
-  - {fileID: 11400000, guid: 034315fe6024d454686ea94a5afe8a8c, type: 2}
   - {fileID: 11400000, guid: 362ab3741d3808146a6bc2c245659fef, type: 2}
+  - {fileID: 11400000, guid: 034315fe6024d454686ea94a5afe8a8c, type: 2}
   - {fileID: 11400000, guid: 1875b3db9990d594ab62c187b60a91f6, type: 2}
+  - {fileID: -4924622028312993815}
+  - {fileID: -7527358241207691515}
