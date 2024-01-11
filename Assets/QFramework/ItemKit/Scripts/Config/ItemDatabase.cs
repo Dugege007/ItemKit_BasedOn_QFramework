@@ -83,15 +83,19 @@ namespace QFramework
 
                     if (GUILayout.Button("X"))
                     {
-                        // 获取当前索引 i 处的 ItemConfig 对象的序列化属性
-                        SerializedProperty arrayElement = mItemConfigs.GetArrayElementAtIndex(i);
-                        // 从 AssetDatabase 中移除该对象，这会删除它作为子资产的关联
-                        AssetDatabase.RemoveObjectFromAsset(arrayElement.objectReferenceValue);
-                        // 删除 mItemConfigs 列表中索引 i 处的元素
-                        mItemConfigs.DeleteArrayElementAtIndex(i);
+                        // 弹窗提示
+                        if (EditorUtility.DisplayDialog("删除物品", "确定要删除吗？\n（此操作不可恢复）", "删除", "取消"))
+                        {
+                            // 获取当前索引 i 处的 ItemConfig 对象的序列化属性
+                            SerializedProperty arrayElement = mItemConfigs.GetArrayElementAtIndex(i);
+                            // 从 AssetDatabase 中移除该对象，这会删除它作为子资产的关联
+                            AssetDatabase.RemoveObjectFromAsset(arrayElement.objectReferenceValue);
+                            // 删除 mItemConfigs 列表中索引 i 处的元素
+                            mItemConfigs.DeleteArrayElementAtIndex(i);
 
-                        AssetDatabase.SaveAssets();
-                        AssetDatabase.Refresh();
+                            AssetDatabase.SaveAssets();
+                            AssetDatabase.Refresh();
+                        }
                     }
                     GUILayout.EndHorizontal();
 
@@ -100,7 +104,7 @@ namespace QFramework
                         // 绘制 itemConfig 引用的对象的属性编辑器界面，不绘制脚本
                         itemSO.DrawProperties(false);
                     }
-                    itemSO.ApplyModifiedProperties();
+                    itemSO.ApplyModifiedPropertiesWithoutUndo();
                     GUILayout.EndVertical();
                 }
 
@@ -151,8 +155,8 @@ namespace QFramework
                     AssetDatabase.Refresh();
                 }
 
-                // 应用对序列化对象所做的所有修改
-                serializedObject.ApplyModifiedProperties();
+                // 应用对序列化对象所做的所有修改，不支持撤销
+                serializedObject.ApplyModifiedPropertiesWithoutUndo();
             }
         }
 #endif
