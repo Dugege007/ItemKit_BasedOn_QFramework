@@ -6,32 +6,17 @@ namespace QFramework
 {
     public class ItemKit
     {
-        //public static Item Item1 = new Item("item_1", "物品1");
-        //public static Item Item2 = new Item("item_2", "物品2");
-        public static Item Item3 = new Item("item_3", "物品3");
-        public static Item Item4 = new Item("item_4", "物品4");
-        public static Item Item5 = new Item("item_5", "物品5");
-
-        public static List<Slot> Slots = new List<Slot>()
-        {
-            new Slot(ConfigManager.Default.Iron, 1),
-            new Slot(ConfigManager.Default.GreenSword, 2),
-            new Slot(ItemKit.Item3, 3),
-            new Slot(ItemKit.Item4, 4),
-        };
-
-        public static Dictionary<string, IItem> ItemByKey = new Dictionary<string, IItem>()
-        {
-            //{ ItemKit.Item1.Key, ItemKit.Item1 },
-            //{ ItemKit.Item2.Key, ItemKit.Item2 },
-            { ItemKit.Item3.Key, ItemKit.Item3 },
-            { ItemKit.Item4.Key, ItemKit.Item4 },
-            { ItemKit.Item5.Key, ItemKit.Item5 },
-        };
+        public static List<Slot> Slots = new List<Slot>();
+        public static Dictionary<string, IItem> ItemByKey = new Dictionary<string, IItem>();
 
         public static void AddItemConfig(IItem itemConfig)
         {
             ItemByKey.Add(itemConfig.GetKey, itemConfig);
+        }
+
+        public static void CreateSlot(IItem item = null, int count = 0)
+        {
+            Slots.Add(new Slot(item, count));
         }
 
         /// <summary>

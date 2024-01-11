@@ -1,17 +1,19 @@
+using System;
 using UnityEngine;
-using QFramework;
 
-// 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
-// 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
 namespace QFramework.Example
 {
-	public partial class ConfigManager : ViewController, ISingleton
-	{
-		public static ConfigManager Default => MonoSingletonProperty<ConfigManager>.Instance;
+    // 定义一个ConfigManager类，用于管理游戏内的配置
+    public class ConfigManager
+    {
+        // 定义一个静态的 Lazy<IItem> 变量 Iron，用于懒加载 Iron 配置
+        // Lazy<IItem> 意味着这个变量的值将在第一次访问时被初始化
+        public static Lazy<IItem> Iron = new Lazy<IItem>(() =>
+            // 使用 Unity 的 Resources.Load 方法来加载名为 Iron 的 ItemConfig 资源
+            // 这里的 Lambda 表达式定义了一个匿名函数，用于初始化 Lazy 变量
+            Resources.Load<ItemConfig>("Iron"));
 
-        public void OnSingletonInit()
-        {
-            
-        }
+        // 同上
+        public static Lazy<IItem> GreenSword = new Lazy<IItem>(() => Resources.Load<ItemConfig>("GreenSword"));
     }
 }

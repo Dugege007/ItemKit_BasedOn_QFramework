@@ -7,45 +7,30 @@ namespace QFramework.Example
 {
     public partial class UGUIInventoryExample : ViewController
     {
+        private void Awake()
+        {
+            ItemKit.AddItemConfig(ConfigManager.Iron.Value);
+            ItemKit.AddItemConfig(ConfigManager.GreenSword.Value);
+
+            ItemKit.CreateSlot(ConfigManager.Iron.Value, 1);
+            ItemKit.CreateSlot(ConfigManager.GreenSword.Value, 1);
+        }
+
         private void Start()
         {
-            ItemKit.AddItemConfig(ConfigManager.Default.Iron);
-            ItemKit.AddItemConfig(ConfigManager.Default.GreenSword);
-
-            ItemKit.Slots[0].Item = ConfigManager.Default.Iron;
-            ItemKit.Slots[0].Count = 1;
-
             UISlot.Hide();
             Refresh();
 
             #region 添加物品
             BtnAddItem1.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(ConfigManager.Default.Iron.Key);
+                ItemKit.AddItem(ConfigManager.Iron.Value.GetKey);
                 Refresh();
             });
 
             BtnAddItem2.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(ConfigManager.Default.GreenSword.Key);
-                Refresh();
-            });
-
-            BtnAddItem3.onClick.AddListener(() =>
-            {
-                ItemKit.AddItem(ItemKit.Item3.Key);
-                Refresh();
-            });
-
-            BtnAddItem4.onClick.AddListener(() =>
-            {
-                ItemKit.AddItem(ItemKit.Item4.Key);
-                Refresh();
-            });
-
-            BtnAddItem5.onClick.AddListener(() =>
-            {
-                ItemKit.AddItem(ItemKit.Item5.Key);
+                ItemKit.AddItem(ConfigManager.GreenSword.Value.GetKey);
                 Refresh();
             });
             #endregion
@@ -53,31 +38,13 @@ namespace QFramework.Example
             #region 删除物品
             BtnRemoveItem1.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(ConfigManager.Default.Iron.Key);
+                ItemKit.RemoveItem(ConfigManager.Iron.Value.GetKey);
                 Refresh();
             });
 
             BtnRemoveItem2.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(ConfigManager.Default.GreenSword.Key);
-                Refresh();
-            });
-
-            BtnRemoveItem3.onClick.AddListener(() =>
-            {
-                ItemKit.RemoveItem(ItemKit.Item3.Key);
-                Refresh();
-            });
-
-            BtnRemoveItem4.onClick.AddListener(() =>
-            {
-                ItemKit.RemoveItem(ItemKit.Item4.Key);
-                Refresh();
-            });
-
-            BtnRemoveItem5.onClick.AddListener(() =>
-            {
-                ItemKit.RemoveItem(ItemKit.Item5.Key);
+                ItemKit.RemoveItem(ConfigManager.GreenSword.Value.GetKey);
                 Refresh();
             });
             #endregion
