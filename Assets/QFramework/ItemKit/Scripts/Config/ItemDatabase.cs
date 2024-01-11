@@ -68,9 +68,11 @@ namespace QFramework
                     // 获取列表中当前配置的序列化属性
                     SerializedProperty itemConfig = mItemConfigs.GetArrayElementAtIndex(i);
                     GUILayout.BeginHorizontal();
-                    // 绘制当前配置的属性编辑器界面
-                    // .DrawProperty() 是 QFramework 提供的，用于绘制 Property
-                    itemConfig.DrawProperty();
+
+                    // 获取当前 itemConfig 引用的实际 UnityEngine.Object
+                    UnityEngine.Object itemObj = itemConfig.objectReferenceValue;
+                    // 创建一个新的 SerializedObject 以便能够编辑 itemConfig 引用的对象
+                    SerializedObject itemSO = new SerializedObject(itemObj);
 
                     // 添加一个弹性空间
                     GUILayout.FlexibleSpace();
@@ -88,6 +90,9 @@ namespace QFramework
                         AssetDatabase.Refresh();
                     }
                     GUILayout.EndHorizontal();
+
+                    // 绘制 itemConfig 引用的对象的属性编辑器界面
+                    itemSO.DrawProperties();
                 }
 
                 if (GUILayout.Button("Create Code"))
