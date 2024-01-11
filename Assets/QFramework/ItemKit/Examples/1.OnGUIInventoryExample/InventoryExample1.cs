@@ -19,7 +19,7 @@ namespace QFramework.Example
                 if (slot.Count <= 0)
                     GUILayout.Label($"格子：空");
                 else
-                    GUILayout.Label($"格子：{slot.Item.Name} x {slot.Count}");
+                    GUILayout.Label($"格子：{slot.Item.GetName} x {slot.Count}");
                 GUILayout.EndHorizontal();
             }
 

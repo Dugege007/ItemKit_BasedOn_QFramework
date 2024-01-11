@@ -36,7 +36,7 @@ namespace QFramework
         /// <returns>返回找到的槽位，如果没有找到符合条件的槽位则返回null。</returns>
         public static Slot FindSlotByKey(string itemKey)
         {
-            Slot slot = ItemKit.Slots.Find(s => s.Item != null && s.Count > 0 && s.Item.Key == itemKey);
+            Slot slot = ItemKit.Slots.Find(s => s.Item != null && s.Count > 0 && s.Item.GetKey == itemKey);
             return slot;
         }
 

@@ -80,7 +80,7 @@ namespace QFramework
                         if (Data.Count > 0)
                         {
                             // 缓存目标栏位数据
-                            Item itemCache = uiSlot.Data.Item;
+                            IItem itemCache = uiSlot.Data.Item;
                             int countCache = uiSlot.Data.Count;
 
                             // 将当前栏位数据保存到目标栏位中
