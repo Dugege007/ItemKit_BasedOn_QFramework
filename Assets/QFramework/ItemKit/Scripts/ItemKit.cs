@@ -1,4 +1,4 @@
-using System.Collections;
+using QFramework.Example;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,28 +6,33 @@ namespace QFramework
 {
     public class ItemKit
     {
-        public static Item Item1 = new Item("item_1", "物品1");
-        public static Item Item2 = new Item("item_2", "物品2");
+        //public static Item Item1 = new Item("item_1", "物品1");
+        //public static Item Item2 = new Item("item_2", "物品2");
         public static Item Item3 = new Item("item_3", "物品3");
         public static Item Item4 = new Item("item_4", "物品4");
         public static Item Item5 = new Item("item_5", "物品5");
 
         public static List<Slot> Slots = new List<Slot>()
         {
-            new Slot(ItemKit.Item1, 1),
-            new Slot(ItemKit.Item2, 2),
+            new Slot(ConfigManager.Default.Iron, 1),
+            new Slot(ConfigManager.Default.GreenSword, 2),
             new Slot(ItemKit.Item3, 3),
             new Slot(ItemKit.Item4, 4),
         };
 
-        public static Dictionary<string, Item> ItemByKey = new Dictionary<string, Item>()
+        public static Dictionary<string, IItem> ItemByKey = new Dictionary<string, IItem>()
         {
-            { ItemKit.Item1.Key, ItemKit.Item1 },
-            { ItemKit.Item2.Key, ItemKit.Item2 },
+            //{ ItemKit.Item1.Key, ItemKit.Item1 },
+            //{ ItemKit.Item2.Key, ItemKit.Item2 },
             { ItemKit.Item3.Key, ItemKit.Item3 },
             { ItemKit.Item4.Key, ItemKit.Item4 },
             { ItemKit.Item5.Key, ItemKit.Item5 },
         };
+
+        public static void AddItemConfig(IItem itemConfig)
+        {
+            ItemByKey.Add(itemConfig.GetKey, itemConfig);
+        }
 
         /// <summary>
         /// 根据物品的键值查找对应的槽位，该槽位必须已经包含物品且物品数量大于0。
@@ -99,6 +104,12 @@ namespace QFramework
             if (slot == null || slot.Count < 1)
             {
                 Debug.Log("背包中没有此物品");
+                return;
+            }
+
+            if (slot.Count < removeCount)
+            {
+                Debug.Log("物品不足");
                 return;
             }
 

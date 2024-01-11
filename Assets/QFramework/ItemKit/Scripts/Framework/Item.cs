@@ -10,7 +10,7 @@ namespace QFramework
     {
         public string GetKey { get; }
         public string GetName { get; }
-        public Sprite GetSprite { get; }
+        public Sprite GetIcon { get; }
     }
 
     public class Item : IItem
@@ -28,6 +28,6 @@ namespace QFramework
 
         public string GetName => Name;
 
-        public Sprite GetSprite => null;
+        public Sprite GetIcon => null;
     }
 }

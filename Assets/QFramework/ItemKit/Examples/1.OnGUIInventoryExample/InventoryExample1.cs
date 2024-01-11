@@ -24,15 +24,15 @@ namespace QFramework.Example
             }
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label(ItemKit.Item1.Name);
-            if (GUILayout.Button("+")) ItemKit.AddItem(ItemKit.Item1.Key);
-            if (GUILayout.Button("-")) ItemKit.RemoveItem(ItemKit.Item1.Key);
+            GUILayout.Label(ConfigManager.Default.Iron.Name);
+            if (GUILayout.Button("+")) ItemKit.AddItem(ConfigManager.Default.Iron.Key);
+            if (GUILayout.Button("-")) ItemKit.RemoveItem(ConfigManager.Default.Iron.Key);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label(ItemKit.Item2.Name);
-            if (GUILayout.Button("+")) ItemKit.AddItem(ItemKit.Item2.Key);
-            if (GUILayout.Button("-")) ItemKit.RemoveItem(ItemKit.Item2.Key);
+            GUILayout.Label(ConfigManager.Default.GreenSword.Name);
+            if (GUILayout.Button("+")) ItemKit.AddItem(ConfigManager.Default.GreenSword.Key);
+            if (GUILayout.Button("-")) ItemKit.RemoveItem(ConfigManager.Default.GreenSword.Key);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();

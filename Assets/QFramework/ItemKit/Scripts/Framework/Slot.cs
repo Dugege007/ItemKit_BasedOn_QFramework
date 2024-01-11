@@ -7,7 +7,7 @@ namespace QFramework
         public IItem Item;
         public int Count;
 
-        public Slot(IItem item, int count = 0)
+        public Slot(IItem item = null, int count = 0)
         {
             Item = item;
             Count = count;

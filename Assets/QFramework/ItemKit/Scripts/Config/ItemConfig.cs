@@ -13,6 +13,6 @@ namespace QFramework
 
         public string GetKey => Key;
         public string GetName => Name;
-        public Sprite GetSprite => Icon;
+        public Sprite GetIcon => Icon;
     }
 }

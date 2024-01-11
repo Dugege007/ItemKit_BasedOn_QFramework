@@ -9,19 +9,25 @@ namespace QFramework.Example
     {
         private void Start()
         {
+            ItemKit.AddItemConfig(ConfigManager.Default.Iron);
+            ItemKit.AddItemConfig(ConfigManager.Default.GreenSword);
+
+            ItemKit.Slots[0].Item = ConfigManager.Default.Iron;
+            ItemKit.Slots[0].Count = 1;
+
             UISlot.Hide();
             Refresh();
 
             #region 添加物品
             BtnAddItem1.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(ItemKit.Item1.Key);
+                ItemKit.AddItem(ConfigManager.Default.Iron.Key);
                 Refresh();
             });
 
             BtnAddItem2.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(ItemKit.Item2.Key);
+                ItemKit.AddItem(ConfigManager.Default.GreenSword.Key);
                 Refresh();
             });
 
@@ -47,13 +53,13 @@ namespace QFramework.Example
             #region 删除物品
             BtnRemoveItem1.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(ItemKit.Item1.Key);
+                ItemKit.RemoveItem(ConfigManager.Default.Iron.Key);
                 Refresh();
             });
 
             BtnRemoveItem2.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(ItemKit.Item2.Key);
+                ItemKit.RemoveItem(ConfigManager.Default.GreenSword.Key);
                 Refresh();
             });
 
