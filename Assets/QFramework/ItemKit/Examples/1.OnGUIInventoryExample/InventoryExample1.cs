@@ -9,11 +9,10 @@ namespace QFramework.Example
     {
         private void Awake()
         {
-            ItemKit.LoadItemConfigByResources(nameof(Items.Iron));
-            ItemKit.LoadItemConfigByResources(nameof(Items.GreenSword));
+            ItemKit.LoadItemDatabase("ExampleItemDatabase");
 
-            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.Iron], 1);
-            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.GreenSword], 1);
+            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1);
+            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.item_green_sword], 1);
         }
 
         private void OnGUI()
@@ -32,15 +31,15 @@ namespace QFramework.Example
             }
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label(ItemKit.ItemByKey[Items.Iron].GetName);
-            if (GUILayout.Button("+")) ItemKit.AddItem(Items.Iron);
-            if (GUILayout.Button("-")) ItemKit.RemoveItem(Items.Iron);
+            GUILayout.Label(ItemKit.ItemByKey[Items.item_iron].GetName);
+            if (GUILayout.Button("+")) ItemKit.AddItem(Items.item_iron);
+            if (GUILayout.Button("-")) ItemKit.RemoveItem(Items.item_iron);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
-            GUILayout.Label(ItemKit.ItemByKey[Items.GreenSword].GetName);
-            if (GUILayout.Button("+")) ItemKit.AddItem(Items.GreenSword);
-            if (GUILayout.Button("-")) ItemKit.RemoveItem(Items.GreenSword);
+            GUILayout.Label(ItemKit.ItemByKey[Items.item_green_sword].GetName);
+            if (GUILayout.Button("+")) ItemKit.AddItem(Items.item_green_sword);
+            if (GUILayout.Button("-")) ItemKit.RemoveItem(Items.item_green_sword);
             GUILayout.EndHorizontal();
         }
 

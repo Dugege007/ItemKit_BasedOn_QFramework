@@ -9,11 +9,10 @@ namespace QFramework.Example
     {
         private void Awake()
         {
-            ItemKit.LoadItemConfigByResources(nameof(Items.Iron));
-            ItemKit.LoadItemConfigByResources(nameof(Items.GreenSword));
+            ItemKit.LoadItemDatabase("ExampleItemDatabase");
 
-            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.Iron], 1);
-            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.GreenSword], 1);
+            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1);
+            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.item_green_sword], 1);
         }
 
         private void Start()
@@ -24,13 +23,13 @@ namespace QFramework.Example
             #region 添加物品
             BtnAddItem1.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(Items.Iron);
+                ItemKit.AddItem(Items.item_iron);
                 Refresh();
             });
 
             BtnAddItem2.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(Items.GreenSword);
+                ItemKit.AddItem(Items.item_green_sword);
                 Refresh();
             });
             #endregion
@@ -38,13 +37,13 @@ namespace QFramework.Example
             #region 删除物品
             BtnRemoveItem1.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(Items.Iron);
+                ItemKit.RemoveItem(Items.item_iron);
                 Refresh();
             });
 
             BtnRemoveItem2.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(Items.GreenSword);
+                ItemKit.RemoveItem(Items.item_green_sword);
                 Refresh();
             });
             #endregion

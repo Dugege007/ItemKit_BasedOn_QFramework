@@ -1,0 +1,64 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-6699404956195670136
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Key: item_green_sword
+  Name: "\u7EFF\u5251"
+  Icon: {fileID: 2140489303, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+--- !u!114 &-4619925017024879834
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Key: item_iron
+  Name: "\u94C1\u5757"
+  Icon: {fileID: -1187671710, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 023747e8a66d73a418986c9d63246ee0, type: 3}
+  m_Name: ExampleItemDatabase
+  m_EditorClassIdentifier: 
+  NameSpace: QFramework.Example
+  ItemConfigs:
+  - {fileID: -4619925017024879834}
+  - {fileID: -6699404956195670136}
+  - {fileID: 8462661938229275394}
+--- !u!114 &8462661938229275394
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Key: item_paper
+  Name: "\u7EB8"
+  Icon: {fileID: -42529867, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}

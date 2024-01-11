@@ -67,12 +67,16 @@ namespace QFramework
                 {
                     // 获取列表中当前配置的序列化属性
                     SerializedProperty itemConfig = mItemConfigs.GetArrayElementAtIndex(i);
-                    GUILayout.BeginHorizontal();
 
+                    GUILayout.BeginVertical("box");
+                    GUILayout.BeginHorizontal();
+                    // 创建一个默认展开的可折叠区域，标题为 ItemConfig 的名称
+                    bool foldout = EditorGUILayout.Foldout(true, string.Empty);
                     // 获取当前 itemConfig 引用的实际 UnityEngine.Object
                     UnityEngine.Object itemObj = itemConfig.objectReferenceValue;
                     // 创建一个新的 SerializedObject 以便能够编辑 itemConfig 引用的对象
                     SerializedObject itemSO = new SerializedObject(itemObj);
+                    itemSO.Update();
 
                     // 添加一个弹性空间
                     GUILayout.FlexibleSpace();
@@ -91,8 +95,13 @@ namespace QFramework
                     }
                     GUILayout.EndHorizontal();
 
-                    // 绘制 itemConfig 引用的对象的属性编辑器界面
-                    itemSO.DrawProperties();
+                    if (foldout)
+                    {
+                        // 绘制 itemConfig 引用的对象的属性编辑器界面，不绘制脚本
+                        itemSO.DrawProperties(false);
+                    }
+                    itemSO.ApplyModifiedProperties();
+                    GUILayout.EndVertical();
                 }
 
                 if (GUILayout.Button("Create Code"))
@@ -121,7 +130,7 @@ namespace QFramework
                                 // 为每个 itemDB.ItemConfigs 生成一个静态字符串字段
                                 foreach (ItemConfig itemConfig in itemDatabase.ItemConfigs)
                                 {
-                                    c.Custom($"public static string {itemConfig.name} = \"{itemConfig.Key}\";");
+                                    c.Custom($"public static string {itemConfig.Key} = \"{itemConfig.Key}\";");
                                     Debug.Log(itemConfig.Key);
                                 }
                             });

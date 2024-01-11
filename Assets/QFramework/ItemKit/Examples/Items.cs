@@ -5,8 +5,8 @@ namespace QFramework.Example
 {
 	public class Items
 	{
-		public static string GreenSword = "item_green_sword";
-		public static string Iron = "item_iron";
-		public static string Paper = "item_paper";
+		public static string item_iron = "item_iron";
+		public static string item_green_sword = "item_green_sword";
+		public static string item_paper = "item_paper";
 	}
 }

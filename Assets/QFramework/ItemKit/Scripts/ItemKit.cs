@@ -9,14 +9,10 @@ namespace QFramework
         public static List<Slot> Slots = new List<Slot>();
         public static Dictionary<string, IItem> ItemByKey = new Dictionary<string, IItem>();
 
-        /// <summary>
-        /// 通过 Resources 加载指定的物品配置文件。
-        /// </summary>
-        /// <param name="itemConfigFileName">物品配置文件的名称，不包含路径和扩展名。</param>
-        public static void LoadItemConfigByResources(string itemConfigFileName)
+        public static void LoadItemDatabase(string databaseName)
         {
-            // 使用 Resources.Load 加载名为 itemConfigFileName 的 ItemConfig 对象
-            AddItemConfig(Resources.Load<ItemConfig>(itemConfigFileName));
+            ItemDatabase database = Resources.Load<ItemDatabase>(databaseName);
+            database.ItemConfigs.ForEach(config => AddItemConfig(config));
         }
 
         /// <summary>

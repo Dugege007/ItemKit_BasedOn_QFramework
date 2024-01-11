@@ -12,6 +12,7 @@ namespace QFramework
         [MenuItem("QFramework/ItemKit/Create Code")]
         public static void CreateCode()
         {
+
         }
     }
 }
