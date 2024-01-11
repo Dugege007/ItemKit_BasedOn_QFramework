@@ -68,6 +68,7 @@ namespace QFramework
                     // 获取列表中当前配置的序列化属性
                     SerializedProperty itemConfig = mItemConfigs.GetArrayElementAtIndex(i);
 
+                    // 绘制背景框
                     GUILayout.BeginVertical("box");
                     GUILayout.BeginHorizontal();
                     // 创建一个默认展开的可折叠区域，标题为 ItemConfig 的名称
@@ -101,8 +102,8 @@ namespace QFramework
 
                     if (foldout)
                     {
-                        // 绘制 itemConfig 引用的对象的属性编辑器界面，不绘制脚本
-                        itemSO.DrawProperties(false);
+                        // 当前绘制方式还比较消耗性能，后续还需要优化
+                        Editor.CreateEditor(itemObj).OnInspectorGUI();
                     }
                     itemSO.ApplyModifiedPropertiesWithoutUndo();
                     GUILayout.EndVertical();

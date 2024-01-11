@@ -12,22 +12,4 @@ namespace QFramework
         public string GetName { get; }
         public Sprite GetIcon { get; }
     }
-
-    public class Item : IItem
-    {
-        public string Key;  // 或者是ID，用于查找
-        public string Name;
-
-        public Item(string key, string name)
-        {
-            Key = key;
-            Name = name;
-        }
-
-        public string GetKey => Key;
-
-        public string GetName => Name;
-
-        public Sprite GetIcon => null;
-    }
 }
