@@ -9,11 +9,11 @@ namespace QFramework.Example
     {
         private void Awake()
         {
-            ItemKit.AddItemConfig(ConfigManager.Iron.Value);
-            ItemKit.AddItemConfig(ConfigManager.GreenSword.Value);
+            ItemKit.LoadItemConfigByResources(nameof(Items.Iron));
+            ItemKit.LoadItemConfigByResources(nameof(Items.GreenSword));
 
-            ItemKit.CreateSlot(ConfigManager.Iron.Value, 1);
-            ItemKit.CreateSlot(ConfigManager.GreenSword.Value, 1);
+            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.Iron], 1);
+            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.GreenSword], 1);
         }
 
         private void Start()
@@ -24,13 +24,13 @@ namespace QFramework.Example
             #region 添加物品
             BtnAddItem1.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(ConfigManager.Iron.Value.GetKey);
+                ItemKit.AddItem(Items.Iron);
                 Refresh();
             });
 
             BtnAddItem2.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(ConfigManager.GreenSword.Value.GetKey);
+                ItemKit.AddItem(Items.GreenSword);
                 Refresh();
             });
             #endregion
@@ -38,13 +38,13 @@ namespace QFramework.Example
             #region 删除物品
             BtnRemoveItem1.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(ConfigManager.Iron.Value.GetKey);
+                ItemKit.RemoveItem(Items.Iron);
                 Refresh();
             });
 
             BtnRemoveItem2.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(ConfigManager.GreenSword.Value.GetKey);
+                ItemKit.RemoveItem(Items.GreenSword);
                 Refresh();
             });
             #endregion
