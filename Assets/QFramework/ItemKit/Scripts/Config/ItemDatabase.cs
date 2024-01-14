@@ -38,7 +38,13 @@ namespace QFramework
                 // 获取并存储 ItemConfigs 列表的序列化属性引用
                 mItemConfigs = serializedObject.FindProperty("ItemConfigs");
 
+                RefreshItemEditors();
+            }
+
+            private void RefreshItemEditors()
+            {
                 mItemEditors.Clear();
+
                 for (int i = 0; i < mItemConfigs.arraySize; i++)
                 {
                     SerializedProperty itemSO = mItemConfigs.GetArrayElementAtIndex(i);
@@ -55,6 +61,8 @@ namespace QFramework
             // 使用 QFramework 提供的字体设置封装
             FluentGUIStyle mHeader = FluentGUIStyle.Label().FontBold();
 
+            Queue<Action> mActionQueue = new Queue<Action>();
+
             // OnInspectorGUI 重写自定义编辑器的GUI布局和行为
             public override void OnInspectorGUI()
             {
@@ -70,6 +78,11 @@ namespace QFramework
                 // .DrawProperties() 是 QFramework 提供的，其中包含 base.OnInspectorGUI() 的功能
                 // .DrawProperties(是否绘制脚本，缩进值，忽略)
                 serializedObject.DrawProperties(true, 0, "ItemConfigs");
+
+                if (mItemConfigs.arraySize != mItemEditors.Count)
+                {
+                    RefreshItemEditors();
+                }
 
                 if (GUILayout.Button("生成代码"))
                 {
@@ -147,32 +160,28 @@ namespace QFramework
                     // 创建一个默认展开的可折叠区域，标题为 ItemConfig 的名称
                     itemEditor.Foldout = EditorGUILayout.Foldout(itemEditor.Foldout, itemEditor.ItemConfig.Name);
 
-                    // 获取当前 itemConfig 引用的实际 UnityEngine.Object
-                    //UnityEngine.Object itemObj = itemConfig.objectReferenceValue;
-
-                    // 创建一个新的 SerializedObject 以便能够编辑 itemConfig 引用的对象
-                    SerializedObject itemSO = new SerializedObject(itemEditor.ItemConfig);
-                    itemSO.Update();
-
                     // 添加一个弹性空间
                     GUILayout.FlexibleSpace();
 
                     if (GUILayout.Button("X"))
                     {
+                        int index = i;
+
                         // 弹窗提示
                         if (EditorUtility.DisplayDialog("删除物品", "确定要删除吗？\n（此操作不可恢复）", "删除", "取消"))
                         {
-                            // 获取当前索引 i 处的 ItemConfig 对象的序列化属性
-                            SerializedProperty arrayElement = mItemConfigs.GetArrayElementAtIndex(i);
-                            // 从 AssetDatabase 中移除该对象，这会删除它作为子资产的关联
-                            AssetDatabase.RemoveObjectFromAsset(arrayElement.objectReferenceValue);
-                            // 删除 mItemConfigs 列表中索引 i 处的元素
-                            mItemConfigs.DeleteArrayElementAtIndex(i);
+                            mActionQueue.Enqueue(() =>
+                            {
+                                // 获取当前索引 i 处的 ItemConfig 对象的序列化属性
+                                SerializedProperty arrayElement = mItemConfigs.GetArrayElementAtIndex(index);
+                                // 从 AssetDatabase 中移除该对象，这会删除它作为子资产的关联
+                                AssetDatabase.RemoveObjectFromAsset(arrayElement.objectReferenceValue);
+                                // 删除 mItemConfigs 列表中索引 i 处的元素
+                                mItemConfigs.DeleteArrayElementAtIndex(index);
 
-                            AssetDatabase.SaveAssets();
-                            AssetDatabase.Refresh();
-
-                            OnEnable();
+                                AssetDatabase.SaveAssets();
+                                AssetDatabase.Refresh();
+                            });
                         }
                     }
                     GUILayout.EndHorizontal();
@@ -184,29 +193,40 @@ namespace QFramework
 
                         itemEditor.Editor.OnInspectorGUI();
                     }
-                    itemSO.ApplyModifiedPropertiesWithoutUndo();
                     GUILayout.EndVertical();
                 }
 
                 if (GUILayout.Button("添加物品"))
                 {
-                    // 创建一个新的 ItemConfig 实例
-                    ItemConfig itemConfig = ItemConfig.CreateInstance<ItemConfig>();
-                    // 将新创建的 itemConfig 添加到 ItemDatabase 的资产中
-                    AssetDatabase.AddObjectToAsset(itemConfig, target);
+                    mActionQueue.Enqueue(() =>
+                    {
+                        // 创建一个新的 ItemConfig 实例
+                        ItemConfig itemConfig = ItemConfig.CreateInstance<ItemConfig>();
+                        itemConfig.name = nameof(ItemConfig);
+                        itemConfig.Name = "新物品";
+                        itemConfig.Key = "item_new";
 
-                    // 在 ItemConfigs 列表中添加一个新的元素
-                    mItemConfigs.InsertArrayElementAtIndex(mItemConfigs.arraySize);
-                    // 获取新添加的元素的序列化属性，并设置其值为新创建的 itemConfig
-                    SerializedProperty arrayElement = mItemConfigs.GetArrayElementAtIndex(mItemConfigs.arraySize - 1);
-                    arrayElement.objectReferenceValue = itemConfig;
+                        // 将新创建的 itemConfig 添加到 ItemDatabase 的资产中
+                        AssetDatabase.AddObjectToAsset(itemConfig, target);
+                        // 在 ItemConfigs 列表中添加一个新的元素
+                        mItemConfigs.InsertArrayElementAtIndex(mItemConfigs.arraySize);
 
-                    // 保存所有更改到资产
-                    AssetDatabase.SaveAssets();
-                    // 刷新资源
-                    AssetDatabase.Refresh();
+                        serializedObject.ApplyModifiedPropertiesWithoutUndo();
 
-                    OnEnable();
+                        // 获取新添加的元素的序列化属性，并设置其值为新创建的 itemConfig
+                        SerializedProperty arrayElement = mItemConfigs.GetArrayElementAtIndex(mItemConfigs.arraySize - 1);
+                        arrayElement.objectReferenceValue = itemConfig;
+
+                        // 保存所有更改到资产
+                        AssetDatabase.SaveAssets();
+                        // 刷新资源
+                        AssetDatabase.Refresh();
+                    });
+                }
+
+                if (mActionQueue.Count > 0)
+                {
+                    mActionQueue.Dequeue().Invoke();
                 }
 
                 // 应用对序列化对象所做的所有修改，不支持撤销

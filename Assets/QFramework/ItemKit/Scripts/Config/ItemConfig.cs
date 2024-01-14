@@ -82,7 +82,7 @@ namespace QFramework
 
             GUILayout.EndHorizontal();
 
-            serializedObject.ApplyModifiedProperties();
+            serializedObject.ApplyModifiedPropertiesWithoutUndo();
         }
     }
 #endif
