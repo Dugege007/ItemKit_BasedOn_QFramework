@@ -20,6 +20,15 @@ namespace QFramework
         [UnityEditor.CustomEditor(typeof(ItemDatabase))]
         public class ItemDatabaseEditor : UnityEditor.Editor
         {
+            public class ItemEditorObj
+            {
+                public bool Foldout = false;
+                public Editor Editor = null;
+                public ItemConfig ItemConfig = null;
+            }
+
+            private List<ItemEditorObj> mItemEditors = new List<ItemEditorObj>();
+
             // mItemConfigs 是一个序列化属性，用于编辑器中显示和编辑 ItemConfigs 列表
             private SerializedProperty mItemConfigs;
 
@@ -27,6 +36,18 @@ namespace QFramework
             {
                 // 获取并存储 ItemConfigs 列表的序列化属性引用
                 mItemConfigs = serializedObject.FindProperty("ItemConfigs");
+
+                mItemEditors.Clear();
+                for (int i = 0; i < mItemConfigs.arraySize; i++)
+                {
+                    SerializedProperty itemSO = mItemConfigs.GetArrayElementAtIndex(i);
+                    Editor editor = CreateEditor(itemSO.objectReferenceValue);
+                    mItemEditors.Add(new ItemEditorObj()
+                    {
+                        Editor = editor,
+                        ItemConfig = itemSO.objectReferenceValue as ItemConfig,
+                    });
+                }
             }
 
             // OnInspectorGUI 重写自定义编辑器的GUI布局和行为
@@ -60,23 +81,29 @@ namespace QFramework
                     AssetDatabase.SaveAssets();
                     // 刷新资源
                     AssetDatabase.Refresh();
+
+                    OnEnable();
                 }
 
                 // 遍历 ItemConfigs 列表，为每个配置绘制编辑器界面
-                for (int i = 0; i < mItemConfigs.arraySize; i++)
+                for (int i = 0; i < mItemEditors.Count; i++)
                 {
                     // 获取列表中当前配置的序列化属性
-                    SerializedProperty itemConfig = mItemConfigs.GetArrayElementAtIndex(i);
+                    //SerializedProperty itemConfig = mItemConfigs.GetArrayElementAtIndex(i);
+
+                    ItemEditorObj itemEditor = mItemEditors[i];
 
                     // 绘制背景框
                     GUILayout.BeginVertical("box");
                     GUILayout.BeginHorizontal();
                     // 创建一个默认展开的可折叠区域，标题为 ItemConfig 的名称
-                    bool foldout = EditorGUILayout.Foldout(true, string.Empty);
+                    itemEditor.Foldout = EditorGUILayout.Foldout(itemEditor.Foldout, itemEditor.ItemConfig.Name);
+
                     // 获取当前 itemConfig 引用的实际 UnityEngine.Object
-                    UnityEngine.Object itemObj = itemConfig.objectReferenceValue;
+                    //UnityEngine.Object itemObj = itemConfig.objectReferenceValue;
+
                     // 创建一个新的 SerializedObject 以便能够编辑 itemConfig 引用的对象
-                    SerializedObject itemSO = new SerializedObject(itemObj);
+                    SerializedObject itemSO = new SerializedObject(itemEditor.ItemConfig);
                     itemSO.Update();
 
                     // 添加一个弹性空间
@@ -96,14 +123,18 @@ namespace QFramework
 
                             AssetDatabase.SaveAssets();
                             AssetDatabase.Refresh();
+
+                            OnEnable();
                         }
                     }
                     GUILayout.EndHorizontal();
 
-                    if (foldout)
+                    if (itemEditor.Foldout)
                     {
                         // 当前绘制方式还比较消耗性能，后续还需要优化
-                        Editor.CreateEditor(itemObj).OnInspectorGUI();
+                        //Editor.CreateEditor(itemObj).OnInspectorGUI();
+
+                        itemEditor.Editor.OnInspectorGUI();
                     }
                     itemSO.ApplyModifiedPropertiesWithoutUndo();
                     GUILayout.EndVertical();

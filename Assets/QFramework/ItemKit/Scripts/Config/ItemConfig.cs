@@ -52,20 +52,34 @@ namespace QFramework
             mIcon.objectReferenceValue = EditorGUILayout.ObjectField(mIcon.objectReferenceValue, typeof(Sprite), true, GUILayout.Height(48), GUILayout.Width(48));
             GUILayout.EndVertical();
 
-            GUILayout.Space(-80);
+            GUILayout.Space(-60);
+
+            // 保存原始的labelWidth
+            float originalLabelWidth = EditorGUIUtility.labelWidth;
+            // 保存原始的fieldWidth
+            float originalFieldWidth = EditorGUIUtility.fieldWidth;
+
+            // 设置新的labelWidth和fieldWidth
+            EditorGUIUtility.labelWidth = 60;
+            EditorGUIUtility.fieldWidth = 200;
 
             GUILayout.BeginVertical();
             GUILayout.BeginHorizontal();
             mName = serializedObject.FindProperty("Name");
             // 绘制名称属性的编辑器
-            EditorGUILayout.PropertyField(mName);
+            EditorGUILayout.PropertyField(mName, GUILayout.ExpandWidth(true)); // 禁止字段自动扩展以填充额外的空间
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             mKey = serializedObject.FindProperty("Key");
             // 绘制关键值属性的编辑器
-            EditorGUILayout.PropertyField(mKey);
-            GUILayout.EndVertical();
+            EditorGUILayout.PropertyField(mKey, GUILayout.ExpandWidth(true)); // 同上
             GUILayout.EndHorizontal();
+            GUILayout.EndVertical();
+
+            // 恢复原始的labelWidth和fieldWidth
+            EditorGUIUtility.labelWidth = originalLabelWidth;
+            EditorGUIUtility.fieldWidth = originalFieldWidth;
+
             GUILayout.EndHorizontal();
 
             serializedObject.ApplyModifiedProperties();
