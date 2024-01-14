@@ -211,11 +211,11 @@ namespace QFramework
                         // 在 ItemConfigs 列表中添加一个新的元素
                         mItemConfigs.InsertArrayElementAtIndex(mItemConfigs.arraySize);
 
-                        serializedObject.ApplyModifiedPropertiesWithoutUndo();
-
                         // 获取新添加的元素的序列化属性，并设置其值为新创建的 itemConfig
                         SerializedProperty arrayElement = mItemConfigs.GetArrayElementAtIndex(mItemConfigs.arraySize - 1);
                         arrayElement.objectReferenceValue = itemConfig;
+
+                        serializedObject.ApplyModifiedPropertiesWithoutUndo();
 
                         // 保存所有更改到资产
                         AssetDatabase.SaveAssets();

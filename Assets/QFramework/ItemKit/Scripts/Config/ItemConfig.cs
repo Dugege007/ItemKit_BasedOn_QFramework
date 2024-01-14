@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor;
-using UnityEditor.TerrainTools;
 
 #if UNITY_EDITOR
 using UnityEngine;
@@ -13,9 +10,9 @@ namespace QFramework
     public class ItemConfig : ScriptableObject, IItem
     {
         [DisplayLabel("名称")]    // QFramework 中提供的功能
-        public string Name;
+        public string Name = string.Empty;
         [DisplayLabel("关键字")]
-        public string Key;
+        public string Key = string.Empty;
         [DisplayLabel("图标")]
         public Sprite Icon;
 
@@ -67,7 +64,7 @@ namespace QFramework
             GUILayout.BeginHorizontal();
             mName = serializedObject.FindProperty("Name");
             // 绘制名称属性的编辑器
-            EditorGUILayout.PropertyField(mName, GUILayout.ExpandWidth(true)); // 禁止字段自动扩展以填充额外的空间
+            EditorGUILayout.PropertyField(mName, GUILayout.ExpandWidth(true)); // 允许字段自动扩展以填充额外的空间
             GUILayout.EndHorizontal();
             GUILayout.BeginHorizontal();
             mKey = serializedObject.FindProperty("Key");
