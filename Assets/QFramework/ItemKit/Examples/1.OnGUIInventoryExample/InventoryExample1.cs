@@ -11,8 +11,9 @@ namespace QFramework.Example
         {
             ItemKit.LoadItemDatabase("ExampleItemDatabase");
 
-            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1);
-            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.item_green_sword], 1);
+            ItemKit.CreateSlotGroup("物品栏")
+                .CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1)
+                .CreateSlot(ItemKit.ItemByKey[Items.item_green_sword], 1);
         }
 
         private void OnGUI()
@@ -20,7 +21,7 @@ namespace QFramework.Example
             // 先规定一下分辨率
             IMGUIHelper.SetDesignResolution(960, 540);
 
-            foreach (var slot in ItemKit.Slots)
+            foreach (var slot in ItemKit.GetSlotGroupByKey("物品栏").Slots)
             {
                 GUILayout.BeginHorizontal("box");
                 if (slot.Count <= 0)
@@ -32,14 +33,14 @@ namespace QFramework.Example
 
             GUILayout.BeginHorizontal();
             GUILayout.Label(ItemKit.ItemByKey[Items.item_iron].GetName);
-            if (GUILayout.Button("+")) ItemKit.AddItem(Items.item_iron);
-            if (GUILayout.Button("-")) ItemKit.RemoveItem(Items.item_iron);
+            if (GUILayout.Button("+")) ItemKit.GetSlotGroupByKey("物品栏").AddItem(Items.item_iron);
+            if (GUILayout.Button("-")) ItemKit.GetSlotGroupByKey("物品栏").RemoveItem(Items.item_iron);
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();
             GUILayout.Label(ItemKit.ItemByKey[Items.item_green_sword].GetName);
-            if (GUILayout.Button("+")) ItemKit.AddItem(Items.item_green_sword);
-            if (GUILayout.Button("-")) ItemKit.RemoveItem(Items.item_green_sword);
+            if (GUILayout.Button("+")) ItemKit.GetSlotGroupByKey("物品栏").AddItem(Items.item_green_sword);
+            if (GUILayout.Button("-")) ItemKit.GetSlotGroupByKey("物品栏").RemoveItem(Items.item_green_sword);
             GUILayout.EndHorizontal();
         }
 

@@ -11,6 +11,9 @@ namespace QFramework.Example
 		{
 			UISlot.Hide();
 
+            ItemKit.CreateSlotGroup("背包")
+                .CreateSlotsByCount(20);
+
             Refresh();
         }
 
@@ -18,7 +21,7 @@ namespace QFramework.Example
 		{
             SlotItemRoot.DestroyChildren();
 
-            foreach (var slot in ItemKit.BagSlots)
+            foreach (var slot in ItemKit.GetSlotGroupByKey("背包").Slots)
             {
                 UISlot.InstantiateWithParent(SlotItemRoot)
                     .InitWithData(slot)

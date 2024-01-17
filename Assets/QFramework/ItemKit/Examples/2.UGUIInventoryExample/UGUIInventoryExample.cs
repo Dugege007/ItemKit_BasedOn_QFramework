@@ -11,8 +11,9 @@ namespace QFramework.Example
         {
             ItemKit.LoadItemDatabase("ExampleItemDatabase");
 
-            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1);
-            ItemKit.CreateSlot(ItemKit.ItemByKey[Items.item_green_sword], 1);
+            ItemKit.CreateSlotGroup("物品栏")
+                .CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1)
+                .CreateSlot(ItemKit.ItemByKey[Items.item_green_sword], 1);
         }
 
         private void Start()
@@ -23,13 +24,17 @@ namespace QFramework.Example
             #region 添加物品
             BtnAddItem1.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(Items.item_iron);
+                ItemKit.GetSlotGroupByKey("物品栏") // 先拿到背包
+                    .AddItem(Items.item_iron);    // 再添加物品
+
                 Refresh();
             });
 
             BtnAddItem2.onClick.AddListener(() =>
             {
-                ItemKit.AddItem(Items.item_green_sword);
+                ItemKit.GetSlotGroupByKey("物品栏")
+                    .AddItem(Items.item_green_sword);
+
                 Refresh();
             });
             #endregion
@@ -37,13 +42,17 @@ namespace QFramework.Example
             #region 删除物品
             BtnRemoveItem1.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(Items.item_iron);
+                ItemKit.GetSlotGroupByKey("物品栏")
+                    .RemoveItem(Items.item_iron);
+
                 Refresh();
             });
 
             BtnRemoveItem2.onClick.AddListener(() =>
             {
-                ItemKit.RemoveItem(Items.item_green_sword);
+                ItemKit.GetSlotGroupByKey("物品栏")
+                    .RemoveItem(Items.item_green_sword);
+
                 Refresh();
             });
             #endregion
@@ -53,7 +62,7 @@ namespace QFramework.Example
         {
             UISlotRoot.DestroyChildren();   // 暂时不考虑性能优化
 
-            foreach (var slot in ItemKit.Slots)
+            foreach (var slot in ItemKit.GetSlotGroupByKey("物品栏").Slots)
             {
                 UISlot.InstantiateWithParent(UISlotRoot)
                     .InitWithData(slot)
