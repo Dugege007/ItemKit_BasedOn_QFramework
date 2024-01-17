@@ -6,8 +6,37 @@ namespace QFramework
 {
     public class ItemKit
     {
+        public static List<Slot> BagSlots = new List<Slot>()
+        {
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+            new Slot(null, 1),
+        };
+
         public static List<Slot> Slots = new List<Slot>();
         public static Dictionary<string, IItem> ItemByKey = new Dictionary<string, IItem>();
+
+        public static UISlot CurrentSlotPointerOn = null;
 
         public static void LoadItemDatabase(string databaseName)
         {

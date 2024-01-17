@@ -14,7 +14,7 @@ namespace QFramework
         [DisplayLabel("¹Ø¼ü×Ö")]
         public string Key = string.Empty;
         [DisplayLabel("Í¼±ê")]
-        public Sprite Icon;
+        public Sprite Icon = null;
 
         public string GetName => Name;
         public string GetKey => Key;

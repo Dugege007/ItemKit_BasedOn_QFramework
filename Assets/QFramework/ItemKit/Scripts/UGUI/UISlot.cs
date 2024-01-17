@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 namespace QFramework
 {
-    public class UISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+    public class UISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
     {
         public Image Icon;
         public Text Count;
@@ -26,8 +26,11 @@ namespace QFramework
             else
             {
                 Icon.Show();
-                if (data.Item.GetIcon)
-                    Icon.sprite = data.Item.GetIcon;
+                if (data.Item != null)
+                {
+                    if (data.Item.GetIcon)
+                        Icon.sprite = data.Item.GetIcon;
+                }
                 Count.text = Data.Count.ToString();
             }
 
@@ -60,18 +63,12 @@ namespace QFramework
                 // 位置还原（坐标归零）
                 Icon.LocalPositionIdentity();
 
-                // 检测鼠标是否在任意一个 UISlot 上
-                UISlot[] uiSlots = transform.parent.GetComponentsInChildren<UISlot>();
-
-                bool throwItem = true;
-
-                foreach (var uiSlot in uiSlots)
+                if(ItemKit.CurrentSlotPointerOn)
                 {
+                    UISlot uiSlot = ItemKit.CurrentSlotPointerOn;
                     RectTransform rectTrans = uiSlot.transform as RectTransform;
                     if (RectTransformUtility.RectangleContainsScreenPoint(rectTrans, Input.mousePosition))
                     {
-                        throwItem = false;
-
                         // 物品交换
                         if (Data.Count > 0)
                         {
@@ -89,18 +86,17 @@ namespace QFramework
 
                             // 刷新
                             FindAnyObjectByType<UGUIInventoryExample>().Refresh();
+                            FindAnyObjectByType<BagExample>().Refresh();
                         }
-
-                        break;
                     }
                 }
-
-                if (throwItem)
+                else
                 {
                     Data.Item = null;
                     Data.Count = 0;
                     // 刷新
                     FindAnyObjectByType<UGUIInventoryExample>().Refresh();
+                    FindAnyObjectByType<BagExample>().Refresh();
                 }
             }
 
@@ -122,6 +118,19 @@ namespace QFramework
             {
                 // 将物品的名称移动到屏幕上的鼠标位置
                 Icon.LocalPosition2D(localPos);
+            }
+        }
+
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            ItemKit.CurrentSlotPointerOn = this;
+        }
+
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            if (ItemKit.CurrentSlotPointerOn == this)
+            {
+                ItemKit.CurrentSlotPointerOn = null;
             }
         }
     }

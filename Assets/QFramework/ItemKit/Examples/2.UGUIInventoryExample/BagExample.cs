@@ -7,9 +7,23 @@ namespace QFramework.Example
 {
 	public partial class BagExample : ViewController
 	{
-		void Start()
+		private void Start()
 		{
-			// Code Here
-		}
-	}
+			UISlot.Hide();
+
+            Refresh();
+        }
+
+		public void Refresh()
+		{
+            SlotItemRoot.DestroyChildren();
+
+            foreach (var slot in ItemKit.BagSlots)
+            {
+                UISlot.InstantiateWithParent(SlotItemRoot)
+                    .InitWithData(slot)
+                    .Show();
+            }
+        }
+    }
 }
