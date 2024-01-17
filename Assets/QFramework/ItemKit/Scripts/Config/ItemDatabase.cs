@@ -174,7 +174,7 @@ namespace QFramework
                             {
                                 // 获取当前索引 i 处的 ItemConfig 对象的序列化属性
                                 SerializedProperty arrayElement = mItemConfigs.GetArrayElementAtIndex(index);
-                                // 从 AssetDatabase 中移除该对象，这会删除它作为子资产的关联
+                                // 从 AssetDatabase 中移除该对象，这会删除它作为子资源的关联
                                 AssetDatabase.RemoveObjectFromAsset(arrayElement.objectReferenceValue);
                                 // 删除 mItemConfigs 列表中索引 i 处的元素
                                 mItemConfigs.DeleteArrayElementAtIndex(index);
@@ -206,7 +206,7 @@ namespace QFramework
                         itemConfig.Name = "新物品";
                         itemConfig.Key = "item_new";
 
-                        // 将新创建的 itemConfig 添加到 ItemDatabase 的资产中
+                        // 将新创建的 itemConfig 添加到 ItemDatabase 的资源中
                         AssetDatabase.AddObjectToAsset(itemConfig, target);
                         // 在 ItemConfigs 列表中添加一个新的元素
                         mItemConfigs.InsertArrayElementAtIndex(mItemConfigs.arraySize);
@@ -217,7 +217,7 @@ namespace QFramework
 
                         serializedObject.ApplyModifiedPropertiesWithoutUndo();
 
-                        // 保存所有更改到资产
+                        // 保存所有更改到资源
                         AssetDatabase.SaveAssets();
                         // 刷新资源
                         AssetDatabase.Refresh();
