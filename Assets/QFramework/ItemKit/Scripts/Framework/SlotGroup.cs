@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace QFramework
@@ -28,9 +29,32 @@ namespace QFramework
             return this;
         }
 
-        public Slot FindSlotByKey(string itemKey)
+        public Slot FindSlotByKey(string itemKey, bool isAdd)
         {
-            Slot slot = mSlots.Find(s => s.Item != null && s.Count > 0 && s.Item.GetKey == itemKey);
+            IItem item = ItemKit.ItemByKey[itemKey];
+            Slot slot;
+
+            if (isAdd)
+            {
+                slot = mSlots.Find(s => s.Item != null && s.Count > 0 && s.Count < item.GetMaxStackableCount && s.Item.GetKey == itemKey);
+            }
+            else
+            {
+                if (item.GetStackable)
+                {
+                    List<Slot> validSlots = mSlots
+                        .Where(s => s.Item != null && s.Count > 0 && s.Item.GetKey == itemKey)
+                        .OrderBy(s => s.Count) // 按 Count 升序排序
+                        .ToList(); // 转换为列表，如果只需要第一个元素，这一步可以省略
+
+                    slot = validSlots.FirstOrDefault(); // 获取Count最小的Slot，如果没有则为null
+                }
+                else
+                {
+                    slot = mSlots.Find(s => s.Item != null && s.Count > 0 && s.Item.GetKey == itemKey);
+                }
+            }
+
             return slot;
         }
 
@@ -41,7 +65,7 @@ namespace QFramework
 
         public Slot FindAddableSlot(string itemKey)
         {
-            Slot slot = FindSlotByKey(itemKey);
+            Slot slot = FindSlotByKey(itemKey, true);
             IItem item = ItemKit.ItemByKey[itemKey];
 
             if (item.GetStackable) // 如果可堆叠
@@ -82,7 +106,7 @@ namespace QFramework
 
         public void RemoveItem(string itemKey, int removeCount = 1)
         {
-            Slot slot = FindSlotByKey(itemKey);
+            Slot slot = FindSlotByKey(itemKey, false);
 
             if (slot == null || slot.Count < 1)
             {
