@@ -63,6 +63,7 @@ namespace QFramework
             }
 
             slot.Count += addCount;
+            slot.Changed.Trigger();
         }
 
         public void RemoveItem(string itemKey, int removeCount = 1)
@@ -89,6 +90,8 @@ namespace QFramework
                 // 当数量减到0时，清除栏位中的物品引用
                 slot.Item = null;
             }
+
+            slot.Changed.Trigger();
         }
     }
 }
