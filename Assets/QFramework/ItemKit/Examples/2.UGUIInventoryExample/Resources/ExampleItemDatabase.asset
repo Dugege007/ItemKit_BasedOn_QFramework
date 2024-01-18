@@ -17,6 +17,26 @@ MonoBehaviour:
   - {fileID: 7051650580664809250}
   - {fileID: 4621728714461775809}
   - {fileID: 3396371239643579797}
+  - {fileID: 139293918132138253}
+--- !u!114 &139293918132138253
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
+  m_Name: item_wood
+  m_EditorClassIdentifier: 
+  Name: "\u6728\u5934"
+  Key: item_wood
+  Icon: {fileID: 1621808698, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  IsStackable: 1
+  HasMaxStackableCount: 1
+  MaxStackableCount: 10
+  IsWeapon: 0
 --- !u!114 &3396371239643579797
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -27,7 +47,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
-  m_Name: ItemConfig
+  m_Name: item_paper
   m_EditorClassIdentifier: 
   Name: "\u7EB8"
   Key: item_paper
@@ -46,7 +66,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
-  m_Name: ItemConfig
+  m_Name: item_green_sword
   m_EditorClassIdentifier: 
   Name: "\u7EFF\u5251"
   Key: item_green_sword
@@ -65,7 +85,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1b7ddcbf70668d34aa298b025875d499, type: 3}
-  m_Name: ItemConfig
+  m_Name: item_iron
   m_EditorClassIdentifier: 
   Name: "\u94C1\u5757"
   Key: item_iron

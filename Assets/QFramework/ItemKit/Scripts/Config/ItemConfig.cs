@@ -135,6 +135,12 @@ namespace QFramework
 
             GUILayout.EndHorizontal();
 
+            if (target.name != mKey.stringValue)
+            {
+                target.name = mKey.stringValue;
+                EditorUtility.SetDirty(target);
+            }
+
             serializedObject.ApplyModifiedPropertiesWithoutUndo();
         }
     }

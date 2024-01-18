@@ -23,7 +23,11 @@ namespace QFramework
         {
             public class ItemEditorObj
             {
-                public bool Foldout = true;
+                public bool Foldout
+                {
+                    get => EditorPrefs.GetBool(ItemConfig.GetName + "_foldout", true);
+                    set => EditorPrefs.SetBool(ItemConfig.GetName + "_foldout", value);
+                }
                 public Editor Editor = null;
                 public ItemConfig ItemConfig = null;
             }

@@ -15,7 +15,9 @@ namespace QFramework
         }
 
         public string GroupKey;
+        [Header("初始栏位")]
         public List<SlotConfig> InitSlots = new List<SlotConfig>();
+        [DisplayLabel("关联的 UISlotGroup")]
         public UISlotGroup UISlotGroup;
 
         private void Awake()
