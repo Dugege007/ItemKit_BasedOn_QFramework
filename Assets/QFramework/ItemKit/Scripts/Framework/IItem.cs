@@ -11,6 +11,9 @@ namespace QFramework
         string GetKey { get; }
         string GetName { get; }
         Sprite GetIcon { get; }
+        bool GetStackable { get; }
+        bool GetHasMaxStackableCount { get; }
+        int GetMaxStackableCount { get; }
 
         bool GetBoolean(string propertyName);
     }

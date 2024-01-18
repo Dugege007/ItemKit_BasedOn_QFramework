@@ -13,8 +13,16 @@ namespace QFramework
         public string Name = string.Empty;
         [DisplayLabel("关键字")]
         public string Key = string.Empty;
-
         public Sprite Icon = null;
+
+        [DisplayLabel("可堆叠")]
+        public bool IsStackable = true;
+        [DisplayIf(nameof(IsStackable), false, true)]
+        [DisplayLabel("  有最大堆叠数")]
+        public bool HasMaxStackableCount = false;
+        [DisplayIf(new string[] { nameof(IsStackable), nameof(HasMaxStackableCount) }, new[] { false, false }, true)]
+        [DisplayLabel("    最大堆叠数")]
+        public int MaxStackableCount = 99;
 
         [DisplayLabel("是武器")]
         public bool IsWeapon = false;
@@ -22,6 +30,9 @@ namespace QFramework
         public string GetName => Name;
         public string GetKey => Key;
         public Sprite GetIcon => Icon;
+        public bool GetStackable => IsStackable;
+        public bool GetHasMaxStackableCount => HasMaxStackableCount;
+        public int GetMaxStackableCount => MaxStackableCount;
 
         public bool GetBoolean(string propertyName)
         {
@@ -40,6 +51,9 @@ namespace QFramework
         private SerializedProperty mIcon;
         private SerializedProperty mName;
         private SerializedProperty mKey;
+        private SerializedProperty mIsStackable;
+        private SerializedProperty mHasMaxStackableCount;
+        private SerializedProperty mMaxStackableCount;
         private SerializedProperty mWeapon;
 
         private void OnEnable()
@@ -47,6 +61,9 @@ namespace QFramework
             mIcon = serializedObject.FindProperty("Icon");
             mName = serializedObject.FindProperty("Name");
             mKey = serializedObject.FindProperty("Key");
+            mIsStackable = serializedObject.FindProperty("IsStackable");
+            mHasMaxStackableCount = serializedObject.FindProperty("HasMaxStackableCount");
+            mMaxStackableCount = serializedObject.FindProperty("MaxStackableCount");
             mWeapon = serializedObject.FindProperty("IsWeapon");
         }
 
@@ -57,7 +74,7 @@ namespace QFramework
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical(GUILayout.Width(80));
             // 绘制 itemConfig 引用的对象的属性编辑器界面
-            serializedObject.DrawProperties(false, 0, "Icon", "Name", "Key", "IsWeapon");
+            serializedObject.DrawProperties(false, 0, "Icon", "Name", "Key", "IsStackable", "HasMaxStackableCount", "MaxStackableCount", "IsWeapon");
 
             //EditorGUILayout.PrefixLabel("图标");
             mIcon.objectReferenceValue = EditorGUILayout.ObjectField(mIcon.objectReferenceValue, typeof(Sprite), true, GUILayout.Height(48), GUILayout.Width(48));
@@ -71,7 +88,7 @@ namespace QFramework
             float originalFieldWidth = EditorGUIUtility.fieldWidth;
 
             // 设置新的labelWidth和fieldWidth
-            EditorGUIUtility.labelWidth = 60;
+            EditorGUIUtility.labelWidth = 100;
             EditorGUIUtility.fieldWidth = 200;
 
             GUILayout.BeginVertical();
@@ -85,6 +102,24 @@ namespace QFramework
             mKey = serializedObject.FindProperty("Key");
             // 绘制关键值属性的编辑器
             EditorGUILayout.PropertyField(mKey, GUILayout.ExpandWidth(true)); // 同上
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            mIsStackable = serializedObject.FindProperty("IsStackable");
+            // 绘制关键值属性的编辑器
+            EditorGUILayout.PropertyField(mIsStackable, GUILayout.ExpandWidth(true)); // 同上
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            mHasMaxStackableCount = serializedObject.FindProperty("HasMaxStackableCount");
+            // 绘制关键值属性的编辑器
+            EditorGUILayout.PropertyField(mHasMaxStackableCount, GUILayout.ExpandWidth(true)); // 同上
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            mMaxStackableCount = serializedObject.FindProperty("MaxStackableCount");
+            // 绘制关键值属性的编辑器
+            EditorGUILayout.PropertyField(mMaxStackableCount, GUILayout.ExpandWidth(true)); // 同上
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();

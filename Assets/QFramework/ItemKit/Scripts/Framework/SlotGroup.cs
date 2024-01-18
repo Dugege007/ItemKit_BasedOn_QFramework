@@ -42,24 +42,36 @@ namespace QFramework
         public Slot FindAddableSlot(string itemKey)
         {
             Slot slot = FindSlotByKey(itemKey);
+            IItem item = ItemKit.ItemByKey[itemKey];
 
-            if (slot == null)
+            if (item.GetStackable) // 如果可堆叠
             {
+                if (slot == null || (item.GetHasMaxStackableCount && slot.Count >= item.GetMaxStackableCount))
+                {
+                    slot = FindEmptySlot();
+                    if (slot != null)
+                        slot.Item = item;
+                }
+
+                return slot;
+            }
+            else // 不可堆叠
+            {
+                // 如果有空格子
                 slot = FindEmptySlot();
                 if (slot != null)
-                    slot.Item = ItemKit.ItemByKey[itemKey];
-            }
+                    slot.Item = item;
 
-            return slot;
+                return slot;
+            }
         }
 
         public void AddItem(string itemKey, int addCount = 1)
         {
             Slot slot = FindAddableSlot(itemKey);
 
-            if (slot == null || slot.Count >= 99)
+            if (slot == null)
             {
-                slot.Count = 99;
                 Debug.Log("背包满了");
                 return;
             }
@@ -96,7 +108,7 @@ namespace QFramework
             slot.Changed.Trigger();
         }
 
-        public SlotGroup Condition(Func<IItem,bool> condition)
+        public SlotGroup Condition(Func<IItem, bool> condition)
         {
             mCondition = condition;
             return this;

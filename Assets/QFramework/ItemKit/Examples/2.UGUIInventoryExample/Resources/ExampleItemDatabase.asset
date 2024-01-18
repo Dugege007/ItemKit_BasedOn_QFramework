@@ -32,6 +32,9 @@ MonoBehaviour:
   Name: "\u7EB8"
   Key: item_paper
   Icon: {fileID: -42529867, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  IsStackable: 1
+  HasMaxStackableCount: 0
+  MaxStackableCount: 20
   IsWeapon: 0
 --- !u!114 &4621728714461775809
 MonoBehaviour:
@@ -48,6 +51,9 @@ MonoBehaviour:
   Name: "\u7EFF\u5251"
   Key: item_green_sword
   Icon: {fileID: 2140489303, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  IsStackable: 0
+  HasMaxStackableCount: 0
+  MaxStackableCount: 99
   IsWeapon: 1
 --- !u!114 &7051650580664809250
 MonoBehaviour:
@@ -64,4 +70,7 @@ MonoBehaviour:
   Name: "\u94C1\u5757"
   Key: item_iron
   Icon: {fileID: -1187671710, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  IsStackable: 1
+  HasMaxStackableCount: 1
+  MaxStackableCount: 10
   IsWeapon: 0
