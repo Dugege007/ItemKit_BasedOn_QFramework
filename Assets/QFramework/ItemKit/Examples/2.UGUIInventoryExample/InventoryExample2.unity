@@ -4588,17 +4588,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 2049421010}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eeb70c6a944c9a04aad687df2686d8ee, type: 3}
+  m_Script: {fileID: 11500000, guid: 3e75f6d4a33e98d4d874d7526f2271b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Namespace: QFramework.Example
-  ScriptName: BagExample
-  ScriptsFolder: Assets/QFramework/ItemKit/Examples/2.UGUIInventoryExample
-  GeneratePrefab: 0
-  PrefabFolder: Assets/Art/Prefab
-  ArchitectureFullTypeName: 
-  UISlot: {fileID: 1914995623}
-  SlotItemRoot: {fileID: 1832126626}
+  GroupKey: "\u80CC\u5305"
+  UISlotTemplate: {fileID: 1914995623}
+  UISlotRoot: {fileID: 1832126626}
 --- !u!1 &2085217884
 GameObject:
   m_ObjectHideFlags: 0

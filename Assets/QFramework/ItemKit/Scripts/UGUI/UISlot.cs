@@ -18,21 +18,32 @@ namespace QFramework
         {
             Data = data;
 
-            if (Data.Count == 0)
+            void UpdateView()
             {
-                Icon.Hide();
-                Count.text = "";
-            }
-            else
-            {
-                Icon.Show();
-                if (data.Item != null)
+                if (Data.Count == 0)
                 {
-                    if (data.Item.GetIcon)
-                        Icon.sprite = data.Item.GetIcon;
+                    Icon.Hide();
+                    Count.text = "";
                 }
-                Count.text = Data.Count.ToString();
+                else
+                {
+                    Icon.Show();
+                    if (data.Item != null)
+                    {
+                        if (data.Item.GetIcon)
+                            Icon.sprite = data.Item.GetIcon;
+                    }
+                    Count.text = Data.Count.ToString();
+                }
             }
+
+            Data.Changed.Register(() =>
+            {
+                UpdateView();
+
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            UpdateView();
 
             return this;    // 返回自身，用于链式调用
         }
@@ -84,9 +95,8 @@ namespace QFramework
                             Data.Item = itemCache;
                             Data.Count = countCache;
 
-                            // 刷新
-                            FindAnyObjectByType<UGUIInventoryExample>().Refresh();
-                            FindAnyObjectByType<BagExample>().Refresh();
+                            uiSlot.Data.Changed.Trigger();
+                            Data.Changed.Trigger();
                         }
                     }
                 }
@@ -94,9 +104,8 @@ namespace QFramework
                 {
                     Data.Item = null;
                     Data.Count = 0;
-                    // 刷新
-                    FindAnyObjectByType<UGUIInventoryExample>().Refresh();
-                    FindAnyObjectByType<BagExample>().Refresh();
+
+                    Data.Changed.Trigger();
                 }
             }
 

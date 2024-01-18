@@ -6,6 +6,7 @@ namespace QFramework
     {
         public IItem Item;
         public int Count;
+        public EasyEvent Changed = new EasyEvent();
 
         public Slot(IItem item = null, int count = 0)
         {
