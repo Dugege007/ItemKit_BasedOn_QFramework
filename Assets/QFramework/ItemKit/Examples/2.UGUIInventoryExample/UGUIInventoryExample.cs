@@ -101,28 +101,15 @@ namespace QFramework.Example
             });
             #endregion
 
-
             BtnTreasureBox.onClick.AddListener(() =>
             {
                 UISlotGroup group = TreasureBoxExample.GetComponent<UISlotGroup>();
-
-                if (group.GroupKey!= "宝箱")
-                    TreasureBoxExample.SetActive(true);
-                else
-                    TreasureBoxExample.SetActive(!TreasureBoxExample.activeSelf);
-
                 group.RefreshWithChangeGroupKey("宝箱");
             });
 
             BtnTreasureBox2.onClick.AddListener(() =>
             {
                 UISlotGroup group = TreasureBoxExample.GetComponent<UISlotGroup>();
-
-                if (group.GroupKey != "宝箱2")
-                    TreasureBoxExample.SetActive(true);
-                else
-                    TreasureBoxExample.SetActive(!TreasureBoxExample.activeSelf);
-
                 group.RefreshWithChangeGroupKey("宝箱2");
             });
         }

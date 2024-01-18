@@ -32,6 +32,11 @@ namespace QFramework
 
         public void RefreshWithChangeGroupKey(string groupKey)
         {
+            if (GroupKey != groupKey)
+                gameObject.SetActive(true);
+            else
+                gameObject.SetActive(!gameObject.activeSelf);
+
             GroupKey = groupKey;
             Refresh();
         }
