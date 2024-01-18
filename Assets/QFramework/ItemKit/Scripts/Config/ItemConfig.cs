@@ -13,12 +13,24 @@ namespace QFramework
         public string Name = string.Empty;
         [DisplayLabel("关键字")]
         public string Key = string.Empty;
-        [DisplayLabel("图标")]
+
         public Sprite Icon = null;
+
+        [DisplayLabel("是武器")]
+        public bool IsWeapon = false;
 
         public string GetName => Name;
         public string GetKey => Key;
         public Sprite GetIcon => Icon;
+
+        public bool GetBoolean(string propertyName)
+        {
+            if (propertyName == "IsWeapon")
+            {
+                return IsWeapon;
+            }
+            return false;
+        }
     }
 
 #if UNITY_EDITOR
@@ -28,12 +40,14 @@ namespace QFramework
         private SerializedProperty mIcon;
         private SerializedProperty mName;
         private SerializedProperty mKey;
+        private SerializedProperty mWeapon;
 
         private void OnEnable()
         {
             mIcon = serializedObject.FindProperty("Icon");
             mName = serializedObject.FindProperty("Name");
             mKey = serializedObject.FindProperty("Key");
+            mWeapon = serializedObject.FindProperty("IsWeapon");
         }
 
         public override void OnInspectorGUI()
@@ -43,13 +57,13 @@ namespace QFramework
             GUILayout.BeginHorizontal();
             GUILayout.BeginVertical(GUILayout.Width(80));
             // 绘制 itemConfig 引用的对象的属性编辑器界面
-            serializedObject.DrawProperties(false, 0, "Icon", "Name", "Key");
+            serializedObject.DrawProperties(false, 0, "Icon", "Name", "Key", "IsWeapon");
 
-            EditorGUILayout.PrefixLabel("图标");
+            //EditorGUILayout.PrefixLabel("图标");
             mIcon.objectReferenceValue = EditorGUILayout.ObjectField(mIcon.objectReferenceValue, typeof(Sprite), true, GUILayout.Height(48), GUILayout.Width(48));
             GUILayout.EndVertical();
 
-            GUILayout.Space(-60);
+            //GUILayout.Space();
 
             // 保存原始的labelWidth
             float originalLabelWidth = EditorGUIUtility.labelWidth;
@@ -66,10 +80,17 @@ namespace QFramework
             // 绘制名称属性的编辑器
             EditorGUILayout.PropertyField(mName, GUILayout.ExpandWidth(true)); // 允许字段自动扩展以填充额外的空间
             GUILayout.EndHorizontal();
+
             GUILayout.BeginHorizontal();
             mKey = serializedObject.FindProperty("Key");
             // 绘制关键值属性的编辑器
             EditorGUILayout.PropertyField(mKey, GUILayout.ExpandWidth(true)); // 同上
+            GUILayout.EndHorizontal();
+
+            GUILayout.BeginHorizontal();
+            mWeapon = serializedObject.FindProperty("IsWeapon");
+            // 绘制关键值属性的编辑器
+            EditorGUILayout.PropertyField(mWeapon, GUILayout.ExpandWidth(true)); // 同上
             GUILayout.EndHorizontal();
             GUILayout.EndVertical();
 

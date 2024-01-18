@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace QFramework
@@ -7,13 +8,14 @@ namespace QFramework
     {
         public string Key = string.Empty;
         private List<Slot> mSlots = new List<Slot>();
-
         // 提供一个访问
         public IReadOnlyList<Slot> Slots => mSlots;
 
+        private Func<IItem, bool> mCondition = _ => true;
+
         public SlotGroup CreateSlot(IItem item = null, int count = 0)
         {
-            mSlots.Add(new Slot(item, count));
+            mSlots.Add(new Slot(item, count, this));
             return this;
         }
 
@@ -92,6 +94,17 @@ namespace QFramework
             }
 
             slot.Changed.Trigger();
+        }
+
+        public SlotGroup Condition(Func<IItem,bool> condition)
+        {
+            mCondition = condition;
+            return this;
+        }
+
+        public bool CheckCondition(IItem item)
+        {
+            return mCondition(item);
         }
     }
 }

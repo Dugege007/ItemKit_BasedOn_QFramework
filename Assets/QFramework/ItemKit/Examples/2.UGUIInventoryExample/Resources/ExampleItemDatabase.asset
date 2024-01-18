@@ -32,6 +32,7 @@ MonoBehaviour:
   Name: "\u7EB8"
   Key: item_paper
   Icon: {fileID: -42529867, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  IsWeapon: 0
 --- !u!114 &4621728714461775809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -47,6 +48,7 @@ MonoBehaviour:
   Name: "\u7EFF\u5251"
   Key: item_green_sword
   Icon: {fileID: 2140489303, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  IsWeapon: 1
 --- !u!114 &7051650580664809250
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,3 +64,4 @@ MonoBehaviour:
   Name: "\u94C1\u5757"
   Key: item_iron
   Icon: {fileID: -1187671710, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  IsWeapon: 0

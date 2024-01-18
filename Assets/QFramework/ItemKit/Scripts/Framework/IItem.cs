@@ -8,8 +8,10 @@ namespace QFramework
     // 这时可以通过接口的方式来提取他们的共同功能
     public interface IItem
     {
-        public string GetKey { get; }
-        public string GetName { get; }
-        public Sprite GetIcon { get; }
+        string GetKey { get; }
+        string GetName { get; }
+        Sprite GetIcon { get; }
+
+        bool GetBoolean(string propertyName);
     }
 }

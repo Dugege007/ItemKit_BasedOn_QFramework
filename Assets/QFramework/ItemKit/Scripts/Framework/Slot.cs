@@ -7,11 +7,13 @@ namespace QFramework
         public IItem Item;
         public int Count;
         public EasyEvent Changed = new EasyEvent();
+        public SlotGroup Group { get; private set; }
 
-        public Slot(IItem item = null, int count = 0)
+        public Slot(IItem item, int count, SlotGroup group)
         {
             Item = item;
             Count = count;
+            Group = group;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace QFramework
         {
             public class ItemEditorObj
             {
-                public bool Foldout = false;
+                public bool Foldout = true;
                 public Editor Editor = null;
                 public ItemConfig ItemConfig = null;
             }

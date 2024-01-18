@@ -88,20 +88,24 @@ namespace QFramework
                         // 物品交换
                         if (Data.Count > 0)
                         {
-                            // 缓存目标栏位数据
-                            IItem itemCache = uiSlot.Data.Item;
-                            int countCache = uiSlot.Data.Count;
+                            // 能放到目标位置才进行物品交换
+                            if (uiSlot.Data.Group.CheckCondition(Data.Item))
+                            {
+                                // 缓存目标栏位数据
+                                IItem itemCache = uiSlot.Data.Item;
+                                int countCache = uiSlot.Data.Count;
 
-                            // 将当前栏位数据保存到目标栏位中
-                            uiSlot.Data.Item = Data.Item;
-                            uiSlot.Data.Count = Data.Count;
+                                // 将当前栏位数据保存到目标栏位中
+                                uiSlot.Data.Item = Data.Item;
+                                uiSlot.Data.Count = Data.Count;
 
-                            // 将目标栏位数据保存到当前栏位中
-                            Data.Item = itemCache;
-                            Data.Count = countCache;
+                                // 将目标栏位数据保存到当前栏位中
+                                Data.Item = itemCache;
+                                Data.Count = countCache;
 
-                            uiSlot.Data.Changed.Trigger();
-                            Data.Changed.Trigger();
+                                uiSlot.Data.Changed.Trigger();
+                                Data.Changed.Trigger();
+                            }
                         }
                     }
                 }

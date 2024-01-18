@@ -20,7 +20,8 @@ namespace QFramework.Example
                 .CreateSlotsByCount(20);
 
             ItemKit.CreateSlotGroup("武器")
-                .CreateSlot(null, 0);
+                .CreateSlot(null, 0)
+                .Condition(item => item.GetBoolean("IsWeapon"));
         }
 
         private void Start()
