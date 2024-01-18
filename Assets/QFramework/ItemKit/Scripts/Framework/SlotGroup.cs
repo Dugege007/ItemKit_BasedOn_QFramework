@@ -90,18 +90,78 @@ namespace QFramework
             }
         }
 
-        public void AddItem(string itemKey, int addCount = 1)
+        public Slot FindNonFullStackableSlot(string itemKey)
         {
-            Slot slot = FindAddableSlot(itemKey);
-
-            if (slot == null)
+            foreach (Slot slot in mSlots)
             {
-                Debug.Log("背包满了");
-                return;
+                if (slot.Count != 0 && slot.Item.GetKey == itemKey && slot.Item.GetMaxStackableCount != slot.Count)
+                    return slot;
             }
 
-            slot.Count += addCount;
-            slot.Changed.Trigger();
+            Slot emptySlot = FindEmptySlot();
+            if (emptySlot != null)
+            {
+                emptySlot.Item = ItemKit.ItemByKey[itemKey];
+            }
+            return emptySlot;
+        }
+
+        public struct ItemOperateResult
+        {
+            public bool Succeed;
+            public int RemainCount;
+            public MessageTypes MessageTypes;
+        }
+
+        public enum MessageTypes
+        {
+            Full,   // 满了
+
+        }
+
+        public ItemOperateResult AddItem(string itemKey, int addCount = 1)
+        {
+            IItem item = ItemKit.ItemByKey[itemKey];
+
+            if (item.GetStackable && item.GetHasMaxStackableCount)
+            {
+                do
+                {
+                    Slot slot = FindNonFullStackableSlot(itemKey);
+                    if (slot != null)
+                    {
+                        int canAddCount = slot.Item.GetMaxStackableCount - slot.Count;
+                        if (addCount <= canAddCount)
+                        {
+                            slot.Count += addCount;
+                            slot.Changed.Trigger();
+                            return new ItemOperateResult() { Succeed = true, RemainCount = 0, };
+                        }
+                        else
+                        {
+                            slot.Count += canAddCount;
+                            slot.Changed.Trigger();
+                            addCount -= canAddCount;
+                        }
+                    }
+                    else
+                    {
+                        return new ItemOperateResult() { Succeed = false, RemainCount = addCount };
+                    }
+
+                } while (addCount > 0);
+            }
+            else
+            {
+                Slot slot = FindAddableSlot(itemKey);
+                if (slot == null)
+                    return new ItemOperateResult() { Succeed = false, RemainCount = addCount };
+
+                slot.Count += addCount;
+                slot.Changed.Trigger();
+            }
+
+            return new ItemOperateResult() { Succeed = true, RemainCount = 0 };
         }
 
         public void RemoveItem(string itemKey, int removeCount = 1)

@@ -33,8 +33,18 @@ namespace QFramework.Example
 
             GUILayout.BeginHorizontal();
             GUILayout.Label(ItemKit.ItemByKey[Items.item_iron].GetName);
-            if (GUILayout.Button("+")) ItemKit.GetSlotGroupByKey("物品栏").AddItem(Items.item_iron);
-            if (GUILayout.Button("-")) ItemKit.GetSlotGroupByKey("物品栏").RemoveItem(Items.item_iron);
+            if (GUILayout.Button("+"))
+            {
+                SlotGroup.ItemOperateResult result = ItemKit.GetSlotGroupByKey("物品栏").AddItem(Items.item_iron);
+                if (!result.Succeed)
+                {
+                    Debug.Log("背包满了");
+                }
+            }
+            if (GUILayout.Button("-")) 
+            { 
+                ItemKit.GetSlotGroupByKey("物品栏").RemoveItem(Items.item_iron);
+            }
             GUILayout.EndHorizontal();
 
             GUILayout.BeginHorizontal();

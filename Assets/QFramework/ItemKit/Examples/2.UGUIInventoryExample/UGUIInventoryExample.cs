@@ -29,20 +29,39 @@ namespace QFramework.Example
             #region 添加物品
             BtnAddItem1.onClick.AddListener(() =>
             {
-                ItemKit.GetSlotGroupByKey("物品栏") // 先拿到背包
-                    .AddItem(Items.item_iron);    // 再添加物品
+                SlotGroup.ItemOperateResult result = ItemKit.GetSlotGroupByKey("物品栏") // 先拿到背包
+                    .AddItem(Items.item_iron, 20);    // 再添加物品
+
+                Debug.Log("剩余未添加物品的数量：" + result.RemainCount);
+                if (!result.Succeed)
+                {
+                    if (result.MessageTypes == SlotGroup.MessageTypes.Full)
+                        Debug.Log("背包满了");
+                }
             });
 
             BtnAddItem2.onClick.AddListener(() =>
             {
-                ItemKit.GetSlotGroupByKey("物品栏")
+                SlotGroup.ItemOperateResult result = ItemKit.GetSlotGroupByKey("物品栏")
                     .AddItem(Items.item_green_sword);
+
+                if (!result.Succeed)
+                {
+                    if (result.MessageTypes == SlotGroup.MessageTypes.Full)
+                        Debug.Log("背包满了");
+                }
             });
 
             BtnAddItem3.onClick.AddListener(() =>
             {
-                ItemKit.GetSlotGroupByKey("物品栏")
+                SlotGroup.ItemOperateResult result = ItemKit.GetSlotGroupByKey("物品栏")
                     .AddItem(Items.item_paper);
+
+                if (!result.Succeed)
+                {
+                    if (result.MessageTypes == SlotGroup.MessageTypes.Full)
+                        Debug.Log("背包满了");
+                }
             });
             #endregion
 
