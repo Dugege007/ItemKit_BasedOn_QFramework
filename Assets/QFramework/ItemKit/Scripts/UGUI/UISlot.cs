@@ -53,8 +53,11 @@ namespace QFramework
             if (mDragging || Data.Count < 1) return;
             mDragging = true;
 
-            UGUIInventoryExample controller = FindAnyObjectByType<UGUIInventoryExample>();
-            Icon.Parent(controller);
+            // 为了解决拖拽物品时层级问题
+            Canvas canvas = Icon.gameObject.GetOrAddComponent<Canvas>();
+            canvas.overrideSorting = true;
+            canvas.sortingOrder = 1000;
+
             SyncItemToMousePos();
         }
 
@@ -70,7 +73,9 @@ namespace QFramework
         {
             if (mDragging)
             {
-                Icon.Parent(transform);
+                Canvas canvas = Icon.GetComponent<Canvas>();
+                canvas.DestroySelf();
+
                 // 位置还原（坐标归零）
                 Icon.LocalPositionIdentity();
 
@@ -116,10 +121,9 @@ namespace QFramework
         private void SyncItemToMousePos()
         {
             Vector3 mousePos = Input.mousePosition;
-            UGUIInventoryExample controller = FindAnyObjectByType<UGUIInventoryExample>();
             // 将屏幕上的点转换为位于指定 RectTransform 平面上的本地坐标系中的位置
             if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                controller.transform as RectTransform, // rect：目标 RectTransform，将屏幕点转换到这个 RectTransform 定义的平面内
+                transform as RectTransform, // rect：目标 RectTransform，将屏幕点转换到这个 RectTransform 定义的平面内
                 mousePos,                   // screenPoint：屏幕坐标，通常是鼠标位置或触摸位置
                 null,                       // camera：相关联的摄像机，对于 Overlay 画布可以为 null，对于 Camera 和 WorldSpace 画布应该是渲染该 UI 元素的摄像机
                 out Vector2 localPos        // localPoint：输出参数，转换后的本地坐标系中的位置
