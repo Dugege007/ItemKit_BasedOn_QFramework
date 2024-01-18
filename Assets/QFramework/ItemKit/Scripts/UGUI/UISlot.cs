@@ -7,6 +7,7 @@ namespace QFramework
 {
     public class UISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
     {
+        public RectTransform IconHolder;
         public Image Icon;
         public Text Count;
 
@@ -22,7 +23,7 @@ namespace QFramework
             {
                 if (Data.Count == 0)
                 {
-                    Icon.Hide();
+                    IconHolder.Hide();
                     Count.text = "";
                 }
                 else
@@ -37,7 +38,7 @@ namespace QFramework
                         Count.Hide();
                     }
 
-                    Icon.Show();
+                    IconHolder.Show();
                     if (data.Item != null)
                     {
                         if (data.Item.GetIcon)
@@ -63,7 +64,7 @@ namespace QFramework
             mDragging = true;
 
             // 为了解决拖拽物品时层级问题
-            Canvas canvas = Icon.gameObject.GetOrAddComponent<Canvas>();
+            Canvas canvas = IconHolder.gameObject.GetOrAddComponent<Canvas>();
             canvas.overrideSorting = true;
             canvas.sortingOrder = 1000;
 
@@ -82,11 +83,11 @@ namespace QFramework
         {
             if (mDragging)
             {
-                Canvas canvas = Icon.GetComponent<Canvas>();
+                Canvas canvas = IconHolder.GetComponent<Canvas>();
                 canvas.DestroySelf();
 
                 // 位置还原（坐标归零）
-                Icon.LocalPositionIdentity();
+                IconHolder.LocalPositionIdentity();
 
                 if(ItemKit.CurrentSlotPointerOn)
                 {
@@ -143,7 +144,7 @@ namespace QFramework
             ))
             {
                 // 将物品的名称移动到屏幕上的鼠标位置
-                Icon.LocalPosition2D(localPos);
+                IconHolder.LocalPosition2D(localPos);
             }
         }
 
