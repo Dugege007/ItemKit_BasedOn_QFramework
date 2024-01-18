@@ -19,6 +19,8 @@ namespace QFramework.Example
             ItemKit.CreateSlotGroup("背包")
                 .CreateSlotsByCount(20);
 
+            ItemKit.CreateSlotGroup("武器")
+                .CreateSlot(null, 0);
         }
 
         private void Start()
