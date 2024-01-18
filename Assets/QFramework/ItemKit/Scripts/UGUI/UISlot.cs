@@ -27,13 +27,22 @@ namespace QFramework
                 }
                 else
                 {
+                    if (Data.Item.GetStackable)
+                    {
+                        Count.text = Data.Count.ToString();
+                        Count.Show();
+                    }
+                    else
+                    {
+                        Count.Hide();
+                    }
+
                     Icon.Show();
                     if (data.Item != null)
                     {
                         if (data.Item.GetIcon)
                             Icon.sprite = data.Item.GetIcon;
                     }
-                    Count.text = Data.Count.ToString();
                 }
             }
 

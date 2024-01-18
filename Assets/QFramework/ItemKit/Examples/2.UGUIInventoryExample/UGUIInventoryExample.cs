@@ -22,6 +22,14 @@ namespace QFramework.Example
             ItemKit.CreateSlotGroup("武器")
                 .CreateSlot(null, 0)
                 .Condition(item => item.GetBoolean("IsWeapon"));
+
+            Slot weaponSlot = ItemKit.GetSlotGroupByKey("武器").Slots[0];
+            weaponSlot.Changed.Register(() =>
+            {
+                if (weaponSlot.Count > 0)
+                    Debug.Log("已切换武器为：" + weaponSlot.Item.GetName);
+
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
         private void Start()

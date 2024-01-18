@@ -94,7 +94,7 @@ namespace QFramework
         {
             foreach (Slot slot in mSlots)
             {
-                if (slot.Count != 0 && slot.Item.GetKey == itemKey && slot.Item.GetMaxStackableCount != slot.Count)
+                if (slot.Item.GetKey == itemKey && slot.Count > 0 && slot.Count < slot.Item.GetMaxStackableCount)
                     return slot;
             }
 
