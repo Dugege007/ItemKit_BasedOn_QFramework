@@ -1,4 +1,4 @@
-// Generate Id:75017b1b-41a8-46ad-892c-18bbc83a8178
+// Generate Id:311c9d40-e2ab-4a1d-a0cb-9b2c1b8a6115
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -10,23 +10,23 @@ namespace QFramework.Example
 
 		public UnityEngine.UI.Button BtnAddItem1;
 
-		public UnityEngine.UI.Button BtnAddItem2;
-
-		public UnityEngine.UI.Button BtnAddItem3;
-
-		public UnityEngine.UI.Button BtnAddItem4;
-
-		public UnityEngine.UI.Button BtnAddItem5;
-
 		public UnityEngine.UI.Button BtnRemoveItem1;
+
+		public UnityEngine.UI.Button BtnAddItem2;
 
 		public UnityEngine.UI.Button BtnRemoveItem2;
 
+		public UnityEngine.UI.Button BtnAddItem3;
+
 		public UnityEngine.UI.Button BtnRemoveItem3;
+
+		public UnityEngine.UI.Button BtnAddItem4;
 
 		public UnityEngine.UI.Button BtnRemoveItem4;
 
-		public UnityEngine.UI.Button BtnRemoveItem5;
+		public UnityEngine.UI.Button BtnTreasureBox;
+
+		public UnityEngine.GameObject TreasureBoxExample;
 
 	}
 }

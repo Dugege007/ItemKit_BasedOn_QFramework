@@ -19,6 +19,9 @@ namespace QFramework.Example
             ItemKit.CreateSlotGroup("背包")
                 .CreateSlotsByCount(20);
 
+            ItemKit.CreateSlotGroup("宝箱")
+                .CreateSlotsByCount(10);
+
             ItemKit.CreateSlotGroup("武器")
                 .CreateSlot(null, 0)
                 .Condition(item => item.GetBoolean("IsWeapon"));
@@ -34,6 +37,8 @@ namespace QFramework.Example
 
         private void Start()
         {
+            TreasureBoxExample.Hide();
+
             #region 添加物品
             BtnAddItem1.onClick.AddListener(() =>
             {
@@ -92,6 +97,11 @@ namespace QFramework.Example
                     .RemoveItem(Items.item_paper);
             });
             #endregion
+
+            BtnTreasureBox.onClick.AddListener(() =>
+            {
+                TreasureBoxExample.SetActive(!TreasureBoxExample.activeSelf);
+            });
         }
     }
 }
