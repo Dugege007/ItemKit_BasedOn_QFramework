@@ -22,6 +22,9 @@ namespace QFramework.Example
             ItemKit.CreateSlotGroup("宝箱")
                 .CreateSlotsByCount(10);
 
+            ItemKit.CreateSlotGroup("宝箱2")
+                .CreateSlotsByCount(5);
+
             ItemKit.CreateSlotGroup("武器")
                 .CreateSlot(null, 0)
                 .Condition(item => item.GetBoolean("IsWeapon"));
@@ -98,9 +101,29 @@ namespace QFramework.Example
             });
             #endregion
 
+
             BtnTreasureBox.onClick.AddListener(() =>
             {
-                TreasureBoxExample.SetActive(!TreasureBoxExample.activeSelf);
+                UISlotGroup group = TreasureBoxExample.GetComponent<UISlotGroup>();
+
+                if (group.GroupKey!= "宝箱")
+                    TreasureBoxExample.SetActive(true);
+                else
+                    TreasureBoxExample.SetActive(!TreasureBoxExample.activeSelf);
+
+                group.RefreshWithChangeGroupKey("宝箱");
+            });
+
+            BtnTreasureBox2.onClick.AddListener(() =>
+            {
+                UISlotGroup group = TreasureBoxExample.GetComponent<UISlotGroup>();
+
+                if (group.GroupKey != "宝箱2")
+                    TreasureBoxExample.SetActive(true);
+                else
+                    TreasureBoxExample.SetActive(!TreasureBoxExample.activeSelf);
+
+                group.RefreshWithChangeGroupKey("宝箱2");
             });
         }
     }

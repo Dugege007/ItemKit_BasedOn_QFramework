@@ -27,10 +27,29 @@ namespace QFramework
 
         private void Start()
         {
+            Refresh();
+        }
+
+        public void RefreshWithChangeGroupKey(string groupKey)
+        {
+            GroupKey = groupKey;
+            Refresh();
+        }
+
+        public void Refresh()
+        {
             if (Type == UISlotGenerateType.GenerateByTemplate)
             {
                 UISlotTemplate.Hide();
-                Refresh();
+
+                UISlotRoot.DestroyChildrenWithCondition(child => child.GetComponent<UISlot>());
+
+                foreach (var slot in ItemKit.GetSlotGroupByKey(GroupKey).Slots)
+                {
+                    UISlotTemplate.InstantiateWithParent(UISlotRoot)
+                        .InitWithData(slot)
+                        .Show();
+                }
             }
             else if (Type == UISlotGenerateType.UseExistUISlot)
             {
@@ -38,18 +57,6 @@ namespace QFramework
                 {
                     UISlots[i].InitWithData(ItemKit.GetSlotGroupByKey(GroupKey).Slots[i]);
                 }
-            }
-        }
-
-        public void Refresh()
-        {
-            UISlotRoot.DestroyChildren();
-
-            foreach (var slot in ItemKit.GetSlotGroupByKey(GroupKey).Slots)
-            {
-                UISlotTemplate.InstantiateWithParent(UISlotRoot)
-                    .InitWithData(slot)
-                    .Show();
             }
         }
     }

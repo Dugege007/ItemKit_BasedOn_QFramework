@@ -17,45 +17,43 @@ namespace QFramework
 
         public UISlot InitWithData(Slot data)
         {
+            Data?.Changed.UnRegister(UpdateView);
+
             Data = data;
 
-            void UpdateView()
-            {
-                if (Data.Count == 0)
-                {
-                    IconHolder.Hide();
-                    Count.text = "";
-                }
-                else
-                {
-                    if (Data.Item.GetStackable)
-                    {
-                        Count.text = Data.Count.ToString();
-                        Count.Show();
-                    }
-                    else
-                    {
-                        Count.Hide();
-                    }
-
-                    IconHolder.Show();
-                    if (data.Item != null)
-                    {
-                        if (data.Item.GetIcon)
-                            Icon.sprite = data.Item.GetIcon;
-                    }
-                }
-            }
-
-            Data.Changed.Register(() =>
-            {
-                UpdateView();
-
-            }).UnRegisterWhenGameObjectDestroyed(gameObject);
+            Data.Changed.Register(UpdateView).UnRegisterWhenGameObjectDestroyed(gameObject);
 
             UpdateView();
 
             return this;    // 返回自身，用于链式调用
+        }
+
+        private void UpdateView()
+        {
+            if (Data.Count == 0)
+            {
+                IconHolder.Hide();
+                Count.text = "";
+            }
+            else
+            {
+                if (Data.Item.GetStackable)
+                {
+                    Count.text = Data.Count.ToString();
+                    Count.Show();
+                }
+                else
+                {
+                    Count.Hide();
+                }
+
+                IconHolder.Show();
+                if (Data.Item != null)
+                {
+                    if (Data.Item.GetIcon)
+                        Icon.sprite = Data.Item.GetIcon;
+                }
+            }
         }
 
         public void OnBeginDrag(PointerEventData eventData)
