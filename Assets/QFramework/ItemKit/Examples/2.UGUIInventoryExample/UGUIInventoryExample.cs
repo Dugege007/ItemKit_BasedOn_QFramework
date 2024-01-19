@@ -29,6 +29,8 @@ namespace QFramework.Example
                 .CreateSlot(null, 0)
                 .Condition(item => item.GetBoolean("IsWeapon"));
 
+            ItemKit.Load();
+
             Slot weaponSlot = ItemKit.GetSlotGroupByKey("武器").Slots[0];
             weaponSlot.Changed.Register(() =>
             {
@@ -112,6 +114,11 @@ namespace QFramework.Example
                 UISlotGroup group = TreasureBoxExample.GetComponent<UISlotGroup>();
                 group.RefreshWithChangeGroupKey("宝箱2");
             });
+        }
+
+        private void OnApplicationQuit()
+        {
+            ItemKit.Save();
         }
     }
 }

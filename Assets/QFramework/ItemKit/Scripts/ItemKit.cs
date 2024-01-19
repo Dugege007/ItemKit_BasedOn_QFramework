@@ -1,5 +1,7 @@
 using QFramework.Example;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace QFramework
@@ -36,6 +38,46 @@ namespace QFramework
         public static void AddItemConfig(IItem itemConfig)
         {
             ItemByKey.Add(itemConfig.GetKey, itemConfig);
+        }
+
+        [Serializable]
+        public class SlotGroupSaveData
+        {
+            public string Key;
+            public List<SlotSaveData> SlotsSaveDatas = new List<SlotSaveData>();
+        }
+
+        [Serializable]
+        public class SlotSaveData
+        {
+            public string ItemKey;
+            public int Count;
+        }
+
+        public static void Save()
+        {
+            foreach (var slopGroup in mSlotGroupByKey.Values)
+            {
+                SlotGroupSaveData slotGroupSaveData = new()
+                {
+                    Key = slopGroup.Key,
+                    SlotsSaveDatas = slopGroup.Slots.Select(slot => new SlotSaveData()
+                    {
+                        ItemKey = slot.Item != null ? slot.Item.GetKey : null,
+                        Count = slot.Count,
+                    }).ToList(),
+                };
+
+                string json = JsonUtility.ToJson(slotGroupSaveData);
+                json.LogInfo();
+            }
+
+            Debug.Log("保存数据");
+        }
+
+        public static void Load()
+        {
+            Debug.Log("加载数据");
         }
     }
 }
