@@ -56,20 +56,20 @@ namespace QFramework
 
         public static void Save()
         {
-            foreach (var slopGroup in mSlotGroupByKey.Values)
+            foreach (var slotGroup in mSlotGroupByKey.Values)
             {
                 SlotGroupSaveData slotGroupSaveData = new()
                 {
-                    Key = slopGroup.Key,
-                    SlotsSaveDatas = slopGroup.Slots.Select(slot => new SlotSaveData()
+                    Key = slotGroup.Key,
+                    SlotsSaveDatas = slotGroup.Slots.Select(slot => new SlotSaveData()
                     {
-                        ItemKey = slot.Item != null ? slot.Item.GetKey : null,
+                        ItemKey = slot.Item?.GetKey,
                         Count = slot.Count,
                     }).ToList(),
                 };
 
                 string json = JsonUtility.ToJson(slotGroupSaveData);
-                json.LogInfo();
+                PlayerPrefs.SetString("slot_group_" + slotGroup.Key, json);
             }
 
             Debug.Log("保存数据");
@@ -77,6 +77,38 @@ namespace QFramework
 
         public static void Load()
         {
+            foreach (var slotGroup in mSlotGroupByKey.Values)
+            {
+                var json = PlayerPrefs.GetString("slot_group_" + slotGroup.Key, string.Empty);
+
+                if (json.IsNullOrEmpty())
+                {
+
+                }
+                else
+                {
+                    SlotGroupSaveData saveData = JsonUtility.FromJson<SlotGroupSaveData>(json);
+                    for (int i = 0; i < saveData.SlotsSaveDatas.Count; i++)
+                    {
+                        var slotSaveData = saveData.SlotsSaveDatas[i];
+                        var item = slotSaveData.ItemKey.IsNullOrEmpty()
+                                ? null
+                                : ItemKit.ItemByKey[slotSaveData.ItemKey];
+
+                        if (i < slotGroup.Slots.Count)
+                        {
+                            slotGroup.Slots[i].Item = item;
+                            slotGroup.Slots[i].Count = slotSaveData.Count;
+                            slotGroup.Slots[i].Changed.Trigger();
+                        }
+                        else
+                        {
+                            slotGroup.CreateSlot(item, slotSaveData.Count);
+                        }
+                    }
+                }
+            }
+
             Debug.Log("加载数据");
         }
     }
