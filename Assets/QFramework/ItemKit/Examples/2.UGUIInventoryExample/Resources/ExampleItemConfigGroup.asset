@@ -1,0 +1,135 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &-3386492188302188162
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
+  m_Name: ItemConfig
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 2140489303, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  Name: "\u7EFF\u5251"
+  Key: item_green_sword
+  IsWeapon: 1
+  IsStackable: 0
+  HasMaxStackableCount: 0
+  MaxStackableCount: 99
+--- !u!114 &-2682991118602880239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
+  m_Name: ItemConfig
+  m_EditorClassIdentifier: 
+  Icon: {fileID: -1187671710, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  Name: "\u94C1\u5757"
+  Key: item_iron
+  IsWeapon: 0
+  IsStackable: 1
+  HasMaxStackableCount: 1
+  MaxStackableCount: 20
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97105fa6742f20a4baf2b2aefb366084, type: 3}
+  m_Name: ExampleItemConfigGroup
+  m_EditorClassIdentifier: 
+  NameSpace: QFramework.Example
+  ItemConfigs:
+  - {fileID: -3386492188302188162}
+  - {fileID: -2682991118602880239}
+  - {fileID: 1881806384769608681}
+  - {fileID: 3628530530645375928}
+  - {fileID: 4061314419002322565}
+--- !u!114 &1881806384769608681
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
+  m_Name: ItemConfig
+  m_EditorClassIdentifier: 
+  Icon: {fileID: -42529867, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  Name: "\u7EB8"
+  Key: item_paper
+  IsWeapon: 0
+  IsStackable: 1
+  HasMaxStackableCount: 1
+  MaxStackableCount: 99
+--- !u!114 &3628530530645375928
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
+  m_Name: ItemConfig
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 1621808698, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+  Name: "\u6728\u5934"
+  Key: item_wood
+  IsWeapon: 0
+  IsStackable: 1
+  HasMaxStackableCount: 1
+  MaxStackableCount: 20
+--- !u!114 &4061314419002322565
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
+  m_Name: ItemConfig
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 0}
+  Name: "\u65B0\u7269\u54C1"
+  Key: item_new
+  IsWeapon: 0
+  IsStackable: 1
+  HasMaxStackableCount: 0
+  MaxStackableCount: 99
+--- !u!114 &7555705113914731257
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
+  m_Name: ItemConfig
+  m_EditorClassIdentifier: 
+  Icon: {fileID: 0}
+  Name: "\u65B0\u7269\u54C1"
+  Key: item_new
+  IsWeapon: 0
+  IsStackable: 1
+  HasMaxStackableCount: 0
+  MaxStackableCount: 99

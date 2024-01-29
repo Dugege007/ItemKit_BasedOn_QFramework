@@ -2,24 +2,25 @@
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using Sirenix.OdinInspector;
 
 #if UNITY_EDITOR
 using UnityEditor;  // 对 using UnityEditor 也加上宏，避免打包出现问题
 #endif
 
-namespace QFramework
+namespace QFramework.Obsolete
 {
-    [CreateAssetMenu(menuName = "@ItemKit/Create Item Database")]
     public class ItemDatabase : ScriptableObject
     {
         [DisplayLabel("命名空间：")]
         public string NameSpace = "QFramework.Example";
 
-        public List<ItemConfig> ItemConfigs = new List<ItemConfig>();
+        [TableList(ShowIndexLabels = true)]
+        public List<Item> ItemConfigs = new List<Item>();
 
 #if UNITY_EDITOR
-        [UnityEditor.CustomEditor(typeof(ItemDatabase))]
-        public class ItemDatabaseEditor : UnityEditor.Editor
+        [CustomEditor(typeof(ItemDatabase))]
+        public class ItemDatabaseEditor : Editor
         {
             public class ItemEditorObj
             {
@@ -29,7 +30,7 @@ namespace QFramework
                     set => EditorPrefs.SetBool(ItemConfig.GetName + "_foldout", value);
                 }
                 public Editor Editor = null;
-                public ItemConfig ItemConfig = null;
+                public Item ItemConfig = null;
             }
 
             private List<ItemEditorObj> mItemEditors = new List<ItemEditorObj>();
@@ -56,7 +57,7 @@ namespace QFramework
                     mItemEditors.Add(new ItemEditorObj()
                     {
                         Editor = editor,
-                        ItemConfig = itemSO.objectReferenceValue as ItemConfig,
+                        ItemConfig = itemSO.objectReferenceValue as Item,
                     });
                 }
             }
@@ -112,7 +113,7 @@ namespace QFramework
                             ns.Class("Items", String.Empty, false, false, c =>
                             {
                                 // 为每个 itemDB.ItemConfigs 生成一个静态字符串字段
-                                foreach (ItemConfig itemConfig in itemDatabase.ItemConfigs)
+                                foreach (Item itemConfig in itemDatabase.ItemConfigs)
                                 {
                                     c.Custom($"public static string {itemConfig.Key} = \"{itemConfig.Key}\";");
                                     Debug.Log(itemConfig.Key);
@@ -205,8 +206,8 @@ namespace QFramework
                     mActionQueue.Enqueue(() =>
                     {
                         // 创建一个新的 ItemConfig 实例
-                        ItemConfig itemConfig = ItemConfig.CreateInstance<ItemConfig>();
-                        itemConfig.name = nameof(ItemConfig);
+                        Item itemConfig = Item.CreateInstance<Item>();
+                        itemConfig.name = nameof(Item);
                         itemConfig.Name = "新物品";
                         itemConfig.Key = "item_new";
 

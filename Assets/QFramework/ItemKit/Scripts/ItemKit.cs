@@ -8,6 +8,8 @@ namespace QFramework
 {
     public class ItemKit
     {
+        public static IItemKitSaveAndLoader SaverAndLoader;
+
         public static Dictionary<string, SlotGroup> mSlotGroupByKey = new Dictionary<string, SlotGroup>();
         public static Dictionary<string, IItem> ItemByKey = new Dictionary<string, IItem>();
 
@@ -31,7 +33,7 @@ namespace QFramework
 
         public static void LoadItemDatabase(string databaseName)
         {
-            ItemDatabase database = Resources.Load<ItemDatabase>(databaseName);
+            ItemConfigGroup database = Resources.Load<ItemConfigGroup>(databaseName);
             database.ItemConfigs.ForEach(config => AddItemConfig(config));
         }
 
