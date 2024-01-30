@@ -9,7 +9,7 @@ namespace QFramework.Example
     {
         private void Awake()
         {
-            ItemKit.LoadItemDatabase("ExampleItemDatabase");
+            ItemKit.LoadItemDatabase("ExampleItemConfigGroup");
 
             ItemKit.CreateSlotGroup("物品栏")
                 .CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1)

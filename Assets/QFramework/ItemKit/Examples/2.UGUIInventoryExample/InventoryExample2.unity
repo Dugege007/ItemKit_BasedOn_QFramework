@@ -4061,7 +4061,7 @@ MonoBehaviour:
   m_BlockingObjects: 0
   m_BlockingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 55
 --- !u!114 &1442710034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4725,11 +4725,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   GroupKey: "\u5B9D\u7BB13"
   InitSlots:
-  - Item: {fileID: 3396371239643579797, guid: d1f9ad3c6d5faf94fb4edbcae56e841b, type: 2}
+  - Item: {fileID: -2682991118602880239, guid: 6678740d287175d4c9b9787f7a84c8e5, type: 2}
     Count: 1
-  - Item: {fileID: 4621728714461775809, guid: d1f9ad3c6d5faf94fb4edbcae56e841b, type: 2}
+  - Item: {fileID: 1241786700482762489, guid: 6678740d287175d4c9b9787f7a84c8e5, type: 2}
     Count: 1
-  - Item: {fileID: 0}
+  - Item: {fileID: 3628530530645375928, guid: 6678740d287175d4c9b9787f7a84c8e5, type: 2}
     Count: 0
   UISlotGroup: {fileID: 648276879}
 --- !u!61 &1551850644
