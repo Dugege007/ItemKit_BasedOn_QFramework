@@ -148,17 +148,15 @@ namespace QFramework
 
         public void OnPointerEnter(PointerEventData eventData)
         {
-            if (Data.Item != null)
-            {
-                Debug.Log("Ãû³Æ£º" + Data.Item.GetName + "\n" +
-                    "ÃèÊö£º" + Data.Item.GetDescription);
-            }
+            UIItemTip.Show(this);
 
             ItemKit.CurrentSlotPointerOn = this;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            UIItemTip.Hide();
+
             if (ItemKit.CurrentSlotPointerOn == this)
             {
                 ItemKit.CurrentSlotPointerOn = null;
