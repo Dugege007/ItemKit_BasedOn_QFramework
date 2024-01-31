@@ -12,5 +12,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 551e9c9170ce5b74d8984cde11b09aa6, type: 3}
   m_Name: ItemEnglishPackage
   m_EditorClassIdentifier: 
-  ItemConfigGroup: {fileID: 11400000, guid: 6678740d287175d4c9b9787f7a84c8e5, type: 2}
-  LocalItems: []
+  ItemConfigGroup: {fileID: 11400000, guid: 3bc264529660bd545ada65c803cbc023, type: 2}
+  LocalItems:
+  - Icon: {fileID: 2140489303, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+    Key: item_green_sword
+    Name: Green Sword
+    Description: This is a green sword with poison attributes
+  - Icon: {fileID: 1403765987, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+    Key: item_wood_sword
+    Name: Wood Sword
+    Description: This is a wood sword
+  - Icon: {fileID: -1187671710, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+    Key: item_iron
+    Name: Iron
+    Description: This is a iron
+  - Icon: {fileID: -42529867, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+    Key: item_paper
+    Name: Paper
+    Description: This is a paper
+  - Icon: {fileID: 1621808698, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
+    Key: item_wood
+    Name: Wood
+    Description: This is a wood

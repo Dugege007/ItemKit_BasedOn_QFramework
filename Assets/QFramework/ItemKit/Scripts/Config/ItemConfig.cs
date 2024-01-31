@@ -47,13 +47,16 @@ namespace QFramework
         [VerticalGroup("名称类型/right"), LabelWidth(42)]
         [LabelText("名称")]
         public string Name = string.Empty;
+
         [VerticalGroup("名称类型/right"), LabelWidth(42)]
         [LabelText("描述")]
         [TextArea(minLines: 1, maxLines: 4)]
         public string Description = string.Empty;
+
         [VerticalGroup("名称类型/right"), LabelWidth(42)]
         [LabelText("关键字")]
         public string Key = string.Empty;
+
         [VerticalGroup("名称类型/right"), LabelWidth(42)]
         [LabelText("是武器")]
         public bool IsWeapon = false;
@@ -62,11 +65,13 @@ namespace QFramework
         [VerticalGroup("属性/stackable"), LabelWidth(66)]
         [LabelText("可堆叠")]
         public bool IsStackable = true;
+
         [ShowIf("IsStackable")]
         [VerticalGroup("属性/stackable"), LabelWidth(66)]
         [Indent]
         [LabelText("有最大值")]
         public bool HasMaxStackableCount = false;
+
         [ShowIf("IsStackable"), EnableIf("HasMaxStackableCount")]
         [DisplayIf(new string[] { "IsStackable", "HasMaxStackableCount" }, new[] { false, false })]
         [VerticalGroup("属性/stackable"), LabelWidth(66)]
