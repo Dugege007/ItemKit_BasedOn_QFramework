@@ -8,7 +8,7 @@ namespace QFramework
 {
     public class ItemKit
     {
-        public static IItemKitSaveAndLoader SaverAndLoader;
+        public static IItemKitSaveAndLoader SaverAndLoader = new DefaultItemKitSaverAndLoader();
 
         public static Dictionary<string, SlotGroup> mSlotGroupByKey = new Dictionary<string, SlotGroup>();
         public static Dictionary<string, IItem> ItemByKey = new Dictionary<string, IItem>();
@@ -22,7 +22,10 @@ namespace QFramework
                 Key = key,
             };
 
-            mSlotGroupByKey.Add(key, slotGroup);
+            if (!mSlotGroupByKey.ContainsKey(key))
+            {
+                mSlotGroupByKey.Add(key, slotGroup);
+            }
             return slotGroup;
         }
 
@@ -42,76 +45,10 @@ namespace QFramework
             ItemByKey.Add(itemConfig.GetKey, itemConfig);
         }
 
-        [Serializable]
-        public class SlotGroupSaveData
-        {
-            public string Key;
-            public List<SlotSaveData> SlotsSaveDatas = new List<SlotSaveData>();
-        }
+        public static void Save() => SaverAndLoader.Save(mSlotGroupByKey);
 
-        [Serializable]
-        public class SlotSaveData
-        {
-            public string ItemKey;
-            public int Count;
-        }
+        public static void Load() => SaverAndLoader.Load(mSlotGroupByKey);
 
-        public static void Save()
-        {
-            foreach (var slotGroup in mSlotGroupByKey.Values)
-            {
-                SlotGroupSaveData slotGroupSaveData = new()
-                {
-                    Key = slotGroup.Key,
-                    SlotsSaveDatas = slotGroup.Slots.Select(slot => new SlotSaveData()
-                    {
-                        ItemKey = slot.Item?.GetKey,
-                        Count = slot.Count,
-                    }).ToList(),
-                };
-
-                string json = JsonUtility.ToJson(slotGroupSaveData);
-                PlayerPrefs.SetString("slot_group_" + slotGroup.Key, json);
-            }
-
-            Debug.Log("保存数据");
-        }
-
-        public static void Load()
-        {
-            foreach (var slotGroup in mSlotGroupByKey.Values)
-            {
-                var json = PlayerPrefs.GetString("slot_group_" + slotGroup.Key, string.Empty);
-
-                if (json.IsNullOrEmpty())
-                {
-
-                }
-                else
-                {
-                    SlotGroupSaveData saveData = JsonUtility.FromJson<SlotGroupSaveData>(json);
-                    for (int i = 0; i < saveData.SlotsSaveDatas.Count; i++)
-                    {
-                        var slotSaveData = saveData.SlotsSaveDatas[i];
-                        var item = slotSaveData.ItemKey.IsNullOrEmpty()
-                                ? null
-                                : ItemKit.ItemByKey[slotSaveData.ItemKey];
-
-                        if (i < slotGroup.Slots.Count)
-                        {
-                            slotGroup.Slots[i].Item = item;
-                            slotGroup.Slots[i].Count = slotSaveData.Count;
-                            slotGroup.Slots[i].Changed.Trigger();
-                        }
-                        else
-                        {
-                            slotGroup.CreateSlot(item, slotSaveData.Count);
-                        }
-                    }
-                }
-            }
-
-            Debug.Log("加载数据");
-        }
+        public static void Clear() => SaverAndLoader.Clear();
     }
 }
