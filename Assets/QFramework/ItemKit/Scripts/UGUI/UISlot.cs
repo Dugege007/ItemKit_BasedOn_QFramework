@@ -87,7 +87,7 @@ namespace QFramework
                 // 位置还原（坐标归零）
                 IconHolder.LocalPositionIdentity();
 
-                if(ItemKit.CurrentSlotPointerOn)
+                if (ItemKit.CurrentSlotPointerOn)
                 {
                     UISlot uiSlot = ItemKit.CurrentSlotPointerOn;
                     RectTransform rectTrans = uiSlot.transform as RectTransform;
@@ -148,6 +148,12 @@ namespace QFramework
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            if (Data.Item != null)
+            {
+                Debug.Log("名称：" + Data.Item.GetName + "\n" +
+                    "描述：" + Data.Item.GetDescription);
+            }
+
             ItemKit.CurrentSlotPointerOn = this;
         }
 

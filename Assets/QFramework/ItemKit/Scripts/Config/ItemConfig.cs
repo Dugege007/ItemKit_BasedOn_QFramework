@@ -1,6 +1,7 @@
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
+using static QFramework.ItemLanguagePackage;
 
 namespace QFramework
 {
@@ -79,12 +80,14 @@ namespace QFramework
         [LabelText("×î´óÖµ")]
         public int MaxStackableCount = 99;
 
-        public string GetName => Name;
+        public string GetName => ItemKit.CurrentLanguage == ItemKit.DefaultLanguage ? Name : LocalItem.Name;
         public string GetKey => Key;
+        public string GetDescription => ItemKit.CurrentLanguage == ItemKit.DefaultLanguage ? Description : LocalItem.Description;
         public Sprite GetIcon => Icon;
         public bool GetStackable => IsStackable;
         public bool GetHasMaxStackableCount => HasMaxStackableCount;
         public int GetMaxStackableCount => MaxStackableCount;
+        public ItemLanguagePackage.LocalItem LocalItem { get; set; }
 
         public bool GetBoolean(string propertyName)
         {

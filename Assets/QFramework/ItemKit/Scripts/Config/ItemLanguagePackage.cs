@@ -12,6 +12,9 @@ namespace QFramework
         [LabelText("物品数据")]
         public ItemConfigGroup ItemConfigGroup;
 
+        [LabelText("语言")]
+        public string Language;
+
         [Title("本地化物品")]
         public List<LocalItem> LocalItems = new List<LocalItem>();
 

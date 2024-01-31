@@ -1,4 +1,5 @@
 using Sirenix.OdinInspector;
+using Unity.VisualScripting;
 using UnityEditor;
 
 #if UNITY_EDITOR
@@ -7,12 +8,14 @@ using UnityEngine;
 
 namespace QFramework.Obsolete
 {
-    public class Item : ScriptableObject, IItem
+    public class Item : ScriptableObject // ,IItem
     {
         [DisplayLabel("名称")]    // QFramework 中提供的功能
         public string Name = string.Empty;
         [DisplayLabel("关键字")]
         public string Key = string.Empty;
+        [DisplayLabel("描述")]
+        public string Description = string.Empty;
         public Sprite Icon = null;
 
         [DisplayLabel("可堆叠")]
@@ -27,12 +30,14 @@ namespace QFramework.Obsolete
         [DisplayLabel("是武器")]
         public bool IsWeapon = false;
 
-        public string GetName => Name;
+        public string GetName => ItemKit.CurrentLanguage == ItemKit.DefaultLanguage ? Name : LocalItem.Name;
         public string GetKey => Key;
+        public string GetDescription => ItemKit.CurrentLanguage == ItemKit.DefaultLanguage ? Description : LocalItem.Description;
         public Sprite GetIcon => Icon;
         public bool GetStackable => IsStackable;
         public bool GetHasMaxStackableCount => HasMaxStackableCount;
         public int GetMaxStackableCount => MaxStackableCount;
+        public ItemLanguagePackage.LocalItem LocalItem { get; set; }
 
         public bool GetBoolean(string propertyName)
         {

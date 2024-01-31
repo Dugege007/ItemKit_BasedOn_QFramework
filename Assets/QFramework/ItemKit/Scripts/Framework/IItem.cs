@@ -10,10 +10,12 @@ namespace QFramework
     {
         string GetKey { get; }
         string GetName { get; }
+        string GetDescription { get; }
         Sprite GetIcon { get; }
         bool GetStackable { get; }
         bool GetHasMaxStackableCount { get; }
         int GetMaxStackableCount { get; }
+        ItemLanguagePackage.LocalItem LocalItem { get; set; }
 
         bool GetBoolean(string propertyName);
     }

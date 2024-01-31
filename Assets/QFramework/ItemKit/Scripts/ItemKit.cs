@@ -1,7 +1,4 @@
-using QFramework.Example;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 namespace QFramework
@@ -32,6 +29,36 @@ namespace QFramework
         public static SlotGroup GetSlotGroupByKey(string key)
         {
             return mSlotGroupByKey[key];
+        }
+
+        // µ±«∞”Ô—‘
+        public const string DefaultLanguage = "DefaultLanguage";
+        public static string CurrentLanguage { get; private set; } = DefaultLanguage;
+
+        public static void LoadItemLanguagePackage(string languagePackageName)
+        {
+            if (languagePackageName == DefaultLanguage)
+            {
+                CurrentLanguage = DefaultLanguage;
+                foreach (var item in ItemByKey.Values)
+                {
+                    item.LocalItem = null;
+                }
+            }
+            else
+            {
+                CurrentLanguage = languagePackageName;
+
+                ItemLanguagePackage languagePackage = Resources.Load<ItemLanguagePackage>(languagePackageName);
+
+                foreach (var localItem in languagePackage.LocalItems)
+                {
+                    if (ItemByKey.TryGetValue(localItem.Key, out var item))
+                    {
+                        item.LocalItem = localItem;
+                    }
+                }
+            }
         }
 
         public static void LoadItemDatabase(string databaseName)

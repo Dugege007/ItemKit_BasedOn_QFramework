@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System;
+using UnityEngine.UI;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
@@ -86,7 +87,7 @@ namespace QFramework.Example
                     }
                 }
 
-                Debug.Log("加载数据：" + json);
+                Debug.Log("加载数据");
             }
 
             public void Clear()
@@ -100,6 +101,8 @@ namespace QFramework.Example
             ItemKit.SaverAndLoader = new MySaverAndLoader();
 
             ItemKit.LoadItemDatabase("ExampleItemConfigGroup");
+
+            ItemKit.LoadItemLanguagePackage("ItemEnglishPackage");
 
             ItemKit.CreateSlotGroup("物品栏")
                 .CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1)
@@ -203,6 +206,26 @@ namespace QFramework.Example
             {
                 UISlotGroup group = TreasureBoxExample.GetComponent<UISlotGroup>();
                 group.RefreshWithChangeGroupKey("宝箱2");
+            });
+
+            void UpdateLanguageText()
+            {
+                if (ItemKit.CurrentLanguage == ItemKit.DefaultLanguage)
+                    BtnLanguage.GetComponentInChildren<Text>().text = "简->EN";
+                else
+                    BtnLanguage.GetComponentInChildren<Text>().text = "EN->简";
+            }
+
+            UpdateLanguageText();
+
+            BtnLanguage.onClick.AddListener(() =>
+            {
+                if (ItemKit.CurrentLanguage == ItemKit.DefaultLanguage)
+                    ItemKit.LoadItemLanguagePackage("ItemEnglishPackage");
+                else
+                    ItemKit.LoadItemLanguagePackage(ItemKit.DefaultLanguage);
+
+                UpdateLanguageText();
             });
         }
 
