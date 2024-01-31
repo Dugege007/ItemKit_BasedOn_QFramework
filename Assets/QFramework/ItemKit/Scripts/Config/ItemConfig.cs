@@ -14,18 +14,14 @@ namespace QFramework
         [HorizontalGroup("名称类型", 54), VerticalGroup("名称类型/left")]
         public Sprite Icon = null;
 
-        [VerticalGroup("名称类型/left")]
-        [Button]
-        public void Refresh()
+        private void OnValidate()
         {
             this.name = Key;
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
         }
 
         [VerticalGroup("名称类型/left")]
-        [Button, GUIColor(1, 0, 0)]
-        private void X()
+        [Button("X"), GUIColor(1, 0, 0)]
+        private void RemoveThisConfig()
         {
             if (EditorUtility.DisplayDialog("删除物品", "确定要删除吗？\n（此操作不可恢复）", "删除", "取消"))
             {
@@ -36,9 +32,25 @@ namespace QFramework
             }
         }
 
+        [VerticalGroup("名称类型/left")]
+        [Button("Dup"), GUIColor("yellow")]
+        private void DuplicateThisConfig()
+        {
+            if (ItemConfigGroup == null)
+            {
+                Debug.LogError("ItemConfigGroup is null!");
+                return;
+            }
+            ItemConfigGroup.DuplicateItemConfig(ItemConfigGroup.ItemConfigs.IndexOf(this), this);
+        }
+
         [VerticalGroup("名称类型/right"), LabelWidth(42)]
         [LabelText("名称")]
         public string Name = string.Empty;
+        [VerticalGroup("名称类型/right"), LabelWidth(42)]
+        [LabelText("描述")]
+        [TextArea(minLines: 1, maxLines: 4)]
+        public string Description = string.Empty;
         [VerticalGroup("名称类型/right"), LabelWidth(42)]
         [LabelText("关键字")]
         public string Key = string.Empty;
