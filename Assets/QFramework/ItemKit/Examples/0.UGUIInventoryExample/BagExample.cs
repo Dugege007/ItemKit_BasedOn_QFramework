@@ -5,11 +5,11 @@ using QFramework;
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
 namespace QFramework.Example
 {
-	public partial class BagExample : ViewController
-	{
-		private void Start()
-		{
-			UISlot.Hide();
+    public partial class BagExample : ViewController
+    {
+        private void Start()
+        {
+            UISlot.Hide();
 
             ItemKit.CreateSlotGroup("背包")
                 .CreateSlotsByCount(20);
@@ -17,8 +17,8 @@ namespace QFramework.Example
             Refresh();
         }
 
-		public void Refresh()
-		{
+        public void Refresh()
+        {
             SlotItemRoot.DestroyChildren();
 
             foreach (var slot in ItemKit.GetSlotGroupByKey("背包").Slots)

@@ -1,6 +1,4 @@
 using UnityEngine;
-using System.Collections.Generic;
-using System.Linq;
 using System;
 using UnityEngine.UI;
 
@@ -10,98 +8,38 @@ namespace QFramework.Example
 {
     public partial class UGUIInventoryExample : ViewController
     {
-        public class MySaverAndLoader : IItemKitSaveAndLoader
+        public class MyItemKitLoader : IItemKitLoader
         {
-            [Serializable]
-            public class SaveData
+            // 用 QFramework 的 ResLoader
+            ResLoader mResLoader = ResLoader.Allocate();
+
+            public ItemConfigGroup LoadItemDatabase(string databaseName)
             {
-                public List<GroupData> GroupDatas = new List<GroupData>();
+                // 加载 Resources 目录下的内容，但是要加一个 "resources://"
+                return mResLoader.LoadSync<ItemConfigGroup>("resources://" + databaseName);
             }
 
-            [Serializable]
-            public class GroupData
+            public void LoadItemDatabaseAsync(string databaseName, Action<ItemConfigGroup> onLoadFinish)
             {
-                public string Key;
-                public List<SlotData> SlotDatas = new List<SlotData>();
             }
 
-            [Serializable]
-            public class SlotData
+            public ItemLanguagePackage LoadLanguagePackage(string languagePackageName)
             {
-                public string ItemKey;
-                public int Count;
+                return mResLoader.LoadSync<ItemLanguagePackage>("resources://" + languagePackageName);
             }
 
-            public void Save(Dictionary<string, SlotGroup> slotGroups)
+            public void LoadLanguagePackageAsync(string languagePackageName, Action<ItemLanguagePackage> onLoadFinish)
             {
-                PlayerPrefs.SetString("my_item_kit", JsonUtility.ToJson(new SaveData()
-                {
-                    GroupDatas = slotGroups.Values.Select(group => new GroupData()
-                    {
-                        Key = group.Key,
-                        SlotDatas = group.Slots.Select(slot => new SlotData()
-                        {
-                            ItemKey = slot.Item?.GetKey,
-                            Count = slot.Count,
-                        }).ToList()
-                    }).ToList()
-                }));
-
-                Debug.Log("保存数据");
-            }
-
-            public void Load(Dictionary<string, SlotGroup> slotGroups)
-            {
-                string json = PlayerPrefs.GetString("my_item_kit", string.Empty);
-
-                if (json.IsNotNullAndEmpty())
-                {
-                    SaveData saveData = JsonUtility.FromJson<SaveData>(json);
-
-                    foreach (var group in saveData.GroupDatas)
-                    {
-                        SlotGroup slotGroup;
-                        if (slotGroups.ContainsKey(group.Key))
-                            slotGroup = slotGroups[group.Key];
-                        else
-                            slotGroup = ItemKit.CreateSlotGroup(group.Key);
-
-                        for (int i = 0; i < group.SlotDatas.Count; i++)
-                        {
-                            var slotSaveData = group.SlotDatas[i];
-                            var item = slotSaveData.ItemKey.IsNullOrEmpty()
-                                    ? null
-                                    : ItemKit.ItemByKey[slotSaveData.ItemKey];
-
-                            if (i < slotGroup.Slots.Count)
-                            {
-                                slotGroup.Slots[i].Item = item;
-                                slotGroup.Slots[i].Count = slotSaveData.Count;
-                                slotGroup.Slots[i].Changed.Trigger();
-                            }
-                            else
-                            {
-                                slotGroup.CreateSlot(item, slotSaveData.Count);
-                            }
-                        }
-                    }
-                }
-
-                Debug.Log("加载数据");
-            }
-
-            public void Clear()
-            {
-                PlayerPrefs.DeleteKey("my_item_kit");
             }
         }
 
         private void Awake()
         {
+            // 将 Loader 替换
             ItemKit.SaverAndLoader = new MySaverAndLoader();
+            ItemKit.Loader = new MyItemKitLoader();
 
             ItemKit.LoadItemDatabase("ExampleItemConfigGroup");
-
             ItemKit.LoadItemLanguagePackage("ItemEnglishPackage");
 
             ItemKit.CreateSlotGroup("物品栏")
