@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,23 +13,6 @@ namespace QFramework
         public Text IDText;
 
         private static UIItemTip mDefault;
-
-        public static void Show(UISlot slot)
-        {
-            if (slot.Data.Item != null)
-            {
-                mDefault.Icon.sprite = slot.Data.Item.GetIcon;
-                mDefault.NameText.text = slot.Data.Item.GetName;
-                mDefault.DescriptionText.text = slot.Data.Item.GetDescription;
-
-                mDefault.TipPanel.Show();
-            }
-        }
-
-        public static void Hide()
-        {
-            mDefault.TipPanel.Hide();
-        }
 
         private void Awake()
         {
@@ -51,6 +32,53 @@ namespace QFramework
                 IDText.Hide();
             else
                 IDText.Show();
+        }
+
+        private void Update()
+        {
+            UpdatePosition();
+        }
+
+        public static void Show(UISlot slot)
+        {
+            if (slot.Data.Item != null)
+            {
+                mDefault.Icon.sprite = slot.Data.Item.GetIcon;
+                mDefault.NameText.text = slot.Data.Item.GetName;
+                mDefault.DescriptionText.text = slot.Data.Item.GetDescription;
+
+                mDefault.TipPanel.Show();
+
+                UpdatePosition();
+            }
+        }
+
+        public static void Hide()
+        {
+            mDefault.TipPanel.Hide();
+        }
+
+        public static void UpdatePosition()
+        {
+            Vector3 mousePos = Input.mousePosition;
+            Vector3[] corners = new Vector3[4];
+            RectTransform rectTrans = mDefault.TipPanel.transform as RectTransform;
+
+            // 更新TipPanel内容后，强制刷新布局
+            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTrans);
+
+            rectTrans.GetWorldCorners(corners);
+            float width = corners[3].x - corners[0].x;
+            float height = corners[1].y - corners[0].y;
+
+            if (mousePos.y < height && mousePos.x > width)
+                rectTrans.position = mousePos + 0.51f * height * Vector3.up + 0.51f * width * Vector3.left;
+            else if (mousePos.y > height && mousePos.x < width)
+                rectTrans.position = mousePos + 0.51f * height * Vector3.down + 0.51f * width * Vector3.right;
+            else if (mousePos.y < height && mousePos.x < width)
+                rectTrans.position = mousePos + 0.51f * height * Vector3.up + 0.51f * width * Vector3.right;
+            else
+                rectTrans.position = mousePos + 0.51f * height * Vector3.down + 0.51f * width * Vector3.left;
         }
 
         private void OnDestroy()

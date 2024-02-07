@@ -1,7 +1,6 @@
 using Sirenix.OdinInspector;
 using UnityEditor;
 using UnityEngine;
-using static QFramework.ItemLanguagePackage;
 
 namespace QFramework
 {
