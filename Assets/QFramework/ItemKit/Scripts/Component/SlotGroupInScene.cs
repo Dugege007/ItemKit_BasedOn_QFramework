@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace QFramework
 {
-    public class SlotGroupComponent : MonoBehaviour
+    public class SlotGroupInScene : MonoBehaviour
     {
         [Serializable]
         public class SlotConfig

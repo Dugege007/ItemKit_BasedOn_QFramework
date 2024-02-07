@@ -54,8 +54,8 @@ namespace QFramework.Example
             ItemKit.LoadItemLanguagePackage("ItemEnglishPackage");
 
             ItemKit.CreateSlotGroup("物品栏")
-                .CreateSlot(ItemKit.ItemByKey[Items.item_iron], 1)
-                .CreateSlot(ItemKit.ItemByKey[Items.item_green_sword], 1)
+                .CreateSlot(Items.item_iron, 1)
+                .CreateSlot(Items.item_green_sword, 1)
                 .CreateSlotsByCount(6);
 
             ItemKit.CreateSlotGroup("背包")
@@ -90,7 +90,7 @@ namespace QFramework.Example
             BtnAddItem1.onClick.AddListener(() =>
             {
                 SlotGroup.ItemOperateResult result = ItemKit.GetSlotGroupByKey("物品栏") // 先拿到背包
-                    .AddItem(Items.item_iron, 20);    // 再添加物品
+                    .AddItem(Items.item_iron_key, 20);    // 再添加物品
 
                 Debug.Log("剩余未添加物品的数量：" + result.RemainCount);
                 if (!result.Succeed)
@@ -103,7 +103,7 @@ namespace QFramework.Example
             BtnAddItem2.onClick.AddListener(() =>
             {
                 SlotGroup.ItemOperateResult result = ItemKit.GetSlotGroupByKey("物品栏")
-                    .AddItem(Items.item_green_sword);
+                    .AddItem(Items.item_green_sword_key);
 
                 if (!result.Succeed)
                 {
@@ -115,7 +115,7 @@ namespace QFramework.Example
             BtnAddItem3.onClick.AddListener(() =>
             {
                 SlotGroup.ItemOperateResult result = ItemKit.GetSlotGroupByKey("物品栏")
-                    .AddItem(Items.item_paper);
+                    .AddItem(Items.item_paper_key);
 
                 if (!result.Succeed)
                 {
@@ -129,19 +129,19 @@ namespace QFramework.Example
             BtnRemoveItem1.onClick.AddListener(() =>
             {
                 ItemKit.GetSlotGroupByKey("物品栏")
-                    .RemoveItem(Items.item_iron);
+                    .RemoveItem(Items.item_iron_key);
             });
 
             BtnRemoveItem2.onClick.AddListener(() =>
             {
                 ItemKit.GetSlotGroupByKey("物品栏")
-                    .RemoveItem(Items.item_green_sword);
+                    .RemoveItem(Items.item_green_sword_key);
             });
 
             BtnRemoveItem3.onClick.AddListener(() =>
             {
                 ItemKit.GetSlotGroupByKey("物品栏")
-                    .RemoveItem(Items.item_paper);
+                    .RemoveItem(Items.item_paper_key);
             });
             #endregion
 

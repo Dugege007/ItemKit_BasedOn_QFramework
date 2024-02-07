@@ -85,7 +85,8 @@ namespace QFramework
                         // 为每个 itemDB.ItemConfigs 生成一个静态字符串字段
                         foreach (ItemConfig itemConfig in itemDatabase.ItemConfigs)
                         {
-                            c.Custom($"public static string {itemConfig.Key} = \"{itemConfig.Key}\";");
+                            c.Custom($"public static IItem {itemConfig.Key} = ItemKit.ItemByKey[\"{itemConfig.Key}\"];");
+                            c.Custom($"public static string {itemConfig.Key}_key = \"{itemConfig.Key}\";");
                             Debug.Log(itemConfig.Key);
                         }
                     });

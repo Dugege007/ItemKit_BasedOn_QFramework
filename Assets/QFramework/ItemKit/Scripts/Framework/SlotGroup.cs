@@ -119,15 +119,14 @@ namespace QFramework
 
         }
 
-        public ItemOperateResult AddItem(string itemKey, int addCount = 1)
+        // 重载一下
+        public ItemOperateResult AddItem(IItem item, int addCount = 1)
         {
-            IItem item = ItemKit.ItemByKey[itemKey];
-
             if (item.GetStackable && item.GetHasMaxStackableCount)
             {
                 do
                 {
-                    Slot slot = FindNonFullStackableSlot(itemKey);
+                    Slot slot = FindNonFullStackableSlot(item.GetKey);
                     if (slot != null)
                     {
                         int canAddCount = slot.Item.GetMaxStackableCount - slot.Count;
@@ -153,7 +152,7 @@ namespace QFramework
             }
             else
             {
-                Slot slot = FindAddableSlot(itemKey);
+                Slot slot = FindAddableSlot(item.GetKey);
                 if (slot == null)
                     return new ItemOperateResult() { Succeed = false, RemainCount = addCount };
 
@@ -162,6 +161,43 @@ namespace QFramework
             }
 
             return new ItemOperateResult() { Succeed = true, RemainCount = 0 };
+        }
+
+
+        public ItemOperateResult AddItem(string itemKey, int addCount = 1)
+        {
+            IItem item = ItemKit.ItemByKey[itemKey];
+
+            return AddItem(item, addCount);
+        }
+
+        // 重载一下
+        public void RemoveItem(IItem item, int removeCount = 1)
+        {
+            Slot slot = FindSlotByKey(item.GetKey, false);
+
+            if (slot == null || slot.Count < 1)
+            {
+                Debug.Log("背包中没有此物品");
+                return;
+            }
+
+            if (slot.Count < removeCount)
+            {
+                Debug.Log("物品不足");
+                return;
+            }
+
+            slot.Count -= removeCount;
+
+            if (slot.Count <= 0)
+            {
+                slot.Count = 0;
+                // 当数量减到0时，清除栏位中的物品引用
+                slot.Item = null;
+            }
+
+            slot.Changed.Trigger();
         }
 
         public void RemoveItem(string itemKey, int removeCount = 1)

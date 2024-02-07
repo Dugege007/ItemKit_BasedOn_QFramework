@@ -9,7 +9,7 @@ namespace QFramework.Example
     {
         private void OnMouseDown()
         {
-            SlotGroupComponent slotGroupComponent = GetComponent<SlotGroupComponent>();
+            SlotGroupInScene slotGroupComponent = GetComponent<SlotGroupInScene>();
 
             slotGroupComponent.UISlotGroup.RefreshWithChangeGroupKey(slotGroupComponent.GroupKey);
         }
