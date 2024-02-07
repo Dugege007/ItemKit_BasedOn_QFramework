@@ -8,36 +8,47 @@ namespace QFramework.Example
 {
     public partial class UGUIInventoryExample : ViewController
     {
-        public class MyItemKitLoader : IItemKitLoader
-        {
-            // 用 QFramework 的 ResLoader
-            ResLoader mResLoader = ResLoader.Allocate();
+        // 测试用
+        //public class MyItemKitLoader : IItemKitLoader
+        //{
+        //    // 用 QFramework 的 ResLoader
+        //    public ResLoader ResLoader { get; set; }
 
-            public ItemConfigGroup LoadItemDatabase(string databaseName)
-            {
-                // 加载 Resources 目录下的内容，但是要加一个 "resources://"
-                return mResLoader.LoadSync<ItemConfigGroup>("resources://" + databaseName);
-            }
+        //    public ItemConfigGroup LoadItemDatabase(string databaseName)
+        //    {
+        //        // 加载 Resources 目录下的内容，要加一个 "resources://"
+        //        return ResLoader.LoadSync<ItemConfigGroup>("resources://" + databaseName);
 
-            public void LoadItemDatabaseAsync(string databaseName, Action<ItemConfigGroup> onLoadFinish)
-            {
-            }
+        //        // 加载 AssetBundle 的内容，可以直接写 databaseName
+        //        // 加载 AssetBundle 的内容，需要将相应的资源进行标记
+        //        //return ResLoader.LoadSync<ItemConfigGroup>(databaseName);
+        //    }
 
-            public ItemLanguagePackage LoadLanguagePackage(string languagePackageName)
-            {
-                return mResLoader.LoadSync<ItemLanguagePackage>("resources://" + languagePackageName);
-            }
+        //    public void LoadItemDatabaseAsync(string databaseName, Action<ItemConfigGroup> onLoadFinish)
+        //    {
+        //    }
 
-            public void LoadLanguagePackageAsync(string languagePackageName, Action<ItemLanguagePackage> onLoadFinish)
-            {
-            }
-        }
+        //    public ItemLanguagePackage LoadLanguagePackage(string languagePackageName)
+        //    {
+        //        return ResLoader.LoadSync<ItemLanguagePackage>("resources://" + languagePackageName);
+        //    }
+
+        //    public void LoadLanguagePackageAsync(string languagePackageName, Action<ItemLanguagePackage> onLoadFinish)
+        //    {
+        //    }
+        //}
 
         private void Awake()
         {
+            //ResKit.Init();
+            //ResLoader resLoader = ResLoader.Allocate();
+
             // 将 Loader 替换
             ItemKit.SaverAndLoader = new MySaverAndLoader();
-            ItemKit.Loader = new MyItemKitLoader();
+            //ItemKit.Loader = new MyItemKitLoader()
+            //{
+            //    ResLoader = resLoader,
+            //};
 
             ItemKit.LoadItemDatabase("ExampleItemConfigGroup");
             ItemKit.LoadItemLanguagePackage("ItemEnglishPackage");
