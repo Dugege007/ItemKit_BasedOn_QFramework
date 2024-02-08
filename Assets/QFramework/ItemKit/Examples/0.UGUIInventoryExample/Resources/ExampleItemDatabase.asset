@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
   m_Name: item_wood
   m_EditorClassIdentifier: 
+  ItemDatabase: {fileID: 11400000}
   Icon: {fileID: 1621808698, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
   Name: "\u6728\u5934"
   Description: "\u8FD9\u662F\u4E00\u5757\u6728\u5934"
@@ -32,6 +33,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
   m_Name: item_paper
   m_EditorClassIdentifier: 
+  ItemDatabase: {fileID: 11400000}
   Icon: {fileID: -42529867, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
   Name: "\u7EB8"
   Description: "\u8FD9\u662F\u4E00\u5F20\u7EB8"
@@ -52,6 +54,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
   m_Name: item_green_sword
   m_EditorClassIdentifier: 
+  ItemDatabase: {fileID: 11400000}
   Icon: {fileID: 2140489303, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
   Name: "\u7EFF\u5251"
   Description: "\u8FD9\u662F\u4E00\u628A\u7EFF\u8272\u7684\u6BD2\u5C5E\u6027\u5251"
@@ -70,35 +73,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 97105fa6742f20a4baf2b2aefb366084, type: 3}
-  m_Name: ExampleItemConfigGroup
+  m_Name: ExampleItemDatabase
   m_EditorClassIdentifier: 
   NameSpace: QFramework.Example
   ItemConfigs:
   - {fileID: -4444599809156488681}
-  - {fileID: 2528467838607257249}
   - {fileID: 2717077468998995653}
   - {fileID: -8873035753273129555}
   - {fileID: -9185990656524690369}
---- !u!114 &2528467838607257249
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
-  m_Name: item_wood_sword
-  m_EditorClassIdentifier: 
-  Icon: {fileID: 1403765987, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
-  Name: "\u6728\u5251"
-  Description: "\u8FD9\u662F\u4E00\u628A\u6728\u5251"
-  Key: item_wood_sword
-  IsWeapon: 1
-  IsStackable: 0
-  HasMaxStackableCount: 0
-  MaxStackableCount: 20
 --- !u!114 &2717077468998995653
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,6 +93,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75d8e85ca3c3c284082c5bd3135fed6c, type: 3}
   m_Name: item_iron
   m_EditorClassIdentifier: 
+  ItemDatabase: {fileID: 11400000}
   Icon: {fileID: -1187671710, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
   Name: "\u94C1\u5757"
   Description: "\u8FD9\u662F\u4E00\u4E2A\u94C1\u5757"

@@ -7,7 +7,8 @@ namespace QFramework
     [CreateAssetMenu(menuName = "@ItemKit/Create ItemConfig")]
     public class ItemConfig : ScriptableObject, IItem
     {
-        public ItemConfigGroup ItemConfigGroup { get; set; }
+        [HideInInspector]
+        public ItemDatabase ItemDatabase;
 
         [HideLabel]
         [PreviewField(48, ObjectFieldAlignment.Left)]
@@ -19,13 +20,14 @@ namespace QFramework
             this.name = Key;
         }
 
+#if UNITY_EDITOR
         [VerticalGroup("名称类型/left")]
         [Button("X"), GUIColor(1, 0, 0)]
         private void RemoveThisConfig()
         {
             if (EditorUtility.DisplayDialog("删除物品", "确定要删除吗？\n（此操作不可恢复）", "删除", "取消"))
             {
-                ItemConfigGroup.ItemConfigs.Remove(this);
+                ItemDatabase.ItemConfigs.Remove(this);
                 AssetDatabase.RemoveObjectFromAsset(this);
                 AssetDatabase.SaveAssets();
                 AssetDatabase.Refresh();
@@ -36,13 +38,14 @@ namespace QFramework
         [Button("Dup"), GUIColor("yellow")]
         private void DuplicateThisConfig()
         {
-            if (ItemConfigGroup == null)
+            if (ItemDatabase == null)
             {
                 Debug.LogError("ItemConfigGroup is null!");
                 return;
             }
-            ItemConfigGroup.DuplicateItemConfig(ItemConfigGroup.ItemConfigs.IndexOf(this), this);
+            ItemDatabase.DuplicateItemConfig(ItemDatabase.ItemConfigs.IndexOf(this), this);
         }
+#endif
 
         [VerticalGroup("名称类型/right"), LabelWidth(42)]
         [LabelText("名称")]

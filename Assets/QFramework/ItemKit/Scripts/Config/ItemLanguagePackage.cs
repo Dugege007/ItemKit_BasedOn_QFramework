@@ -10,7 +10,7 @@ namespace QFramework
     public class ItemLanguagePackage : ScriptableObject
     {
         [LabelText("物品数据")]
-        public ItemConfigGroup ItemConfigGroup;
+        public ItemDatabase ItemDatabase;
 
         [LabelText("语言")]
         public string Language;
@@ -20,9 +20,9 @@ namespace QFramework
 
         private void OnValidate()
         {
-            if (ItemConfigGroup && LocalItems.Count == 0)
+            if (ItemDatabase && LocalItems.Count == 0)
             {
-                foreach (var item in ItemConfigGroup.ItemConfigs)
+                foreach (var item in ItemDatabase.ItemConfigs)
                 {
                     LocalItems.Add(new LocalItem()
                     {
@@ -32,15 +32,15 @@ namespace QFramework
                     });
                 }
             }
-            else if (ItemConfigGroup && LocalItems.Count > 0)
+            else if (ItemDatabase && LocalItems.Count > 0)
             {
                 // itemDB : item_iron、item_paper
                 // itemLanguagePackage : 
-                LocalItems.RemoveAll(item => ItemConfigGroup.ItemConfigs.All(i => i.Key != item.Key));
+                LocalItems.RemoveAll(item => ItemDatabase.ItemConfigs.All(i => i.Key != item.Key));
 
                 // 将 ItemConfigGroup 中的内容添加过来
                 List<LocalItem> newLocalItems = new List<LocalItem>();
-                foreach (var item in ItemConfigGroup.ItemConfigs)
+                foreach (var item in ItemDatabase.ItemConfigs)
                 {
                     LocalItem localItem2Add = LocalItems.FirstOrDefault(localItem => localItem.Key == item.Key);
                     if (localItem2Add != null)
@@ -61,7 +61,7 @@ namespace QFramework
 
                 LocalItems = newLocalItems;
             }
-            else if (ItemConfigGroup == null)
+            else if (ItemDatabase == null)
             {
                 LocalItems.Clear();
             }

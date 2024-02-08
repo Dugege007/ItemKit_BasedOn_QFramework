@@ -16,16 +16,23 @@ namespace QFramework
 
         public static SlotGroup CreateSlotGroup(string key)
         {
-            SlotGroup slotGroup = new SlotGroup()
+            if (HasSlotGroup(key))
             {
-                Key = key,
-            };
-
-            if (!mSlotGroupByKey.ContainsKey(key))
-            {
-                mSlotGroupByKey.Add(key, slotGroup);
+                Debug.Log($"槽位组 '{key}' 已存在。");
+                return mSlotGroupByKey[key];
             }
-            return slotGroup;
+            else
+            {
+                SlotGroup slotGroup = new SlotGroup() { Key = key };
+                mSlotGroupByKey.Add(key, slotGroup);
+                Debug.Log($"槽位组 '{key}' 已添加。");
+                return slotGroup;
+            }
+        }
+
+        public static bool HasSlotGroup(string key)
+        {
+            return mSlotGroupByKey.ContainsKey(key);
         }
 
         public static SlotGroup GetSlotGroupByKey(string key)
@@ -35,8 +42,17 @@ namespace QFramework
 
         public static void LoadItemDatabase(string databaseName)
         {
-            ItemConfigGroup database = Loader.LoadItemDatabase(databaseName);
-            database.ItemConfigs.ForEach(config => AddItemConfig(config));
+            ItemDatabase database = Loader.LoadItemDatabase(databaseName);
+            if (database == null)
+                Debug.LogError("database为空");
+
+            foreach (var config in database.ItemConfigs)
+            {
+                if(config == null)
+                    Debug.LogError("config为空");
+
+                AddItemConfig(config);
+            }
         }
 
         // 异步加载，协程方式
@@ -74,7 +90,7 @@ namespace QFramework
             {
                 CurrentLanguage = languagePackageName;
 
-                ItemLanguagePackage languagePackage = Loader.LoadLanguagePackage(languagePackageName); 
+                ItemLanguagePackage languagePackage = Loader.LoadLanguagePackage(languagePackageName);
                 foreach (var localItem in languagePackage.LocalItems)
                 {
                     if (ItemByKey.TryGetValue(localItem.Key, out var item))
@@ -115,7 +131,7 @@ namespace QFramework
                     }
 
                     done = true;
-                }); 
+                });
             }
 
             while (!done)
@@ -124,7 +140,14 @@ namespace QFramework
 
         public static void AddItemConfig(IItem itemConfig)
         {
-            ItemByKey.Add(itemConfig.GetKey, itemConfig);
+            if (!ItemByKey.ContainsKey(itemConfig.GetKey))
+            {
+                ItemByKey.Add(itemConfig.GetKey, itemConfig);
+            }
+            else
+            {
+                Debug.Log($"尝试添加的键 '{itemConfig.GetKey}' 已存在。");
+            }
         }
 
         public static void Save() => SaverAndLoader.Save(mSlotGroupByKey);

@@ -67,10 +67,12 @@ namespace QFramework
             // 更新TipPanel内容后，强制刷新布局
             LayoutRebuilder.ForceRebuildLayoutImmediate(rectTrans);
 
+            // 获取界面的四个角点
             rectTrans.GetWorldCorners(corners);
             float width = corners[3].x - corners[0].x;
             float height = corners[1].y - corners[0].y;
 
+            // 根据鼠标和屏幕的相对位置，调整生成 TipPanel 的位置
             if (mousePos.y < height && mousePos.x > width)
                 rectTrans.position = mousePos + 0.51f * height * Vector3.up + 0.51f * width * Vector3.left;
             else if (mousePos.y > height && mousePos.x < width)
@@ -79,6 +81,7 @@ namespace QFramework
                 rectTrans.position = mousePos + 0.51f * height * Vector3.up + 0.51f * width * Vector3.right;
             else
                 rectTrans.position = mousePos + 0.51f * height * Vector3.down + 0.51f * width * Vector3.left;
+            // 0.51f 多了0.01f，使Tips和鼠标保持一小段距离
         }
 
         private void OnDestroy()

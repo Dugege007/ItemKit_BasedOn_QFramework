@@ -50,7 +50,7 @@ namespace QFramework.Example
             //    ResLoader = resLoader,
             //};
 
-            ItemKit.LoadItemDatabase("ExampleItemConfigGroup");
+            ItemKit.LoadItemDatabase("ExampleItemDatabase");
             ItemKit.LoadItemLanguagePackage("ItemEnglishPackage");
 
             ItemKit.CreateSlotGroup("物品栏")
@@ -90,7 +90,7 @@ namespace QFramework.Example
             BtnAddItem1.onClick.AddListener(() =>
             {
                 SlotGroup.ItemOperateResult result = ItemKit.GetSlotGroupByKey("物品栏") // 先拿到背包
-                    .AddItem(Items.item_iron_key, 20);    // 再添加物品
+                    .AddItem(Items.item_iron_key, 15);    // 再添加物品
 
                 Debug.Log("剩余未添加物品的数量：" + result.RemainCount);
                 if (!result.Succeed)

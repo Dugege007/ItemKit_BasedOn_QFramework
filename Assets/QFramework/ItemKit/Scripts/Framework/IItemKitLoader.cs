@@ -5,19 +5,19 @@ namespace QFramework
 {
     public interface IItemKitLoader
     {
-        ItemConfigGroup LoadItemDatabase(string databaseName);
+        ItemDatabase LoadItemDatabase(string databaseName);
         ItemLanguagePackage LoadLanguagePackage(string languagePackageName);
 
         // 异步加载，用回调的方式
-        void LoadItemDatabaseAsync(string databaseName, Action<ItemConfigGroup> onLoadFinish);
+        void LoadItemDatabaseAsync(string databaseName, Action<ItemDatabase> onLoadFinish);
         void LoadLanguagePackageAsync(string languagePackageName, Action<ItemLanguagePackage> onLoadFinish);
     }
 
     public class DefaultItemKitLoader : IItemKitLoader
     {
-        public ItemConfigGroup LoadItemDatabase(string databaseName)
+        public ItemDatabase LoadItemDatabase(string databaseName)
         {
-            return Resources.Load<ItemConfigGroup>(databaseName);
+            return Resources.Load<ItemDatabase>(databaseName);
         }
 
         public ItemLanguagePackage LoadLanguagePackage(string languagePackageName)
@@ -25,13 +25,13 @@ namespace QFramework
             return Resources.Load<ItemLanguagePackage>(languagePackageName);
         }
 
-        public void LoadItemDatabaseAsync(string databaseName, Action<ItemConfigGroup> onLoadFinish)
+        public void LoadItemDatabaseAsync(string databaseName, Action<ItemDatabase> onLoadFinish)
         {
             // 最基本的异步加载方式
-            ResourceRequest request = Resources.LoadAsync<ItemConfigGroup>(databaseName);
+            ResourceRequest request = Resources.LoadAsync<ItemDatabase>(databaseName);
             request.completed += operation =>
             {
-                onLoadFinish(request.asset as ItemConfigGroup);
+                onLoadFinish(request.asset as ItemDatabase);
             };
         }
 

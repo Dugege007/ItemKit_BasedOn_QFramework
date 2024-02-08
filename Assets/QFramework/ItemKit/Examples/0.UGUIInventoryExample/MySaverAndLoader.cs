@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace QFramework.Example
@@ -84,8 +82,16 @@ namespace QFramework.Example
                 }
             }
 
-            Debug.Log("加载数据");
+            Debug.Log("加载数据完成");
         }
+
+#if UNITY_EDITOR
+        [UnityEditor.MenuItem("Tools/Clear All Data")]
+        public static void ClearAllData()
+        {
+            PlayerPrefs.DeleteKey("my_item_kit");
+        }
+#endif
 
         public void Clear()
         {

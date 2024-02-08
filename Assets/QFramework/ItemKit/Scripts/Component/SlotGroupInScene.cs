@@ -1,5 +1,4 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,10 +21,15 @@ namespace QFramework
 
         private void Awake()
         {
-            SlotGroup group = ItemKit.CreateSlotGroup(GroupKey);
-            foreach (var slotConfig in InitSlots)
+            // 检查是否已经存在同名的槽位组
+            if (ItemKit.HasSlotGroup(GroupKey) == false)
             {
-                group.CreateSlot(slotConfig.Item, slotConfig.Count);
+                // 如果不存在同名的槽位组，则创建新的槽位组
+                SlotGroup group = ItemKit.CreateSlotGroup(GroupKey);
+                foreach (var slotConfig in InitSlots)
+                {
+                    group.CreateSlot(slotConfig.Item, slotConfig.Count);
+                }
             }
         }
 

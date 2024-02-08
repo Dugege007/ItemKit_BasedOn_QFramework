@@ -58,9 +58,19 @@ namespace QFramework
             }
             else if (Type == UISlotGenerateType.UseExistUISlot)
             {
-                for (int i = 0; i < UISlots.Count; i++)
+                var slotGroup = ItemKit.GetSlotGroupByKey(GroupKey);
+                var slots = slotGroup.Slots;
+
+                if (slots != null && UISlots.Count <= slots.Count)
                 {
-                    UISlots[i].InitWithData(ItemKit.GetSlotGroupByKey(GroupKey).Slots[i]);
+                    for (int i = 0; i < UISlots.Count; i++)
+                    {
+                        UISlots[i].InitWithData(slots[i]);
+                    }
+                }
+                else
+                {
+                    Debug.Log("UISlots 的数量大于 SlotGroup 中的 Slots 数量或 SlotGroup 为 null");
                 }
             }
         }

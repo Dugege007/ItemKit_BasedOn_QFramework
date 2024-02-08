@@ -52,7 +52,7 @@ MonoBehaviour:
     - TypeName: UnityEngine.UI.Button
       PathToRoot: ButtonHolder/BtnLanguage
       MemberName: BtnLanguage
-    ScriptsFolder: Assets/QFramework/ItemKit/Examples/2.UGUIInventoryExample
+    ScriptsFolder: Assets\QFramework\ItemKit\Examples\0.UGUIInventoryExample
     ClassName: UGUIInventoryExample
     Namespace: QFramework.Example
     MainCode: "using UnityEngine;\r\nusing QFramework;\r\n\r\n// 1.\u8BF7\u5728\u83DC\u5355
@@ -61,7 +61,7 @@ MonoBehaviour:
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
       QFramework.Example\r\n{\r\n\tpublic partial class UGUIInventoryExample : ViewController\r\n\t{\r\n\t\tvoid
       Start()\r\n\t\t{\r\n\t\t\t// Code Here\r\n\t\t}\r\n\t}\r\n}\r\n"
-    DesignerCode: "// Generate Id:d2c420db-1395-415a-ab07-fbae589998bb\r\nusing UnityEngine;\r\n\r\n//
+    DesignerCode: "// Generate Id:0fed8b69-40c0-49e2-9a6b-ebe76fdd458b\r\nusing UnityEngine;\r\n\r\n//
       1.\u8BF7\u5728\u83DC\u5355 \u7F16\u8F91\u5668\u6269\u5C55/Namespace Settings
       \u91CC\u8BBE\u7F6E\u547D\u540D\u7A7A\u95F4\r\n// 2.\u547D\u540D\u7A7A\u95F4\u66F4\u6539\u540E\uFF0C\u751F\u6210\u4EE3\u7801\u4E4B\u540E\uFF0C\u9700\u8981\u628A\u903B\u8F91\u4EE3\u7801\u6587\u4EF6\uFF08\u975E
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace

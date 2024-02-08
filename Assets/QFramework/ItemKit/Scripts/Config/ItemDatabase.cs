@@ -7,8 +7,8 @@ using UnityEditor;
 
 namespace QFramework
 {
-    [CreateAssetMenu(menuName = "@ItemKit/Create Item ConfigGroup")]
-    public class ItemConfigGroup : ScriptableObject
+    [CreateAssetMenu(menuName = "@ItemKit/Create Item Database")]
+    public class ItemDatabase : ScriptableObject
     {
         public string NameSpace = "QFramework.Example";
 
@@ -16,21 +16,23 @@ namespace QFramework
         [TableList(ShowIndexLabels = true)]
         public List<ItemConfig> ItemConfigs = new List<ItemConfig>();
 
+#if UNITY_EDITOR
         [Button("添加 ItemConfig", ButtonSizes.Large), GUIColor("yellow")]
         private void AddItemConfig()
         {
             // 创建一个新的 ItemConfig 实例
-            ItemConfig itemConfig = CreateInstance<ItemConfig>();
-            itemConfig.ItemConfigGroup = this;
-            itemConfig.name = nameof(ItemConfig);
-            itemConfig.Name = "新物品";
-            itemConfig.Key = "item_new";
+            ItemConfig itemConfigSO = CreateInstance<ItemConfig>();
+            itemConfigSO.ItemDatabase = this;
+            itemConfigSO.name = nameof(ItemConfig);
+            itemConfigSO.Name = "新物品";
+            itemConfigSO.Key = "item_new";
 
             // 将新创建的 itemConfig 添加到 ItemConfigGroup 的资源中
-            AssetDatabase.AddObjectToAsset(itemConfig, this);
+            AssetDatabase.AddObjectToAsset(itemConfigSO, this);
             // 在 ItemConfigs 列表中添加一个新的元素
-            ItemConfigs.Add(itemConfig);
+            ItemConfigs.Add(itemConfigSO);
 
+            Debug.Log($"添加物品配置: {itemConfigSO.GetKey}");
             // 保存所有更改到资源
             AssetDatabase.SaveAssets();
             // 刷新资源
@@ -41,7 +43,7 @@ namespace QFramework
         {
             // 创建一个新的 ItemConfig 实例
             ItemConfig itemConfigSO = CreateInstance<ItemConfig>();
-            itemConfigSO.ItemConfigGroup = this;
+            itemConfigSO.ItemDatabase = this;
             itemConfigSO.name = itemConfig.Key;
             itemConfigSO.Name = string.Empty;
             itemConfigSO.Key = "item_new";
@@ -85,8 +87,19 @@ namespace QFramework
                         // 为每个 itemDB.ItemConfigs 生成一个静态字符串字段
                         foreach (ItemConfig itemConfig in itemDatabase.ItemConfigs)
                         {
-                            c.Custom($"public static IItem {itemConfig.Key} = ItemKit.ItemByKey[\"{itemConfig.Key}\"];");
-                            c.Custom($"public static string {itemConfig.Key}_key = \"{itemConfig.Key}\";");
+                            // Items 类试图在其静态字段初始化时直接从 ItemKit.ItemByKey 字典中访问项目
+                            // 但这些项目可能还没有被添加到字典中
+                            // 为了更便捷地解决这一问题，可以时候用延迟加载
+                            c.Custom($"private static IItem _{itemConfig.Key};");
+                            c.Custom($"public static IItem {itemConfig.Key} " +
+                                $"{{ get " +
+                                $"{{ if (_{itemConfig.Key} == null) " +
+                                $"_{itemConfig.Key} = ItemKit.ItemByKey[\"{itemConfig.Key}\"]; " +
+                                $"return _{itemConfig.Key}; " +
+                                $"}}" +
+                                $"}}");
+                            c.Custom($"public static string {itemConfig.Key}_key = \"{itemConfig.Key}\";"); 
+                            
                             Debug.Log(itemConfig.Key);
                         }
                     });
@@ -106,6 +119,7 @@ namespace QFramework
             // 刷新 Unity 编辑器的资源数据库
             AssetDatabase.Refresh();
         }
+#endif
 
         private void OnValidate()
         {
