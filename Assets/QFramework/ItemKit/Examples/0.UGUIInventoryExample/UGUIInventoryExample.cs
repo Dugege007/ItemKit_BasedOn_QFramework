@@ -69,7 +69,10 @@ namespace QFramework.Example
 
             ItemKit.CreateSlotGroup("武器")
                 .CreateSlot(null, 0)
-                .Condition(item => item.GetBoolean("IsWeapon"));
+                .Condition(item => item.GetBoolean("IsWeapon")); // 添加限制条件：如果是武器，才可以拖入
+
+            ItemKit.CreateSlotGroup("商店")
+                .Condition(_ => false); // 添加限制条件：不可拖动
 
             ItemKit.Load();
 

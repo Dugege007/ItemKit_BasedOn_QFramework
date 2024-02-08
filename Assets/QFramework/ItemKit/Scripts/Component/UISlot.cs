@@ -59,6 +59,13 @@ namespace QFramework
         public void OnBeginDrag(PointerEventData eventData)
         {
             if (mDragging || Data.Count < 1) return;
+
+            UISlot uiSlot = ItemKit.CurrentSlotPointerOn;
+            if (uiSlot != null)
+            {
+                if (uiSlot.Data.Group.CheckCondition(Data.Item) == false)
+                    return;
+            }
             mDragging = true;
 
             // 为了解决拖拽物品时层级问题

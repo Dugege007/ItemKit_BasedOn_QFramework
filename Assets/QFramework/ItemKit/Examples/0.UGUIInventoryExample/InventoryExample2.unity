@@ -1930,7 +1930,7 @@ GameObject:
   - component: {fileID: 553462438}
   - component: {fileID: 553462437}
   m_Layer: 5
-  m_Name: SlotItemRoot
+  m_Name: ShopItemRoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2157,7 +2157,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 190, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 380, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &575237879
@@ -2648,8 +2648,7 @@ MonoBehaviour:
   Type: 0
   UISlotTemplate: {fileID: 881748289}
   UISlotRoot: {fileID: 975939144}
-  UISlots:
-  - {fileID: 0}
+  UISlots: []
 --- !u!114 &648276880
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3162,6 +3161,7 @@ GameObject:
   - component: {fileID: 792442847}
   - component: {fileID: 792442846}
   - component: {fileID: 792442848}
+  - component: {fileID: 792442849}
   m_Layer: 5
   m_Name: UIShopItem
   m_TagString: Untagged
@@ -3245,7 +3245,31 @@ MonoBehaviour:
   MarkType: 0
   CustomComponentName: UIShopItem
   CustomComment: 
-  mComponentName: UnityEngine.UI.Image
+  mComponentName: QFramework.Example.UIShopItem
+--- !u!114 &792442849
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792442844}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c66e1ed24c01997448dcaeb8f3561687, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Namespace: QFramework.Example
+  ScriptName: UIShopItem
+  ScriptsFolder: Assets/QFramework/ItemKit/Examples/0.UGUIInventoryExample/Shop
+  GeneratePrefab: 0
+  PrefabFolder: Assets/Art/Prefab
+  ArchitectureFullTypeName: 
+  UISlot: {fileID: 1171816129}
+  IconHolder: {fileID: 0}
+  Name: {fileID: 2115758304}
+  Description: {fileID: 1048060078}
+  BtnBuy: {fileID: 1457695535}
+  PriceText: {fileID: 1990157912}
 --- !u!1 &801758862
 GameObject:
   m_ObjectHideFlags: 0
@@ -3357,7 +3381,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 70, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 380, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &817067921
@@ -4962,7 +4986,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 130, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 260, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1076523061
@@ -7821,7 +7845,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 180, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 360, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1708202050
@@ -8387,7 +8411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 270, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 260, y: 0}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1812439342
@@ -9931,7 +9955,7 @@ GameObject:
   - component: {fileID: 1982859880}
   - component: {fileID: 1982859883}
   - component: {fileID: 1982859882}
-  - component: {fileID: 1982859881}
+  - component: {fileID: 1982859884}
   m_Layer: 5
   m_Name: ShopExample
   m_TagString: Untagged
@@ -9961,24 +9985,6 @@ RectTransform:
   m_AnchoredPosition: {x: 600, y: 370}
   m_SizeDelta: {x: 480, y: 400}
   m_Pivot: {x: 0.5, y: 1}
---- !u!114 &1982859881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982859879}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e75f6d4a33e98d4d874d7526f2271b0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  GroupKey: "\u5B9D\u7BB1"
-  Type: 0
-  UISlotTemplate: {fileID: 1171816129}
-  UISlotRoot: {fileID: 553462436}
-  UISlots:
-  - {fileID: 0}
 --- !u!114 &1982859882
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10017,6 +10023,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1982859879}
   m_CullTransparentMesh: 1
+--- !u!114 &1982859884
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982859879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3004ae4e91db734448dd5f9745efde66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Namespace: QFramework.Example
+  ScriptName: ShopExample
+  ScriptsFolder: Assets/QFramework/ItemKit/Examples/0.UGUIInventoryExample/Shop
+  GeneratePrefab: 0
+  PrefabFolder: Assets/Art/Prefab
+  ArchitectureFullTypeName: 
+  UIShopItem: {fileID: 792442849}
+  ShopItemRoot: {fileID: 553462436}
 --- !u!1 &1990157910
 GameObject:
   m_ObjectHideFlags: 0
