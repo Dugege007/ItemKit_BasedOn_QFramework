@@ -14,9 +14,12 @@ namespace QFramework
 
         private Func<IItem, bool> mCondition = _ => true;
 
+        public EasyEvent Changed = new EasyEvent();
+
         public SlotGroup CreateSlot(IItem item = null, int count = 0)
         {
             mSlots.Add(new Slot(item, count, this));
+            Changed.Trigger();
             return this;
         }
 
@@ -26,6 +29,7 @@ namespace QFramework
             {
                 CreateSlot();
             }
+            Changed.Trigger();
             return this;
         }
 
@@ -134,13 +138,15 @@ namespace QFramework
                         {
                             slot.Count += addCount;
                             slot.Changed.Trigger();
+                            Changed.Trigger();
                             return new ItemOperateResult() { Succeed = true, RemainCount = 0, };
                         }
                         else
                         {
                             slot.Count += canAddCount;
-                            slot.Changed.Trigger();
                             addCount -= canAddCount;
+                            slot.Changed.Trigger();
+                            Changed.Trigger();
                         }
                     }
                     else
@@ -158,6 +164,7 @@ namespace QFramework
 
                 slot.Count += addCount;
                 slot.Changed.Trigger();
+                Changed.Trigger();
             }
 
             return new ItemOperateResult() { Succeed = true, RemainCount = 0 };
@@ -198,6 +205,7 @@ namespace QFramework
             }
 
             slot.Changed.Trigger();
+            Changed.Trigger();
         }
 
         public void RemoveItem(string itemKey, int removeCount = 1)

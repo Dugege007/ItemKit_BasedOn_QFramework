@@ -120,6 +120,9 @@ namespace QFramework
 
                                 uiSlot.Data.Changed.Trigger();
                                 Data.Changed.Trigger();
+
+                                uiSlot.Data.Group.Changed.Trigger();
+                                Data.Group.Changed.Trigger();
                             }
                         }
                     }

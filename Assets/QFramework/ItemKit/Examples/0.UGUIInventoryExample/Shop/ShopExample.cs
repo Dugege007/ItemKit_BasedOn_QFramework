@@ -44,52 +44,23 @@ namespace QFramework.Example
         {
             UIShopItem.Hide();
 
-            //ShowBuyItems();
+            ShowBuyItems();
 
-            void RefreshSellItems()
+            BtnBuy.onClick.AddListener(() =>
             {
-                ShopItemRoot.DestroyChildren();
+                ShowBuyItems();
+            });
 
-                HashSet<ShopSellItem> sellItems = new HashSet<ShopSellItem>();
+            BtnSell.onClick.AddListener(() =>
+            {
+                RefreshSellItems();
+            });
 
-                foreach (var slotItem in ItemKit.GetSlotGroupByKey("物品栏").Slots
-                    .Where(s => s.Count > 0)
-                    .Select(s => s.Item)
-                    .ToHashSet())
-                {
-                    sellItems.Add(new ShopSellItem() { Item = slotItem, Count = 1, Price = 5 });
-                }
+            ItemKit.GetSlotGroupByKey("物品栏").Changed.Register(() =>
+            {
+                RefreshSellItems();
 
-                foreach (var sellItem in sellItems)
-                {
-                    int price = sellItem.Price;
-                    IItem item = sellItem.Item;
-
-                    UIShopItem shopItem = UIShopItem.InstantiateWithParent(ShopItemRoot);
-                    shopItem.UISlot.InitWithData(new Slot(item, sellItem.Count, ItemKit.GetSlotGroupByKey("商店")));
-                    shopItem.UISlot.Count.Hide();
-                    shopItem.Name.text = item.GetName;
-                    shopItem.Description.text = item.GetDescription;
-                    shopItem.PriceText.text = price.ToString();
-                    shopItem.BtnBuy.onClick.AddListener(() =>
-                    {
-                        ItemKit.GetSlotGroupByKey("物品栏").RemoveItem(item);
-                        Coin.Value += price;
-                        RefreshSellItems();
-                    });
-
-                    Coin.RegisterWithInitValue(coin =>
-                    {
-                        shopItem.BtnBuy.interactable = true;
-                        shopItem.PriceText.color = Color.green;
-
-                    }).UnRegisterWhenGameObjectDestroyed(shopItem.gameObject);
-
-                    shopItem.Show();
-                }
-            }
-
-            RefreshSellItems();
+            }).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
 
         private void OnGUI()
@@ -100,6 +71,8 @@ namespace QFramework.Example
 
         private void ShowBuyItems()
         {
+            ShopItemRoot.DestroyChildren();
+
             List<ShopBuyItem> buyItems = new List<ShopBuyItem>()
             {
                 new ShopBuyItem() { Item = Items.item_green_sword, Count = 1, Price = 150 },
@@ -119,7 +92,7 @@ namespace QFramework.Example
                 shopItem.Name.text = item.GetName;
                 shopItem.Description.text = item.GetDescription;
                 shopItem.PriceText.text = price.ToString();
-                shopItem.BtnBuy.onClick.AddListener(() =>
+                shopItem.BtnBuyOrSell.onClick.AddListener(() =>
                 {
                     ItemKit.GetSlotGroupByKey("物品栏").AddItem(item);
                     Coin.Value -= price;
@@ -129,12 +102,12 @@ namespace QFramework.Example
                 {
                     if (coin >= price)
                     {
-                        shopItem.BtnBuy.interactable = true;
+                        shopItem.BtnBuyOrSell.interactable = true;
                         shopItem.PriceText.color = Color.white;
                     }
                     else
                     {
-                        shopItem.BtnBuy.interactable = false;
+                        shopItem.BtnBuyOrSell.interactable = false;
                         shopItem.PriceText.color = Color.red;
                     }
 
@@ -144,7 +117,7 @@ namespace QFramework.Example
             }
         }
 
-        private void ShowSellItems()
+        private void RefreshSellItems()
         {
             ShopItemRoot.DestroyChildren();
 
@@ -169,15 +142,16 @@ namespace QFramework.Example
                 shopItem.Name.text = item.GetName;
                 shopItem.Description.text = item.GetDescription;
                 shopItem.PriceText.text = price.ToString();
-                shopItem.BtnBuy.onClick.AddListener(() =>
+                shopItem.BtnBuyOrSell.onClick.AddListener(() =>
                 {
                     ItemKit.GetSlotGroupByKey("物品栏").RemoveItem(item);
                     Coin.Value += price;
+                    RefreshSellItems();
                 });
 
                 Coin.RegisterWithInitValue(coin =>
                 {
-                    shopItem.BtnBuy.interactable = true;
+                    shopItem.BtnBuyOrSell.interactable = true;
                     shopItem.PriceText.color = Color.green;
 
                 }).UnRegisterWhenGameObjectDestroyed(shopItem.gameObject);

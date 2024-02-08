@@ -41,15 +41,15 @@ namespace QFramework
 
         public static void Show(UISlot slot)
         {
-            if (slot.Data.Item != null)
+            if (slot.Data.Item != null && slot.Data.Count > 0)
             {
                 mDefault.Icon.sprite = slot.Data.Item.GetIcon;
                 mDefault.NameText.text = slot.Data.Item.GetName;
                 mDefault.DescriptionText.text = slot.Data.Item.GetDescription;
 
-                mDefault.TipPanel.Show();
-
                 UpdatePosition();
+
+                mDefault.TipPanel.Show();
             }
         }
 

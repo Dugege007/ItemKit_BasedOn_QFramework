@@ -25,6 +25,12 @@ MonoBehaviour:
     - TypeName: RectTransform
       PathToRoot: Scroll View/Viewport/ShopItemRoot
       MemberName: ShopItemRoot
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: BtnBuy
+      MemberName: BtnBuy
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: BtnSell
+      MemberName: BtnSell
     ScriptsFolder: Assets/QFramework/ItemKit/Examples/0.UGUIInventoryExample/Shop
     ClassName: ShopExample
     Namespace: QFramework.Example
@@ -34,9 +40,10 @@ MonoBehaviour:
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
       QFramework.Example\r\n{\r\n\tpublic partial class ShopExample : ViewController\r\n\t{\r\n\t\tvoid
       Start()\r\n\t\t{\r\n\t\t\t// Code Here\r\n\t\t}\r\n\t}\r\n}\r\n"
-    DesignerCode: "// Generate Id:39e74643-bf61-472c-a496-50924579cd11\r\nusing UnityEngine;\r\n\r\n//
+    DesignerCode: "// Generate Id:337af65f-64c6-414a-b9aa-3cd5e4b8be89\r\nusing UnityEngine;\r\n\r\n//
       1.\u8BF7\u5728\u83DC\u5355 \u7F16\u8F91\u5668\u6269\u5C55/Namespace Settings
       \u91CC\u8BBE\u7F6E\u547D\u540D\u7A7A\u95F4\r\n// 2.\u547D\u540D\u7A7A\u95F4\u66F4\u6539\u540E\uFF0C\u751F\u6210\u4EE3\u7801\u4E4B\u540E\uFF0C\u9700\u8981\u628A\u903B\u8F91\u4EE3\u7801\u6587\u4EF6\uFF08\u975E
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
       QFramework.Example\r\n{\r\n\tpublic partial class ShopExample\r\n\t{\r\n\r\n\t\tpublic
-      QFramework.Example.UIShopItem UIShopItem;\r\n\r\n\t\tpublic RectTransform ShopItemRoot;\r\n\r\n\t}\r\n}\r\n"
+      QFramework.Example.UIShopItem UIShopItem;\r\n\r\n\t\tpublic RectTransform ShopItemRoot;\r\n\r\n\t\tpublic
+      UnityEngine.UI.Button BtnBuy;\r\n\r\n\t\tpublic UnityEngine.UI.Button BtnSell;\r\n\r\n\t}\r\n}\r\n"

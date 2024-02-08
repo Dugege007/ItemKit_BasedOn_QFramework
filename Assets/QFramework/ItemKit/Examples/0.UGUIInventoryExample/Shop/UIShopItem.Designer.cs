@@ -1,4 +1,4 @@
-// Generate Id:794afe4c-eff8-4307-aeab-18ebe91e170d
+// Generate Id:0a8f2188-fb16-4ff6-8b7b-b18c2ed9c14c
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -16,7 +16,7 @@ namespace QFramework.Example
 
 		public UnityEngine.UI.Text Description;
 
-		public UnityEngine.UI.Button BtnBuy;
+		public UnityEngine.UI.Button BtnBuyOrSell;
 
 		public UnityEngine.UI.Text PriceText;
 

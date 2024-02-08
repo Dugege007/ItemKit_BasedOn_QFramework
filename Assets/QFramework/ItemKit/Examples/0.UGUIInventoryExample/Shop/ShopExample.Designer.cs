@@ -1,4 +1,4 @@
-// Generate Id:39e74643-bf61-472c-a496-50924579cd11
+// Generate Id:337af65f-64c6-414a-b9aa-3cd5e4b8be89
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -11,6 +11,10 @@ namespace QFramework.Example
 		public QFramework.Example.UIShopItem UIShopItem;
 
 		public RectTransform ShopItemRoot;
+
+		public UnityEngine.UI.Button BtnBuy;
+
+		public UnityEngine.UI.Button BtnSell;
 
 	}
 }
