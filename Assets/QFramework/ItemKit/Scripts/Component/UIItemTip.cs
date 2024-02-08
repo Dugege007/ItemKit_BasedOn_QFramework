@@ -81,7 +81,6 @@ namespace QFramework
                 rectTrans.position = mousePos + 0.51f * height * Vector3.up + 0.51f * width * Vector3.right;
             else
                 rectTrans.position = mousePos + 0.51f * height * Vector3.down + 0.51f * width * Vector3.left;
-            // 0.51f 多了0.01f，使Tips和鼠标保持一小段距离
         }
 
         private void OnDestroy()

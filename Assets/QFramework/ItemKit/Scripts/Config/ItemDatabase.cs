@@ -92,10 +92,10 @@ namespace QFramework
                             // 为了更便捷地解决这一问题，可以时候用延迟加载
                             c.Custom($"private static IItem _{itemConfig.Key};");
                             c.Custom($"public static IItem {itemConfig.Key} " +
-                                $"{{ get " +
-                                $"{{ if (_{itemConfig.Key} == null) " +
-                                $"_{itemConfig.Key} = ItemKit.ItemByKey[\"{itemConfig.Key}\"]; " +
-                                $"return _{itemConfig.Key}; " +
+                                $"{{ get\n" +
+                                $"{{ if (_{itemConfig.Key} == null)\n" +
+                                $"_{itemConfig.Key} = ItemKit.ItemByKey[\"{itemConfig.Key}\"];\n" +
+                                $"return _{itemConfig.Key};\n" +
                                 $"}}" +
                                 $"}}");
                             c.Custom($"public static string {itemConfig.Key}_key = \"{itemConfig.Key}\";"); 

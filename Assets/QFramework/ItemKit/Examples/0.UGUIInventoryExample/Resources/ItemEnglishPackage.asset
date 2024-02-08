@@ -17,17 +17,27 @@ MonoBehaviour:
   LocalItems:
   - Icon: {fileID: 2140489303, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
     Key: item_green_sword
-    Name: 00
-    Description: "\u8FD9\u662F\u4E00\u628A\u7EFF\u8272\u7684\u6BD2\u5C5E\u6027\u5251"
+    Name: Green Sword
+    Description: 'This is a Green Sword
+
+      5KG
+
+      ATK+10
+
+      SSS'
   - Icon: {fileID: -1187671710, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
     Key: item_iron
-    Name: 22
-    Description: "\u8FD9\u662F\u4E00\u4E2A\u94C1\u5757"
+    Name: Iron
+    Description: 'This is an Iron
+
+      2KG'
   - Icon: {fileID: -42529867, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
     Key: item_paper
-    Name: 33
-    Description: "\u8FD9\u662F\u4E00\u5F20\u7EB8"
+    Name: Paper
+    Description: This is a Paper
   - Icon: {fileID: 1621808698, guid: 2635526cdd203e446ac15954fb3ce813, type: 3}
     Key: item_wood
-    Name: 44
-    Description: "\u8FD9\u662F\u4E00\u5757\u6728\u5934"
+    Name: Wood
+    Description: 'This is a Wood
+
+      2KG'

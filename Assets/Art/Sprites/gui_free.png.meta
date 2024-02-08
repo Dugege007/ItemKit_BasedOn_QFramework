@@ -202,13 +202,13 @@ TextureImporter:
       name: gui_free_3
       rect:
         serializedVersion: 2
-        x: 147
+        x: 146
         y: 114
         width: 42
         height: 28
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 6, y: 6, z: 4, w: 5}
       outline: []
       physicsShape: []
       tessellationDetail: 0
