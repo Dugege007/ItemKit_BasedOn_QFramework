@@ -2066,7 +2066,6 @@ GameObject:
   - component: {fileID: 553462436}
   - component: {fileID: 553462439}
   - component: {fileID: 553462438}
-  - component: {fileID: 553462437}
   m_Layer: 5
   m_Name: ShopItemRoot
   m_TagString: Untagged
@@ -2093,22 +2092,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &553462437
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 553462435}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MarkType: 0
-  CustomComponentName: SlotItemRoot
-  CustomComment: 
-  mComponentName: RectTransform
 --- !u!114 &553462438
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3298,7 +3281,6 @@ GameObject:
   - component: {fileID: 792442845}
   - component: {fileID: 792442847}
   - component: {fileID: 792442846}
-  - component: {fileID: 792442848}
   - component: {fileID: 792442849}
   m_Layer: 5
   m_Name: UIShopItem
@@ -3368,22 +3350,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 792442844}
   m_CullTransparentMesh: 1
---- !u!114 &792442848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 792442844}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d51f3a7c41ab0346b49ae50d456bece, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  MarkType: 0
-  CustomComponentName: UIShopItem
-  CustomComment: 
-  mComponentName: QFramework.Example.UIShopItem
 --- !u!114 &792442849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10327,6 +10293,7 @@ GameObject:
   - component: {fileID: 1982859883}
   - component: {fileID: 1982859882}
   - component: {fileID: 1982859884}
+  - component: {fileID: 1982859885}
   m_Layer: 5
   m_Name: ShopExample
   m_TagString: Untagged
@@ -10414,10 +10381,22 @@ MonoBehaviour:
   GeneratePrefab: 0
   PrefabFolder: Assets/Art/Prefab
   ArchitectureFullTypeName: 
-  UIShopItem: {fileID: 792442849}
-  ShopItemRoot: {fileID: 553462436}
   BtnBuy: {fileID: 352018379}
   BtnSell: {fileID: 1716005617}
+--- !u!114 &1982859885
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1982859879}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12588a8706bcfd64fa06dd94f32f30ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  UIShopItemTemplate: {fileID: 792442849}
+  ShopItemRoot: {fileID: 553462436}
 --- !u!1 &1990157910
 GameObject:
   m_ObjectHideFlags: 0
