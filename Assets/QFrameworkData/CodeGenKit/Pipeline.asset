@@ -20,23 +20,58 @@ MonoBehaviour:
     NameToFullName: []
     BindInfos:
     - TypeName: UnityEngine.UI.Button
-      PathToRoot: BtnBuy
-      MemberName: BtnBuy
+      PathToRoot: ButtonHolder/BtnAddItem1
+      MemberName: BtnAddItem1
     - TypeName: UnityEngine.UI.Button
-      PathToRoot: BtnSell
-      MemberName: BtnSell
-    ScriptsFolder: Assets/QFramework/ItemKit/Examples/0.UGUIInventoryExample/Shop
-    ClassName: ShopExample
+      PathToRoot: ButtonHolder/BtnRemoveItem1
+      MemberName: BtnRemoveItem1
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnAddItem2
+      MemberName: BtnAddItem2
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnRemoveItem2
+      MemberName: BtnRemoveItem2
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnAddItem3
+      MemberName: BtnAddItem3
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnRemoveItem3
+      MemberName: BtnRemoveItem3
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnTreasureBox
+      MemberName: BtnTreasureBox
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnTreasureBox2
+      MemberName: BtnTreasureBox2
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnShop1
+      MemberName: BtnShop1
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnShop2
+      MemberName: BtnShop2
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: ButtonHolder/BtnLanguage
+      MemberName: BtnLanguage
+    ScriptsFolder: Assets\QFramework\ItemKit\Examples\0.UGUIInventoryExample
+    ClassName: UGUIInventoryExample
     Namespace: QFramework.Example
     MainCode: "using UnityEngine;\r\nusing QFramework;\r\n\r\n// 1.\u8BF7\u5728\u83DC\u5355
       \u7F16\u8F91\u5668\u6269\u5C55/Namespace Settings \u91CC\u8BBE\u7F6E\u547D\u540D\u7A7A\u95F4\r\n//
       2.\u547D\u540D\u7A7A\u95F4\u66F4\u6539\u540E\uFF0C\u751F\u6210\u4EE3\u7801\u4E4B\u540E\uFF0C\u9700\u8981\u628A\u903B\u8F91\u4EE3\u7801\u6587\u4EF6\uFF08\u975E
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
-      QFramework.Example\r\n{\r\n\tpublic partial class ShopExample : ViewController\r\n\t{\r\n\t\tvoid
+      QFramework.Example\r\n{\r\n\tpublic partial class UGUIInventoryExample : ViewController\r\n\t{\r\n\t\tvoid
       Start()\r\n\t\t{\r\n\t\t\t// Code Here\r\n\t\t}\r\n\t}\r\n}\r\n"
-    DesignerCode: "// Generate Id:afa9e86d-1469-4ced-85c4-097d480d4d87\r\nusing UnityEngine;\r\n\r\n//
+    DesignerCode: "// Generate Id:4fea8cd8-7611-48a7-9e41-21b84af4bdaa\r\nusing UnityEngine;\r\n\r\n//
       1.\u8BF7\u5728\u83DC\u5355 \u7F16\u8F91\u5668\u6269\u5C55/Namespace Settings
       \u91CC\u8BBE\u7F6E\u547D\u540D\u7A7A\u95F4\r\n// 2.\u547D\u540D\u7A7A\u95F4\u66F4\u6539\u540E\uFF0C\u751F\u6210\u4EE3\u7801\u4E4B\u540E\uFF0C\u9700\u8981\u628A\u903B\u8F91\u4EE3\u7801\u6587\u4EF6\uFF08\u975E
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
-      QFramework.Example\r\n{\r\n\tpublic partial class ShopExample\r\n\t{\r\n\r\n\t\tpublic
-      UnityEngine.UI.Button BtnBuy;\r\n\r\n\t\tpublic UnityEngine.UI.Button BtnSell;\r\n\r\n\t}\r\n}\r\n"
+      QFramework.Example\r\n{\r\n\tpublic partial class UGUIInventoryExample\r\n\t{\r\n\r\n\t\tpublic
+      UnityEngine.UI.Button BtnAddItem1;\r\n\r\n\t\tpublic UnityEngine.UI.Button
+      BtnRemoveItem1;\r\n\r\n\t\tpublic UnityEngine.UI.Button BtnAddItem2;\r\n\r\n\t\tpublic
+      UnityEngine.UI.Button BtnRemoveItem2;\r\n\r\n\t\tpublic UnityEngine.UI.Button
+      BtnAddItem3;\r\n\r\n\t\tpublic UnityEngine.UI.Button BtnRemoveItem3;\r\n\r\n\t\tpublic
+      UnityEngine.UI.Button BtnTreasureBox;\r\n\r\n\t\tpublic UnityEngine.UI.Button
+      BtnTreasureBox2;\r\n\r\n\t\tpublic UnityEngine.UI.Button BtnShop1;\r\n\r\n\t\tpublic
+      UnityEngine.UI.Button BtnShop2;\r\n\r\n\t\tpublic UnityEngine.UI.Button BtnLanguage;\r\n\r\n\t\tpublic
+      UnityEngine.GameObject TreasureBoxExample;\r\n\r\n\t\tpublic QFramework.Example.UIShop
+      UIShop;\r\n\r\n\t}\r\n}\r\n"

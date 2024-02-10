@@ -148,6 +148,7 @@ namespace QFramework.Example
             });
             #endregion
 
+            // 宝箱
             BtnTreasureBox.onClick.AddListener(() =>
             {
                 UISlotGroup group = TreasureBoxExample.GetComponent<UISlotGroup>();
@@ -158,6 +159,18 @@ namespace QFramework.Example
             {
                 UISlotGroup group = TreasureBoxExample.GetComponent<UISlotGroup>();
                 group.RefreshWithChangeGroupKey("宝箱2");
+            });
+
+            // 商店
+            BtnShop1.onClick.AddListener(() =>
+            {
+                ShopComponent shopComponent = BtnShop1.GetComponent<ShopComponent>();
+                UIShop.Show(shopComponent.BuyItems);
+            });
+
+            BtnShop2.onClick.AddListener(() =>
+            {
+                ShopComponent shopComponent = BtnShop1.GetComponent<ShopComponent>();
             });
 
             void UpdateLanguageText()
