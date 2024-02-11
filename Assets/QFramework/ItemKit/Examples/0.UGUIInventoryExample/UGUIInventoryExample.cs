@@ -167,31 +167,47 @@ namespace QFramework.Example
             BtnShop1.onClick.AddListener(() =>
             {
                 ShopConfig shopConfig = BtnShop1.GetComponent<ShopConfig>();
-                UIShop.Show(shopConfig.BuyItems);
-
                 UIShop.Title.text = shopConfig.ShopName;
+
+                // 出售
+                Dictionary<IItem, Func<int>> sellPriceTable = new Dictionary<IItem, Func<int>>();
+                foreach (var sellItem in shopConfig.SellItems)
+                    sellPriceTable.Add(sellItem.Item, () => sellItem.Price);
+
+                // 购买
+                Dictionary<IItem, Func<int>> buyPriceTable = new Dictionary<IItem, Func<int>>();
+                foreach (var buyItem in shopConfig.BuyItems)
+                    buyPriceTable.Add(buyItem.Item, () => buyItem.Price);
+
+                UIShop.ShowWithPriceTables(buyPriceTable, sellPriceTable);
             });
 
             BtnShop2.onClick.AddListener(() =>
             {
-                ShopConfig shopConfig = BtnShop1.GetComponent<ShopConfig>();
-
-                UIShop.Show(new List<ShopBuyItem>()
-                    {
-                        new ShopBuyItem()
-                        {
-                            Item = Items.item_green_sword as ItemConfig, Count = 1,
-                            Price = 150,
-                            PriceGetter = () =>
-                                ItemKit.GetSlotGroupByKey("物品栏").GetItemCount(Items.item_green_sword) + 5
-                        },
-                        new ShopBuyItem() { Item = Items.item_iron as ItemConfig, Count = 1, Price = 20 },
-                        new ShopBuyItem() { Item = Items.item_iron as ItemConfig, Count = 5, Price = 90 },
-                        new ShopBuyItem() { Item = Items.item_wood as ItemConfig, Count = 1, Price = 10 },
-                        new ShopBuyItem() { Item = Items.item_paper as ItemConfig, Count = 1, Price = 2 },
-                    });
-
+                ShopConfig shopConfig = BtnShop2.GetComponent<ShopConfig>();
                 UIShop.Title.text = shopConfig.ShopName;
+
+                UIShop.ShowWithPriceTables(
+                    new Dictionary<IItem, Func<int>>()
+                        {
+                            {
+                                Items.item_green_sword, 
+                                () => ItemKit.GetSlotGroupByKey("物品栏")
+                                    .GetItemCount(Items.item_green_sword) + 5
+                            },
+                        },
+
+                    new Dictionary<IItem, Func<int>>()
+                        {
+                            { 
+                                Items.item_green_sword, 
+                                () => ItemKit.GetSlotGroupByKey("物品栏")
+                                    .GetItemCount(Items.item_green_sword) * 2 },
+                            {
+                                Items.item_iron,
+                                () => 5 
+                            },
+                        });
             });
 
             // 语言

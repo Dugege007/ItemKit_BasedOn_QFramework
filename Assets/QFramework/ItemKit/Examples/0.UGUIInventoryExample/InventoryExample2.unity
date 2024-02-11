@@ -1014,9 +1014,13 @@ MonoBehaviour:
   - Item: {fileID: -9185990656524690369, guid: 3bc264529660bd545ada65c803cbc023, type: 2}
     Count: 1
     Price: 10
+  SellItems:
+  - Item: {fileID: -4444599809156488681, guid: 3bc264529660bd545ada65c803cbc023, type: 2}
+    Count: 1
+    Price: 5
   - Item: {fileID: 2717077468998995653, guid: 3bc264529660bd545ada65c803cbc023, type: 2}
-    Count: 5
-    Price: 90
+    Count: 1
+    Price: 50
 --- !u!1 &161355385
 GameObject:
   m_ObjectHideFlags: 0
@@ -5182,6 +5186,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ShopName: "\u5546\u5E972"
   BuyItems: []
+  SellItems: []
 --- !u!1 &1056304512
 GameObject:
   m_ObjectHideFlags: 0

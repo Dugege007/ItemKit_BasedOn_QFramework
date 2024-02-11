@@ -7,24 +7,6 @@ using System;
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
 namespace QFramework.Example
 {
-    [Serializable]
-    public class ShopBuyItem
-    {
-        public ItemConfig Item;
-        public int Count;
-        public int Price;
-        public Func<int> PriceGetter;
-    }
-
-    [Serializable]
-    public class ShopSellItem
-    {
-        public ItemConfig Item;
-        public int Count;
-        public int Price;
-        public Func<int> PriceGetter;
-    }
-
     public partial class UIShop : ViewController
     {
         public static BindableProperty<int> Coin = new(100);
@@ -55,18 +37,18 @@ namespace QFramework.Example
 
             BtnBuy.onClick.AddListener(() =>
             {
-                Show(mBuyItems);
+                ShowBuyItems(mBuyPriceTable);
             });
 
             BtnSell.onClick.AddListener(() =>
             {
-                RefreshSellItems();
+                ShowSellItems(mSellPriceTable);
             });
 
             ItemKit.GetSlotGroupByKey("物品栏").Changed.Register(() =>
             {
                 if (Mode == ShopMode.Sell)
-                    RefreshSellItems();
+                    ShowSellItems(mSellPriceTable);
 
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -77,75 +59,97 @@ namespace QFramework.Example
             GUILayout.Label("Coin: " + Coin.Value);
         }
 
-        private IEnumerable<ShopBuyItem> mBuyItems;
+        public void ShowWithPriceTables(Dictionary<IItem, Func<int>> buyPriceTable, Dictionary<IItem, Func<int>> sellPriceTable)
+        {
+            mBuyPriceTable = buyPriceTable;
+            mSellPriceTable = sellPriceTable;
 
-        public void Show(IEnumerable<ShopBuyItem> buyItems)
+            ShowBuyItems(mBuyPriceTable);
+        }
+
+        private Dictionary<IItem, Func<int>> mBuyPriceTable;
+
+        public void ShowBuyItems(Dictionary<IItem, Func<int>> buyPriceTable)
         {
             Mode = ShopMode.Buy;
-            mBuyItems = buyItems;
+            mBuyPriceTable = buyPriceTable;
 
             ShopItemRoot.DestroyChildren();
 
-            foreach (var buyItem in buyItems)
+            foreach (var buyItem in buyPriceTable)
             {
-                IItem item = buyItem.Item;
+                IItem item = buyItem.Key;
+                Func<int> priceGetter = buyItem.Value;
 
                 UIShopItem uiShopItem = UIShopItem
                     .InstantiateWithParent(ShopItemRoot)
-                    .InitWithData(item, buyItem.Count)
+                    .InitWithData(item)
                     .Show();
 
-                ShopBuyItem uiShopItemTemp = buyItem;
+                IItem uiShopItemTemp = item;
 
                 Coin.RegisterWithInitValue(coin =>
                 {
-                    if (buyItem.PriceGetter != null)
-                        buyItem.Price = buyItem.PriceGetter();
-
-                    uiShopItem.UpdateBuyPriceText(Coin.Value, uiShopItemTemp.Price);
+                    uiShopItem.UpdateBuyPriceText(Coin.Value, priceGetter());
 
                 }).UnRegisterWhenGameObjectDestroyed(uiShopItem.gameObject);
 
                 uiShopItem.BtnBuyOrSell.onClick.AddListener(() =>
                 {
-                    ItemKit.GetSlotGroupByKey("物品栏").AddItem(item);
-                    Coin.Value -= buyItem.Price;
+                    ItemKit.GetSlotGroupByKey("物品栏").AddItem(uiShopItemTemp);
+                    Coin.Value -= mBuyPriceTable[uiShopItemTemp]();
 
-                    if (buyItem.PriceGetter != null)
-                    {
-                        buyItem.Price = buyItem.PriceGetter();
-                        uiShopItem.UpdateBuyPriceText(Coin.Value, uiShopItemTemp.Price);
-                    }
+                    uiShopItem.UpdateBuyPriceText(Coin.Value, priceGetter());
                 });
             }
 
             this.Show();
         }
 
-        public void Show(IEnumerable<ShopSellItem> sellItems)
+        private Dictionary<IItem, Func<int>> mSellPriceTable;
+
+        public void ShowSellItems(Dictionary<IItem, Func<int>> sellPriceTable)
         {
+            mSellPriceTable = sellPriceTable;
+            HashSet<ShopSellItem> sellItems = new HashSet<ShopSellItem>();
+
+            foreach (var slotItem in ItemKit.GetSlotGroupByKey("物品栏").Slots
+                .Where(s => s.Count > 0)
+                .Select(s => s.Item)
+                .ToHashSet())
+            {
+                if (mSellPriceTable != null && mSellPriceTable.ContainsKey(slotItem))
+                {
+                    sellItems.Add(new ShopSellItem()
+                    {
+                        Item = slotItem as ItemConfig,
+                        Count = 1,
+                        Price = mSellPriceTable[slotItem]()
+                    });
+                }
+            }
+
             Mode = ShopMode.Sell;
 
             ShopItemRoot.DestroyChildren();
 
-            foreach (var sellItem in sellItems)
+            foreach (var shopSellItem in sellItems)
             {
-                int price = sellItem.Price;
-                IItem item = sellItem.Item;
+                int price = shopSellItem.Price;
+                IItem item = shopSellItem.Item;
 
                 UIShopItem uiShopItem = UIShopItem.InstantiateWithParent(ShopItemRoot);
-                uiShopItem.UISlot.InitWithData(new Slot(item, sellItem.Count, ItemKit.GetSlotGroupByKey("商店")));
+                uiShopItem.UISlot.InitWithData(new Slot(item, shopSellItem.Count, ItemKit.GetSlotGroupByKey("商店")));
                 uiShopItem.UISlot.Count.Hide();
                 uiShopItem.Name.text = item.GetName;
                 uiShopItem.Description.text = item.GetDescription;
                 uiShopItem.PriceText.text = price.ToString();
 
-                ShopSellItem shopSellItem = sellItem;
                 uiShopItem.BtnBuyOrSell.onClick.AddListener(() =>
                 {
                     Coin.Value += price;
                     ItemKit.GetSlotGroupByKey("物品栏").RemoveItem(item);
-                    RefreshSellItems();
+                    ShowSellItems(mSellPriceTable);
                 });
 
                 Coin.RegisterWithInitValue(coin =>
@@ -156,21 +160,6 @@ namespace QFramework.Example
                 }).UnRegisterWhenGameObjectDestroyed(uiShopItem.gameObject);
 
                 uiShopItem.Show();
-            }
-
-            this.Show();
-        }
-
-        private void RefreshSellItems()
-        {
-            HashSet<ShopSellItem> sellItems = new HashSet<ShopSellItem>();
-
-            foreach (var slotItem in ItemKit.GetSlotGroupByKey("物品栏").Slots
-                .Where(s => s.Count > 0)
-                .Select(s => s.Item)
-                .ToHashSet())
-            {
-                sellItems.Add(new ShopSellItem() { Item = slotItem as ItemConfig, Count = 1, Price = 5 });
             }
         }
     }
