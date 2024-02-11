@@ -13,6 +13,7 @@ namespace QFramework.Example
         public ItemConfig Item;
         public int Count;
         public int Price;
+        public Func<int> PriceGetter;
     }
 
     [Serializable]
@@ -21,6 +22,7 @@ namespace QFramework.Example
         public ItemConfig Item;
         public int Count;
         public int Price;
+        public Func<int> PriceGetter;
     }
 
     public partial class UIShop : ViewController
@@ -86,37 +88,35 @@ namespace QFramework.Example
 
             foreach (var buyItem in buyItems)
             {
-                int price = buyItem.Price;
                 IItem item = buyItem.Item;
 
-                UIShopItem uiShopItem = UIShopItem.InstantiateWithParent(ShopItemRoot);
-                uiShopItem.UISlot.InitWithData(new Slot(item, buyItem.Count, ItemKit.GetSlotGroupByKey("商店")));
-                uiShopItem.Name.text = item.GetName;
-                uiShopItem.Description.text = item.GetDescription;
-                uiShopItem.PriceText.text = price.ToString();
+                UIShopItem uiShopItem = UIShopItem
+                    .InstantiateWithParent(ShopItemRoot)
+                    .InitWithData(item, buyItem.Count)
+                    .Show();
+
+                ShopBuyItem uiShopItemTemp = buyItem;
 
                 Coin.RegisterWithInitValue(coin =>
                 {
-                    if (coin >= price)
-                    {
-                        uiShopItem.BtnBuyOrSell.interactable = true;
-                        uiShopItem.PriceText.color = Color.white;
-                    }
-                    else
-                    {
-                        uiShopItem.BtnBuyOrSell.interactable = false;
-                        uiShopItem.PriceText.color = Color.red;
-                    }
+                    if (buyItem.PriceGetter != null)
+                        buyItem.Price = buyItem.PriceGetter();
+
+                    uiShopItem.UpdateBuyPriceText(Coin.Value, uiShopItemTemp.Price);
 
                 }).UnRegisterWhenGameObjectDestroyed(uiShopItem.gameObject);
 
                 uiShopItem.BtnBuyOrSell.onClick.AddListener(() =>
                 {
                     ItemKit.GetSlotGroupByKey("物品栏").AddItem(item);
-                    Coin.Value -= price;
-                });
+                    Coin.Value -= buyItem.Price;
 
-                uiShopItem.Show();
+                    if (buyItem.PriceGetter != null)
+                    {
+                        buyItem.Price = buyItem.PriceGetter();
+                        uiShopItem.UpdateBuyPriceText(Coin.Value, uiShopItemTemp.Price);
+                    }
+                });
             }
 
             this.Show();

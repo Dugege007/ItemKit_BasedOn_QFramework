@@ -16,6 +16,13 @@ namespace QFramework
 
         public EasyEvent Changed = new EasyEvent();
 
+        public int GetItemCount(IItem item)
+        {
+            return Slots
+                .Where(slot => slot.Count > 0 && slot.Item == item)
+                .Sum(slot => slot.Count);
+        }
+
         public SlotGroup CreateSlot(IItem item = null, int count = 0)
         {
             mSlots.Add(new Slot(item, count, this));
