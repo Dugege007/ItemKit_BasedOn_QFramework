@@ -1,6 +1,7 @@
 using UnityEngine;
 using System;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
@@ -164,13 +165,26 @@ namespace QFramework.Example
             // 商店
             BtnShop1.onClick.AddListener(() =>
             {
-                ShopComponent shopComponent = BtnShop1.GetComponent<ShopComponent>();
-                UIShop.Show(shopComponent.BuyItems);
+                ShopConfig shopConfig = BtnShop1.GetComponent<ShopConfig>();
+                UIShop.Show(shopConfig.BuyItems);
+
+                UIShop.Title.text = shopConfig.ShopName;
             });
 
             BtnShop2.onClick.AddListener(() =>
             {
-                ShopComponent shopComponent = BtnShop1.GetComponent<ShopComponent>();
+                ShopConfig shopConfig = BtnShop1.GetComponent<ShopConfig>();
+
+                UIShop.Show(new List<ShopBuyItem>()
+                    {
+                        new ShopBuyItem() { Item = Items.item_green_sword as ItemConfig, Count = 1, Price = 150 },
+                        new ShopBuyItem() { Item = Items.item_iron as ItemConfig, Count = 1, Price = 20 },
+                        new ShopBuyItem() { Item = Items.item_iron as ItemConfig, Count = 5, Price = 90 },
+                        new ShopBuyItem() { Item = Items.item_wood as ItemConfig, Count = 1, Price = 10 },
+                        new ShopBuyItem() { Item = Items.item_paper as ItemConfig, Count = 1, Price = 2 },
+                    });
+
+                UIShop.Title.text = shopConfig.ShopName;
             });
 
             void UpdateLanguageText()

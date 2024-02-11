@@ -27,6 +27,13 @@ namespace QFramework.Example
     {
         public static BindableProperty<int> Coin = new(100);
 
+        public enum ShopMode
+        {
+            Buy,
+            Sell,
+        }
+
+        public ShopMode Mode = ShopMode.Buy;
 
         private void Awake()
         {
@@ -44,11 +51,9 @@ namespace QFramework.Example
         {
             UIShopItem.Hide();
 
-            ShowBuyItems();
-
             BtnBuy.onClick.AddListener(() =>
             {
-                ShowBuyItems();
+                Show(mBuyItems);
             });
 
             BtnSell.onClick.AddListener(() =>
@@ -58,7 +63,8 @@ namespace QFramework.Example
 
             ItemKit.GetSlotGroupByKey("物品栏").Changed.Register(() =>
             {
-                RefreshSellItems();
+                if (Mode == ShopMode.Sell)
+                    RefreshSellItems();
 
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -69,8 +75,13 @@ namespace QFramework.Example
             GUILayout.Label("Coin: " + Coin.Value);
         }
 
+        private IEnumerable<ShopBuyItem> mBuyItems;
+
         public void Show(IEnumerable<ShopBuyItem> buyItems)
         {
+            Mode = ShopMode.Buy;
+            mBuyItems = buyItems;
+
             ShopItemRoot.DestroyChildren();
 
             foreach (var buyItem in buyItems)
@@ -113,6 +124,8 @@ namespace QFramework.Example
 
         public void Show(IEnumerable<ShopSellItem> sellItems)
         {
+            Mode = ShopMode.Sell;
+
             ShopItemRoot.DestroyChildren();
 
             foreach (var sellItem in sellItems)
@@ -146,18 +159,6 @@ namespace QFramework.Example
             }
 
             this.Show();
-        }
-
-        private void ShowBuyItems()
-        {
-            List<ShopBuyItem> buyItems = new List<ShopBuyItem>()
-            {
-                new ShopBuyItem() { Item = Items.item_green_sword as ItemConfig, Count = 1, Price = 150 },
-                new ShopBuyItem() { Item = Items.item_iron as ItemConfig, Count = 1, Price = 20 },
-                new ShopBuyItem() { Item = Items.item_iron as ItemConfig, Count = 5, Price = 90 },
-                new ShopBuyItem() { Item = Items.item_wood as ItemConfig, Count = 1, Price = 10 },
-                new ShopBuyItem() { Item = Items.item_paper as ItemConfig, Count = 1, Price = 2 },
-            };
         }
 
         private void RefreshSellItems()

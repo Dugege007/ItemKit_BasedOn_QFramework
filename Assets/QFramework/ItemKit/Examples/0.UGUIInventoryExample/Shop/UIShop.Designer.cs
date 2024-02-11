@@ -1,4 +1,4 @@
-// Generate Id:a8bb73f2-492f-4920-b25b-61d57ca79072
+// Generate Id:50b29f95-50f0-4967-b42b-61f27f724fa0
 using UnityEngine;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
@@ -7,6 +7,8 @@ namespace QFramework.Example
 {
 	public partial class UIShop
 	{
+
+		public UnityEngine.UI.Text Title;
 
 		public QFramework.Example.UIShopItem UIShopItem;
 
