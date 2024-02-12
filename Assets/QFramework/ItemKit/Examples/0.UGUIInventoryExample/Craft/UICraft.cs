@@ -29,9 +29,33 @@ namespace QFramework.Example
             // 生成
             craftItem.NeedItemSlot.InitWithData(new Slot(Items.item_green_sword, gCount, ItemKit.GetSlotGroupByKey("锻造")));
 
+            SlotGroup slotGroup = ItemKit.GetSlotGroupByKey("物品栏");
+
+            void UpdateButtonView()
+            {
+                int count = slotGroup.GetItemCount(Items.item_iron);
+                if (count >= needCount)
+                    craftItem.BtnCraft.interactable = true;
+                else
+                    craftItem.BtnCraft.interactable = false;
+            }
+
+            UpdateButtonView();
+
+            slotGroup.Changed.Register(() =>
+            {
+                UpdateButtonView();
+
+            }).UnRegisterWhenGameObjectDestroyed(craftItem.gameObject);
+
             craftItem.BtnCraft.onClick.AddListener(() =>
             {
-
+                int count = slotGroup.GetItemCount(Items.item_iron);
+                if (count >= needCount)
+                {
+                    slotGroup.RemoveItem(Items.item_iron, needCount);
+                    slotGroup.AddItem(Items.item_green_sword);
+                }
             });
 
             craftItem.Show();
