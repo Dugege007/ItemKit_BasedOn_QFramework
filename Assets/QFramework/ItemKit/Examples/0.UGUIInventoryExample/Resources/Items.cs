@@ -1,6 +1,3 @@
-using UnityEngine;
-using QFramework;
-
 namespace QFramework.Example
 {
     public class Items
