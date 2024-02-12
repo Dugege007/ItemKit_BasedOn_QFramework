@@ -9,31 +9,19 @@ namespace QFramework.Example
         {
             public IItem Item;
             public Func<int> PriceGetter;
-            public bool Countable;
-            public int Count;
+            public Func<int> CountGetter;
+            public Action OnBuy;
         }
 
         public Dictionary<IItem, BuyItem> Table = new Dictionary<IItem, BuyItem>();
 
-        public void AddCountable(IItem item, Func<int> priceGetter, int count)
+        public void Add(IItem item, Func<int> priceGetter, Func<int> countGetter)
         {
             Table.Add(item, new BuyItem()
             {
                 Item = item,
                 PriceGetter = priceGetter,
-                Countable = true,
-                Count = count
-            });
-        }
-
-        public void Add(IItem item, Func<int> priceGetter)
-        {
-            Table.Add(item, new BuyItem()
-            {
-                Item = item,
-                PriceGetter = priceGetter,
-                Countable = false,
-                Count = 0
+                CountGetter = countGetter,
             });
         }
 
@@ -44,7 +32,7 @@ namespace QFramework.Example
 
         public int GetCount(IItem item)
         {
-            return Table[item].Count;
+            return Table[item].CountGetter();
         }
     }
 }

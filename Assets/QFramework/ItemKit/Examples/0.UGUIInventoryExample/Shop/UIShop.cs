@@ -80,13 +80,18 @@ namespace QFramework.Example
             {
                 IItem item = kv.Key;
                 Func<int> priceGetter = kv.Value.PriceGetter;
+                Func<int> countGetter = kv.Value.CountGetter;
+                Action onBuy = kv.Value.OnBuy;
 
                 UIShopItem uiShopItem = UIShopItem
                     .InstantiateWithParent(ShopItemRoot)
                     .InitWithData(item)
                     .Show();
 
-                IItem uiShopItemTemp = item;
+                IItem buyItem = item;
+
+                if (countGetter != null)
+                    uiShopItem.UISlot.Count.text = countGetter().ToString();
 
                 Coin.RegisterWithInitValue(coin =>
                 {
@@ -96,10 +101,20 @@ namespace QFramework.Example
 
                 uiShopItem.BtnBuyOrSell.onClick.AddListener(() =>
                 {
-                    ItemKit.GetSlotGroupByKey("物品栏").AddItem(uiShopItemTemp);
-                    Coin.Value -= mBuyTable.GetPrice(uiShopItemTemp);
+                    ItemKit.GetSlotGroupByKey("物品栏").AddItem(buyItem);
+                    Coin.Value -= mBuyTable.GetPrice(buyItem);
 
                     uiShopItem.UpdateBuyPriceText(Coin.Value, priceGetter());
+                    onBuy?.Invoke();
+                    if (countGetter != null)
+                    {
+                        uiShopItem.UISlot.Count.text = countGetter().ToString();
+
+                        if (countGetter() == 0)
+                            uiShopItem.BtnBuyOrSell.interactable = false;
+                        else
+                            uiShopItem.UpdateBuyPriceText(Coin.Value, priceGetter());
+                    }
                 });
             }
 

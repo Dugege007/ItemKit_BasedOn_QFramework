@@ -40,6 +40,8 @@ namespace QFramework.Example
         //    }
         //}
 
+        private static int mIronCount = 10;
+
         private void Awake()
         {
             //ResKit.Init();
@@ -180,11 +182,11 @@ namespace QFramework.Example
                 {
                     if (buyItem.Countable)
                     {
-                        buyTable.AddCountable(buyItem.Item, () => buyItem.Price, buyItem.Count);
+                        buyTable.Add(buyItem.Item, () => buyItem.Price, () => buyItem.Count);
                     }
                     else
                     {
-                        buyTable.Add(buyItem.Item, () => buyItem.Price);
+                        buyTable.Add(buyItem.Item, () => buyItem.Price, null);
                     }
                 }
 
@@ -208,8 +210,8 @@ namespace QFramework.Example
                                     Item = Items.item_iron,
                                     PriceGetter = () => ItemKit.GetSlotGroupByKey("物品栏")
                                         .GetItemCount(Items.item_green_sword) + 5,
-                                    Countable = true,
-                                    Count = 10,
+                                    CountGetter = () => mIronCount,
+                                    OnBuy = () => mIronCount--,
                                 }
                             }
                         },
