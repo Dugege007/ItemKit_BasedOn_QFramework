@@ -19,35 +19,31 @@ MonoBehaviour:
     From: 0
     NameToFullName: []
     BindInfos:
-    - TypeName: UnityEngine.UI.Text
-      PathToRoot: Title
-      MemberName: Title
-    - TypeName: QFramework.Example.UIShopItem
-      PathToRoot: UIShopItem
-      MemberName: UIShopItem
+    - TypeName: UISlot
+      PathToRoot: NeedItemSlot
+      MemberName: NeedItemSlot
+    - TypeName: QFramework.UISlot
+      PathToRoot: CostItemSlot
+      MemberName: CostItemSlot
+    - TypeName: UnityEngine.UI.Button
+      PathToRoot: BtnCraft
+      MemberName: BtnCraft
     - TypeName: RectTransform
-      PathToRoot: Scroll View/Viewport/ShopItemRoot
-      MemberName: ShopItemRoot
-    - TypeName: UnityEngine.UI.Button
-      PathToRoot: BtnBuy
-      MemberName: BtnBuy
-    - TypeName: UnityEngine.UI.Button
-      PathToRoot: BtnSell
-      MemberName: BtnSell
-    ScriptsFolder: Assets\QFramework\ItemKit\Examples\0.UGUIInventoryExample\Shop
-    ClassName: UIShop
+      PathToRoot: CostItemRoot
+      MemberName: CostItemRoot
+    ScriptsFolder: Assets/QFramework/ItemKit/Examples/0.UGUIInventoryExample/Craft
+    ClassName: CraftItem
     Namespace: QFramework.Example
     MainCode: "using UnityEngine;\r\nusing QFramework;\r\n\r\n// 1.\u8BF7\u5728\u83DC\u5355
       \u7F16\u8F91\u5668\u6269\u5C55/Namespace Settings \u91CC\u8BBE\u7F6E\u547D\u540D\u7A7A\u95F4\r\n//
       2.\u547D\u540D\u7A7A\u95F4\u66F4\u6539\u540E\uFF0C\u751F\u6210\u4EE3\u7801\u4E4B\u540E\uFF0C\u9700\u8981\u628A\u903B\u8F91\u4EE3\u7801\u6587\u4EF6\uFF08\u975E
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
-      QFramework.Example\r\n{\r\n\tpublic partial class UIShop : ViewController\r\n\t{\r\n\t\tvoid
+      QFramework.Example\r\n{\r\n\tpublic partial class CraftItem : ViewController\r\n\t{\r\n\t\tvoid
       Start()\r\n\t\t{\r\n\t\t\t// Code Here\r\n\t\t}\r\n\t}\r\n}\r\n"
-    DesignerCode: "// Generate Id:50b29f95-50f0-4967-b42b-61f27f724fa0\r\nusing UnityEngine;\r\n\r\n//
+    DesignerCode: "// Generate Id:49ca2fb8-4d02-45ad-94a2-c27234c64fd7\r\nusing UnityEngine;\r\n\r\n//
       1.\u8BF7\u5728\u83DC\u5355 \u7F16\u8F91\u5668\u6269\u5C55/Namespace Settings
       \u91CC\u8BBE\u7F6E\u547D\u540D\u7A7A\u95F4\r\n// 2.\u547D\u540D\u7A7A\u95F4\u66F4\u6539\u540E\uFF0C\u751F\u6210\u4EE3\u7801\u4E4B\u540E\uFF0C\u9700\u8981\u628A\u903B\u8F91\u4EE3\u7801\u6587\u4EF6\uFF08\u975E
       Designer\uFF09\u7684\u547D\u540D\u7A7A\u95F4\u624B\u52A8\u66F4\u6539\r\nnamespace
-      QFramework.Example\r\n{\r\n\tpublic partial class UIShop\r\n\t{\r\n\r\n\t\tpublic
-      UnityEngine.UI.Text Title;\r\n\r\n\t\tpublic QFramework.Example.UIShopItem
-      UIShopItem;\r\n\r\n\t\tpublic RectTransform ShopItemRoot;\r\n\r\n\t\tpublic
-      UnityEngine.UI.Button BtnBuy;\r\n\r\n\t\tpublic UnityEngine.UI.Button BtnSell;\r\n\r\n\t}\r\n}\r\n"
+      QFramework.Example\r\n{\r\n\tpublic partial class CraftItem\r\n\t{\r\n\r\n\t\tpublic
+      UISlot NeedItemSlot;\r\n\r\n\t\tpublic QFramework.UISlot CostItemSlot;\r\n\r\n\t\tpublic
+      UnityEngine.UI.Button BtnCraft;\r\n\r\n\t\tpublic RectTransform CostItemRoot;\r\n\r\n\t}\r\n}\r\n"
