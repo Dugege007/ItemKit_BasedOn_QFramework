@@ -175,11 +175,20 @@ namespace QFramework.Example
                     sellPriceTable.Add(sellItem.Item, () => sellItem.Price);
 
                 // 购买
-                Dictionary<IItem, Func<int>> buyPriceTable = new Dictionary<IItem, Func<int>>();
+                ShopBuyTable buyTable = new ShopBuyTable();
                 foreach (var buyItem in shopConfig.BuyItems)
-                    buyPriceTable.Add(buyItem.Item, () => buyItem.Price);
+                {
+                    if (buyItem.Countable)
+                    {
+                        buyTable.AddCountable(buyItem.Item, () => buyItem.Price, buyItem.Count);
+                    }
+                    else
+                    {
+                        buyTable.Add(buyItem.Item, () => buyItem.Price);
+                    }
+                }
 
-                UIShop.ShowWithPriceTables(buyPriceTable, sellPriceTable);
+                UIShop.ShowWithPriceTables(buyTable, sellPriceTable);
             });
 
             BtnShop2.onClick.AddListener(() =>
@@ -188,24 +197,33 @@ namespace QFramework.Example
                 UIShop.Title.text = shopConfig.ShopName;
 
                 UIShop.ShowWithPriceTables(
-                    new Dictionary<IItem, Func<int>>()
+                    new ShopBuyTable()
+                    {
+                        Table = new Dictionary<IItem, ShopBuyTable.BuyItem>()
                         {
                             {
-                                Items.item_green_sword, 
-                                () => ItemKit.GetSlotGroupByKey("物品栏")
-                                    .GetItemCount(Items.item_green_sword) + 5
-                            },
+                                Items.item_iron,
+                                new ShopBuyTable.BuyItem()
+                                {
+                                    Item = Items.item_iron,
+                                    PriceGetter = () => ItemKit.GetSlotGroupByKey("物品栏")
+                                        .GetItemCount(Items.item_green_sword) + 5,
+                                    Countable = true,
+                                    Count = 10,
+                                }
+                            }
                         },
+                    },
 
                     new Dictionary<IItem, Func<int>>()
                         {
-                            { 
-                                Items.item_green_sword, 
+                            {
+                                Items.item_green_sword,
                                 () => ItemKit.GetSlotGroupByKey("物品栏")
                                     .GetItemCount(Items.item_green_sword) * 2 },
                             {
                                 Items.item_iron,
-                                () => 5 
+                                () => 5
                             },
                         });
             });

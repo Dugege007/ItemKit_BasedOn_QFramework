@@ -37,7 +37,7 @@ namespace QFramework.Example
 
             BtnBuy.onClick.AddListener(() =>
             {
-                ShowBuyItems(mBuyPriceTable);
+                ShowBuyItems(mBuyTable);
             });
 
             BtnSell.onClick.AddListener(() =>
@@ -59,27 +59,27 @@ namespace QFramework.Example
             GUILayout.Label("Coin: " + Coin.Value);
         }
 
-        public void ShowWithPriceTables(Dictionary<IItem, Func<int>> buyPriceTable, Dictionary<IItem, Func<int>> sellPriceTable)
+        public void ShowWithPriceTables(ShopBuyTable buyPriceTable, Dictionary<IItem, Func<int>> sellPriceTable)
         {
-            mBuyPriceTable = buyPriceTable;
+            mBuyTable = buyPriceTable;
             mSellPriceTable = sellPriceTable;
 
-            ShowBuyItems(mBuyPriceTable);
+            ShowBuyItems(mBuyTable);
         }
 
-        private Dictionary<IItem, Func<int>> mBuyPriceTable;
+        private ShopBuyTable mBuyTable;
 
-        public void ShowBuyItems(Dictionary<IItem, Func<int>> buyPriceTable)
+        public void ShowBuyItems(ShopBuyTable buyTable)
         {
             Mode = ShopMode.Buy;
-            mBuyPriceTable = buyPriceTable;
+            mBuyTable = buyTable;
 
             ShopItemRoot.DestroyChildren();
 
-            foreach (var buyItem in buyPriceTable)
+            foreach (var kv in mBuyTable.Table)
             {
-                IItem item = buyItem.Key;
-                Func<int> priceGetter = buyItem.Value;
+                IItem item = kv.Key;
+                Func<int> priceGetter = kv.Value.PriceGetter;
 
                 UIShopItem uiShopItem = UIShopItem
                     .InstantiateWithParent(ShopItemRoot)
@@ -97,7 +97,7 @@ namespace QFramework.Example
                 uiShopItem.BtnBuyOrSell.onClick.AddListener(() =>
                 {
                     ItemKit.GetSlotGroupByKey("物品栏").AddItem(uiShopItemTemp);
-                    Coin.Value -= mBuyPriceTable[uiShopItemTemp]();
+                    Coin.Value -= mBuyTable.GetPrice(uiShopItemTemp);
 
                     uiShopItem.UpdateBuyPriceText(Coin.Value, priceGetter());
                 });

@@ -9,16 +9,20 @@ namespace QFramework.Example
     public class ShopBuyItem
     {
         public ItemConfig Item;
-        public int Count;
         public int Price;
+
+        [LabelText("сп©Б╢Ф")]
+        public bool Countable = false;
+        [ShowIf("Countable", true)]
+        public int Count;
     }
 
     [Serializable]
     public class ShopSellItem
     {
         public ItemConfig Item;
-        public int Count;
         public int Price;
+        public int Count;
     }
 
     public class ShopConfig : MonoBehaviour
