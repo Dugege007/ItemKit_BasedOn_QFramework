@@ -172,9 +172,9 @@ namespace QFramework.Example
                 UIShop.Title.text = shopConfig.ShopName;
 
                 // 出售
-                Dictionary<IItem, Func<int>> sellPriceTable = new Dictionary<IItem, Func<int>>();
+                ShopSellTable sellTable = new ShopSellTable();
                 foreach (var sellItem in shopConfig.SellItems)
-                    sellPriceTable.Add(sellItem.Item, () => sellItem.Price);
+                    sellTable.Add(sellItem.Item, () => sellItem.Price);
 
                 // 购买
                 ShopBuyTable buyTable = new ShopBuyTable();
@@ -190,7 +190,7 @@ namespace QFramework.Example
                     }
                 }
 
-                UIShop.ShowWithPriceTables(buyTable, sellPriceTable);
+                UIShop.ShowWithPriceTables(buyTable, sellTable);
             });
 
             BtnShop2.onClick.AddListener(() =>
@@ -217,17 +217,31 @@ namespace QFramework.Example
                         },
                     },
 
-                    new Dictionary<IItem, Func<int>>()
-                        {
+                    new ShopSellTable()
+                    {
+                        Table = new Dictionary<IItem, ShopSellTable.SellItem>()
                             {
-                                Items.item_green_sword,
-                                () => ItemKit.GetSlotGroupByKey("物品栏")
-                                    .GetItemCount(Items.item_green_sword) * 2 },
-                            {
-                                Items.item_iron,
-                                () => 5
-                            },
-                        });
+                                {
+                                    Items.item_iron,
+                                    new ShopSellTable.SellItem()
+                                    {
+                                        Item = Items.item_iron,
+                                        PriceGetter = () => 5,
+                                        OnSell = () => mIronCount++,
+                                    }
+                                },
+                                {
+                                    Items.item_green_sword,
+                                    new ShopSellTable.SellItem()
+                                    {
+                                        Item = Items.item_green_sword,
+                                        PriceGetter = () => ItemKit.GetSlotGroupByKey("物品栏")
+                                        .GetItemCount(Items.item_green_sword) * 2,
+                                        OnSell = () => { },
+                                    }
+                                },
+                            }
+                    });
             });
 
             // 语言

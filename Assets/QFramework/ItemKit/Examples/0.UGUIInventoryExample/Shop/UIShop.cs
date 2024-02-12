@@ -42,13 +42,13 @@ namespace QFramework.Example
 
             BtnSell.onClick.AddListener(() =>
             {
-                ShowSellItems(mSellPriceTable);
+                ShowSellItems(mSellTable);
             });
 
             ItemKit.GetSlotGroupByKey("物品栏").Changed.Register(() =>
             {
                 if (Mode == ShopMode.Sell)
-                    ShowSellItems(mSellPriceTable);
+                    ShowSellItems(mSellTable);
 
             }).UnRegisterWhenGameObjectDestroyed(gameObject);
         }
@@ -59,10 +59,10 @@ namespace QFramework.Example
             GUILayout.Label("Coin: " + Coin.Value);
         }
 
-        public void ShowWithPriceTables(ShopBuyTable buyPriceTable, Dictionary<IItem, Func<int>> sellPriceTable)
+        public void ShowWithPriceTables(ShopBuyTable buyTable, ShopSellTable sellTable)
         {
-            mBuyTable = buyPriceTable;
-            mSellPriceTable = sellPriceTable;
+            mBuyTable = buyTable;
+            mSellTable = sellTable;
 
             ShowBuyItems(mBuyTable);
         }
@@ -121,11 +121,11 @@ namespace QFramework.Example
             this.Show();
         }
 
-        private Dictionary<IItem, Func<int>> mSellPriceTable;
+        private ShopSellTable mSellTable;
 
-        public void ShowSellItems(Dictionary<IItem, Func<int>> sellPriceTable)
+        public void ShowSellItems(ShopSellTable sellTable)
         {
-            mSellPriceTable = sellPriceTable;
+            mSellTable = sellTable;
             HashSet<ShopSellItem> sellItems = new HashSet<ShopSellItem>();
 
             foreach (var slotItem in ItemKit.GetSlotGroupByKey("物品栏").Slots
@@ -133,13 +133,13 @@ namespace QFramework.Example
                 .Select(s => s.Item)
                 .ToHashSet())
             {
-                if (mSellPriceTable != null && mSellPriceTable.ContainsKey(slotItem))
+                if (mSellTable != null && mSellTable.Table.ContainsKey(slotItem))
                 {
                     sellItems.Add(new ShopSellItem()
                     {
                         Item = slotItem as ItemConfig,
                         Count = 1,
-                        Price = mSellPriceTable[slotItem]()
+                        Price = mSellTable.GetPrice(slotItem),
                     });
                 }
             }
@@ -164,7 +164,8 @@ namespace QFramework.Example
                 {
                     Coin.Value += price;
                     ItemKit.GetSlotGroupByKey("物品栏").RemoveItem(item);
-                    ShowSellItems(mSellPriceTable);
+                    ShowSellItems(mSellTable);
+                    mSellTable.Table[item].OnSell?.Invoke();
                 });
 
                 Coin.RegisterWithInitValue(coin =>
