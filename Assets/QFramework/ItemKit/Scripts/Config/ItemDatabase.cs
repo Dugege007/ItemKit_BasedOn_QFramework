@@ -66,9 +66,11 @@ namespace QFramework
         [Button("生成 Items 代码", ButtonSizes.Large), GUIColor("green")]
         private void GenerateCode()
         {
+            string path = EditorUtility.SaveFilePanelInProject("Items.cs", "Items", "cs", null);
+
             var itemDatabase = this;
             // 获取当前 ItemDatabase 脚本的文件路径，并确定生成代码的保存位置
-            string filePath = AssetDatabase.GetAssetPath(itemDatabase).GetFolderPath() + "/Items.cs";
+            string filePath = path;
 
             // 使用 QFramework 中的代码生成功能
             // 创建一个代码作用域树，用于生成代码结构
@@ -98,8 +100,8 @@ namespace QFramework
                                 $"return _{itemConfig.Key};\n" +
                                 $"}}" +
                                 $"}}");
-                            c.Custom($"public static string {itemConfig.Key}_key = \"{itemConfig.Key}\";"); 
-                            
+                            c.Custom($"public static string {itemConfig.Key}_key = \"{itemConfig.Key}\";");
+
                             Debug.Log(itemConfig.Key);
                         }
                     });

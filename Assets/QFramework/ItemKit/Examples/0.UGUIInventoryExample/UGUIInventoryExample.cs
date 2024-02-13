@@ -40,8 +40,76 @@ namespace QFramework.Example
 
         private static int mIronCount = 10;
 
+        public class MyExcelItem : IItem
+        {
+            public string GetKey { get; set; }
+
+            public string GetName { get; set; }
+
+            public string GetDescription { get; set; }
+
+            public Sprite GetIcon { get; set; }
+
+            public bool GetStackable { get; set; }
+
+            public bool GetHasMaxStackableCount { get; set; }
+
+            public int GetMaxStackableCount { get; set; }
+
+            public ItemLanguagePackage.LocalItem LocalItem { get; set; }
+
+            public bool GetBoolean(string propertyName)
+            {
+                if (propertyName == "IsWeapon")
+                {
+                    return IsWeapon;
+                }
+
+                return false;
+            }
+
+            public bool IsWeapon { get; set; }
+        }
+
         private void Awake()
         {
+            // 读取 CSV 文件
+            TextAsset itemTextAsset = Resources.Load<TextAsset>("Items");
+            string itemString = itemTextAsset.text;
+
+            string[] itemRows = itemString.Split("\n");
+            int line = 0;
+            // key	name	desctiption	icon	stackable	max_count	is_weapon
+            foreach (string row in itemRows)
+            {
+                if (line > 0)
+                {
+                    string[] itemFields = row.Split(",");
+                    string key = itemFields[0];
+                    string name = itemFields[1];
+                    string description = itemFields[2];
+                    string icon = itemFields[3];
+                    string stackable = itemFields[4];
+                    string maxCount = itemFields[5];
+                    string isWeapon = itemFields[6];
+
+                    MyExcelItem item = new MyExcelItem()
+                    {
+                        GetKey = key,
+                        GetName = name,
+                        GetIcon = null,
+                        GetDescription = description,
+                        GetStackable = int.Parse(stackable) == 1,
+                        GetMaxStackableCount = int.Parse(maxCount),
+                        IsWeapon = int.Parse(isWeapon) == 1,
+                    };
+                }
+
+                line++;
+            }
+
+            itemString.LogInfo();
+
             //ResKit.Init();
             //ResLoader resLoader = ResLoader.Allocate();
 
