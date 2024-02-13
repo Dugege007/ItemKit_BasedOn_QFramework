@@ -10,7 +10,10 @@ namespace QFramework
     [CreateAssetMenu(menuName = "@ItemKit/Create Item Database")]
     public class ItemDatabase : ScriptableObject
     {
+        [LabelText("命名空间")]
         public string NameSpace = "QFramework.Example";
+        [LabelText("生成路径")]
+        public string CodeGenPath = "";
 
         [Searchable]
         [TableList(ShowIndexLabels = true)]
@@ -66,9 +69,14 @@ namespace QFramework
         [Button("生成 Items 代码", ButtonSizes.Large), GUIColor("green")]
         private void GenerateCode()
         {
-            string path = EditorUtility.SaveFilePanelInProject("Items.cs", "Items", "cs", null);
-
             var itemDatabase = this;
+            string path = CodeGenPath;
+
+            if (CodeGenPath.IsNullOrEmpty())
+            {
+                CodeGenPath = EditorUtility.SaveFilePanelInProject("Items.cs", "Items", "cs", null);
+            }
+
             // 获取当前 ItemDatabase 脚本的文件路径，并确定生成代码的保存位置
             string filePath = path;
 

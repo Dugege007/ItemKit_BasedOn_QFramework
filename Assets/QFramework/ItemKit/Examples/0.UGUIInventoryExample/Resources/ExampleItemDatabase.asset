@@ -76,6 +76,7 @@ MonoBehaviour:
   m_Name: ExampleItemDatabase
   m_EditorClassIdentifier: 
   NameSpace: QFramework.Example
+  CodeGenPath: Assets/QFramework/ItemKit/Examples/0.UGUIInventoryExample/Items.cs
   ItemConfigs:
   - {fileID: -4444599809156488681}
   - {fileID: 2717077468998995653}
