@@ -16,6 +16,9 @@ namespace QFramework
         int GetMaxStackableCount { get; }
         ItemLanguagePackage.LocalItem LocalItem { get; set; }
 
-        bool GetBoolean(string propertyName);
+        bool GetBoolean(string attributeName);
+        int GetInt(string attributeName);
+        float GetFloat(string attributeName);
+        string GetString(string attributeName);
     }
 }

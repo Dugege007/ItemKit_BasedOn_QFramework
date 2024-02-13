@@ -1,9 +1,35 @@
 using Sirenix.OdinInspector;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
 namespace QFramework
 {
+    [Serializable]
+    public class ItemAttribute
+    {
+        [HideLabel]
+        [LabelText("名称")]
+        public string Name;
+
+        [HideLabel]
+        [HorizontalGroup("类型和值")]
+        [VerticalGroup("类型和值/type")]
+        public AttributeType Type;
+
+        [HideLabel]
+        [HideIf("Type", AttributeType.Boolean)]
+        [VerticalGroup("类型和值/value")]
+        public string Value;
+
+        [HideLabel]
+        [ShowIf("Type", AttributeType.Boolean)]
+        [VerticalGroup("类型和值/value")]
+        public bool BoolValue;
+    }
+
     [CreateAssetMenu(menuName = "@ItemKit/Create ItemConfig")]
     public class ItemConfig : ScriptableObject, IItem
     {
@@ -60,11 +86,11 @@ namespace QFramework
         [LabelText("关键字")]
         public string Key = string.Empty;
 
-        [VerticalGroup("名称类型/right"), LabelWidth(42)]
-        [LabelText("是武器")]
-        public bool IsWeapon = false;
-
         [HorizontalGroup("属性")]
+        [VerticalGroup("属性/stackable")]
+        [LabelText("属性")]
+        public List<ItemAttribute> Attributes = new List<ItemAttribute>();
+
         [VerticalGroup("属性/stackable"), LabelWidth(66)]
         [LabelText("可堆叠")]
         public bool IsStackable = true;
@@ -91,13 +117,38 @@ namespace QFramework
         public int GetMaxStackableCount => MaxStackableCount;
         public ItemLanguagePackage.LocalItem LocalItem { get; set; }
 
-        public bool GetBoolean(string propertyName)
+        public bool GetBoolean(string attributeName)
         {
-            if (propertyName == "IsWeapon")
-            {
-                return IsWeapon;
-            }
-            return false;
+            ItemAttribute attribute = Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
+
+            return attribute.BoolValue;
+        }
+
+        public int GetInt(string attributeName)
+        {
+            ItemAttribute attribute = Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
+
+            if (int.TryParse(attribute.Value, out var result))
+                return result;
+
+            return 0;
+        }
+
+        public float GetFloat(string attributeName)
+        {
+            ItemAttribute attribute = Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
+
+            if (float.TryParse(attribute.Value, out var result))
+                return result;
+
+            return 0;
+        }
+
+        public string GetString(string attributeName)
+        {
+            ItemAttribute attribute = Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
+
+            return attribute.Value;
         }
     }
 }

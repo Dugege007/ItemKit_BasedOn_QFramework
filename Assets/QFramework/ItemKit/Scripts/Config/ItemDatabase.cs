@@ -4,9 +4,41 @@ using UnityEngine;
 using System.IO;
 using System;
 using UnityEditor;
+using System.Linq;
 
 namespace QFramework
 {
+    public enum AttributeType
+    {
+        Boolean,
+        Int,
+        Float,
+        String,
+    }
+
+    [Serializable]
+    public class ItemAttributeDefine
+    {
+        [HideLabel]
+        [LabelText("名称"), LabelWidth(42)]
+        public string Name;
+
+        [HideLabel]
+        [HorizontalGroup("类型和值")]
+        [VerticalGroup("类型和值/type")]
+        public AttributeType Type;
+
+        [HideLabel]
+        [HideIf("Type", AttributeType.Boolean)]
+        [VerticalGroup("类型和值/value")]
+        public string Value;
+
+        [HideLabel]
+        [ShowIf("Type", AttributeType.Boolean)]
+        [VerticalGroup("类型和值/value")]
+        public bool BoolValue;
+    }
+
     [CreateAssetMenu(menuName = "@ItemKit/Create Item Database")]
     public class ItemDatabase : ScriptableObject
     {
@@ -14,6 +46,9 @@ namespace QFramework
         public string NameSpace = "QFramework.Example";
         [LabelText("生成路径")]
         public string CodeGenPath = "";
+
+        [LabelText("属性定义")]
+        public List<ItemAttributeDefine> AttributesDefine = new List<ItemAttributeDefine>();
 
         [Searchable]
         [TableList(ShowIndexLabels = true)]
@@ -50,7 +85,7 @@ namespace QFramework
             itemConfigSO.name = itemConfig.Key;
             itemConfigSO.Name = string.Empty;
             itemConfigSO.Key = "item_new";
-            itemConfigSO.IsWeapon = itemConfig.IsWeapon;
+            itemConfigSO.Attributes = itemConfig.Attributes;
             itemConfigSO.IsStackable = itemConfig.IsStackable;
             itemConfigSO.HasMaxStackableCount = itemConfig.HasMaxStackableCount;
             itemConfigSO.MaxStackableCount = itemConfig.MaxStackableCount;
@@ -129,11 +164,45 @@ namespace QFramework
             foreach (ItemConfig itemConfig in ItemConfigs)
             {
                 if (itemConfig != null)
-                {
                     itemConfig.name = itemConfig.Key;
-                }
                 else
                     ItemConfigs.Remove(itemConfig);
+            }
+
+            if (AttributesDefine.Count > 0)
+            {
+                foreach (ItemAttributeDefine attributeDefine in AttributesDefine)
+                {
+                    foreach (ItemConfig item in ItemConfigs)
+                    {
+                        if (item.Attributes.Any(attribute => attribute.Name == attributeDefine.Name))
+                        {
+                        }
+                        else
+                        {
+                            item.Attributes.Add(new ItemAttribute()
+                            {
+                                Name = attributeDefine.Name,
+                                Type = attributeDefine.Type,
+                                Value = attributeDefine.Value,
+                                BoolValue = attributeDefine.BoolValue,
+                            });
+                        }
+
+                        // 去除冗余
+                        if (item.Attributes.Count != AttributesDefine.Count)
+                        {
+                            item.Attributes.RemoveAll(attribute => AttributesDefine.All(g => g.Name != attribute.Name));
+                        }
+                    }
+                }
+            }
+            else
+            {
+                foreach (var item in ItemConfigs)
+                {
+                    item.Attributes.Clear();
+                }
             }
         }
     }

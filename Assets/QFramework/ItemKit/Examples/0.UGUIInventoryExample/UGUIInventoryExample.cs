@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
 using UnityEngine.U2D;
+using System.Linq;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
@@ -51,6 +52,8 @@ namespace QFramework.Example
 
             public Sprite GetIcon { get; set; }
 
+            public List<ItemAttribute> Attributes = new List<ItemAttribute>();
+
             public bool GetStackable { get; set; }
 
             public bool GetHasMaxStackableCount { get; set; }
@@ -59,14 +62,38 @@ namespace QFramework.Example
 
             public ItemLanguagePackage.LocalItem LocalItem { get; set; }
 
-            public bool GetBoolean(string propertyName)
+            public bool GetBoolean(string attributeName)
             {
-                if (propertyName == "IsWeapon")
-                {
-                    return IsWeapon;
-                }
+                ItemAttribute attribute = Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
 
-                return false;
+                return attribute.BoolValue;
+            }
+
+            public int GetInt(string attributeName)
+            {
+                ItemAttribute attribute = Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
+
+                if (int.TryParse(attribute.Value, out var result))
+                    return result;
+
+                return 0;
+            }
+
+            public float GetFloat(string attributeName)
+            {
+                ItemAttribute attribute = Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
+
+                if (float.TryParse(attribute.Value, out var result))
+                    return result;
+
+                return 0;
+            }
+
+            public string GetString(string attributeName)
+            {
+                ItemAttribute attribute = Attributes.FirstOrDefault(attribute => attribute.Name == attributeName);
+
+                return attribute.Value;
             }
 
             public bool IsWeapon { get; set; }
@@ -152,7 +179,7 @@ namespace QFramework.Example
 
             ItemKit.CreateSlotGroup("武器")
                 .CreateSlot(null, 0)
-                .Condition(item => item.GetBoolean("IsWeapon")); // 添加限制条件：如果是武器，才可以拖入
+                .Condition(item => item.GetBoolean("是武器")); // 添加限制条件：如果是武器，才可以拖入
 
             ItemKit.CreateSlotGroup("商店")
                 .Condition(_ => false); // 添加限制条件：不可拖动
