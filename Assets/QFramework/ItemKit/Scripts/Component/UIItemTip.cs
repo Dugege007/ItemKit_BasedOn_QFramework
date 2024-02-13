@@ -100,13 +100,13 @@ namespace QFramework
                     tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.up + 0.5f * tipWidth * Vector3.left + 0.5f * slotHeight * Vector3.up;
                 // Slot 位置在 左上，TipPanel 生成在 右下
                 else if (mousePos.y > height && mousePos.x < width)
-                    tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.down + 0.5f * tipWidth * Vector3.right + 0.5f * slotHeight * Vector3.down;
+                    tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.down + 0.5f * tipWidth * Vector3.right + 0.5f * slotWidth * Vector3.right;
                 // Slot 位置在 左下，TipPanel 生成在 右上
                 else if (mousePos.y < height && mousePos.x < width)
                     tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.up + 0.5f * tipWidth * Vector3.right + 0.5f * slotHeight * Vector3.up;
                 // Slot 位置在 右上，TipPanel 生成在 左下
                 else
-                    tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.down + 0.5f * tipWidth * Vector3.left + 0.5f * slotHeight * Vector3.down;
+                    tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.down + 0.5f * tipWidth * Vector3.left + 0.5f * slotWidth * Vector3.left;
             }
         }
 
