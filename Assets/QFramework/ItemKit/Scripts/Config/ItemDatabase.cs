@@ -20,23 +20,15 @@ namespace QFramework
     public class ItemAttributeDefine
     {
         [HideLabel]
+        [HorizontalGroup("名称类型和值")]
+        [VerticalGroup("名称类型和值/name")]
         [LabelText("名称"), LabelWidth(42)]
         public string Name;
 
         [HideLabel]
-        [HorizontalGroup("类型和值")]
-        [VerticalGroup("类型和值/type")]
+        [HorizontalGroup("名称类型和值")]
+        [VerticalGroup("名称类型和值/type")]
         public AttributeType Type;
-
-        [HideLabel]
-        [HideIf("Type", AttributeType.Boolean)]
-        [VerticalGroup("类型和值/value")]
-        public string Value;
-
-        [HideLabel]
-        [ShowIf("Type", AttributeType.Boolean)]
-        [VerticalGroup("类型和值/value")]
-        public bool BoolValue;
     }
 
     [CreateAssetMenu(menuName = "@ItemKit/Create Item Database")]
@@ -47,60 +39,7 @@ namespace QFramework
         [LabelText("生成路径")]
         public string CodeGenPath = "";
 
-        [LabelText("属性定义")]
-        public List<ItemAttributeDefine> AttributesDefine = new List<ItemAttributeDefine>();
-
-        [Searchable]
-        [TableList(ShowIndexLabels = true)]
-        public List<ItemConfig> ItemConfigs = new List<ItemConfig>();
-
 #if UNITY_EDITOR
-        [Button("添加 ItemConfig", ButtonSizes.Large), GUIColor("yellow")]
-        private void AddItemConfig()
-        {
-            // 创建一个新的 ItemConfig 实例
-            ItemConfig itemConfigSO = CreateInstance<ItemConfig>();
-            itemConfigSO.ItemDatabase = this;
-            itemConfigSO.name = nameof(ItemConfig);
-            itemConfigSO.Name = "新物品";
-            itemConfigSO.Key = "item_new";
-
-            // 将新创建的 itemConfig 添加到 ItemConfigGroup 的资源中
-            AssetDatabase.AddObjectToAsset(itemConfigSO, this);
-            // 在 ItemConfigs 列表中添加一个新的元素
-            ItemConfigs.Add(itemConfigSO);
-
-            Debug.Log($"添加物品配置: {itemConfigSO.GetKey}");
-            // 保存所有更改到资源
-            AssetDatabase.SaveAssets();
-            // 刷新资源
-            AssetDatabase.Refresh();
-        }
-
-        public void DuplicateItemConfig(int index, ItemConfig itemConfig)
-        {
-            // 创建一个新的 ItemConfig 实例
-            ItemConfig itemConfigSO = CreateInstance<ItemConfig>();
-            itemConfigSO.ItemDatabase = this;
-            itemConfigSO.name = itemConfig.Key;
-            itemConfigSO.Name = string.Empty;
-            itemConfigSO.Key = "item_new";
-            itemConfigSO.Attributes = itemConfig.Attributes;
-            itemConfigSO.IsStackable = itemConfig.IsStackable;
-            itemConfigSO.HasMaxStackableCount = itemConfig.HasMaxStackableCount;
-            itemConfigSO.MaxStackableCount = itemConfig.MaxStackableCount;
-
-            // 将新创建的 itemConfig 添加到 ItemConfigGroup 的资源文件中
-            AssetDatabase.AddObjectToAsset(itemConfigSO, this);
-            // 在 ItemConfigs 列表中添加一个新的元素
-            ItemConfigs.Insert(index + 1, itemConfigSO);
-
-            // 保存所有更改到资源
-            AssetDatabase.SaveAssets();
-            // 刷新资源
-            AssetDatabase.Refresh();
-        }
-
         [Button("生成 Items 代码", ButtonSizes.Large), GUIColor("green")]
         private void GenerateCode()
         {
@@ -159,6 +98,62 @@ namespace QFramework
         }
 #endif
 
+        [LabelText("属性定义"), VerticalGroup("排列", Order = 10, AnimateVisibility = true)]
+        public List<ItemAttributeDefine> AttributesDefine = new List<ItemAttributeDefine>();
+
+        [Searchable, VerticalGroup("排列", AnimateVisibility = true)]
+        [TableList(ShowIndexLabels = true)]
+        public List<ItemConfig> ItemConfigs = new List<ItemConfig>();
+
+#if UNITY_EDITOR
+        [Button("添加 ItemConfig", ButtonSizes.Large), GUIColor("yellow"), VerticalGroup("排列")]
+        private void AddItemConfig()
+        {
+            // 创建一个新的 ItemConfig 实例
+            ItemConfig itemConfigSO = CreateInstance<ItemConfig>();
+            itemConfigSO.ItemDatabase = this;
+            itemConfigSO.name = nameof(ItemConfig);
+            itemConfigSO.Name = "新物品";
+            itemConfigSO.Key = "item_new";
+
+            // 将新创建的 itemConfig 添加到 ItemConfigGroup 的资源中
+            AssetDatabase.AddObjectToAsset(itemConfigSO, this);
+            // 在 ItemConfigs 列表中添加一个新的元素
+            ItemConfigs.Add(itemConfigSO);
+
+            Debug.Log($"添加物品配置: {itemConfigSO.GetKey}");
+            // 保存所有更改到资源
+            AssetDatabase.SaveAssets();
+            // 刷新资源
+            AssetDatabase.Refresh();
+        }
+
+        public void DuplicateItemConfig(int index, ItemConfig itemConfig)
+        {
+            // 创建一个新的 ItemConfig 实例
+            ItemConfig itemConfigSO = CreateInstance<ItemConfig>();
+            itemConfigSO.ItemDatabase = this;
+            itemConfigSO.name = itemConfig.Key;
+            itemConfigSO.Name = string.Empty;
+            itemConfigSO.Key = "item_new";
+            itemConfigSO.Attributes = new List<ItemAttribute>();
+            itemConfigSO.IsStackable = itemConfig.IsStackable;
+            itemConfigSO.HasMaxStackableCount = itemConfig.HasMaxStackableCount;
+            itemConfigSO.MaxStackableCount = itemConfig.MaxStackableCount;
+
+            // 将新创建的 itemConfig 添加到 ItemConfigGroup 的资源文件中
+            AssetDatabase.AddObjectToAsset(itemConfigSO, this);
+            // 在 ItemConfigs 列表中添加一个新的元素
+            ItemConfigs.Insert(index + 1, itemConfigSO);
+
+            // 保存所有更改到资源
+            AssetDatabase.SaveAssets();
+            // 刷新资源
+            AssetDatabase.Refresh();
+        }
+#endif
+
+
         private void OnValidate()
         {
             foreach (ItemConfig itemConfig in ItemConfigs)
@@ -175,18 +170,22 @@ namespace QFramework
                 {
                     foreach (ItemConfig item in ItemConfigs)
                     {
-                        if (item.Attributes.Any(attribute => attribute.Name == attributeDefine.Name))
-                        {
-                        }
-                        else
+                        ItemAttribute attribute = item.Attributes.FirstOrDefault(attribute => attribute.Name == attributeDefine.Name);
+
+                        // 同步
+                        if (attribute == null)
                         {
                             item.Attributes.Add(new ItemAttribute()
                             {
                                 Name = attributeDefine.Name,
                                 Type = attributeDefine.Type,
-                                Value = attributeDefine.Value,
-                                BoolValue = attributeDefine.BoolValue,
                             });
+
+                            item.Attributes.Add(attribute);
+                        }
+                        else
+                        {
+                            attribute.Type = attributeDefine.Type;
                         }
 
                         // 去除冗余
@@ -205,5 +204,15 @@ namespace QFramework
                 }
             }
         }
+    }
+
+    public class ItemAttributeDefineDrawer : PropertyDrawer
+    {
+        public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+        {
+            return EditorGUIUtility.singleLineHeight;
+        }
+
+
     }
 }

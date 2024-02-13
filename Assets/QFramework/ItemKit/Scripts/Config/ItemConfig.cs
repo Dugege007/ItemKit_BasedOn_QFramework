@@ -11,12 +11,12 @@ namespace QFramework
     public class ItemAttribute
     {
         [HideLabel]
-        [LabelText("名称")]
+        [LabelText("名称"), LabelWidth(42)]
         public string Name;
 
         [HideLabel]
         [HorizontalGroup("类型和值")]
-        [VerticalGroup("类型和值/type")]
+        [VerticalGroup("类型和值/type",HideWhenChildrenAreInvisible = true)]
         public AttributeType Type;
 
         [HideLabel]
