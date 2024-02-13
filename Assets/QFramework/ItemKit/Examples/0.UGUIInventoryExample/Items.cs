@@ -8,6 +8,9 @@ namespace QFramework.Example
 		public static IItem item_green_sword => ItemKit.ItemByKey["item_green_sword"];
 		public static string item_green_sword_key = "item_green_sword";
 
+		public static IItem item_wood_sword => ItemKit.ItemByKey["item_wood_sword"];
+		public static string item_wood_sword_key = "item_wood_sword";
+
 		public static IItem item_iron => ItemKit.ItemByKey["item_iron"];
 		public static string item_iron_key = "item_iron";
 

@@ -137,6 +137,16 @@ namespace QFramework
             itemConfigSO.Name = string.Empty;
             itemConfigSO.Key = "item_new";
             itemConfigSO.Attributes = new List<ItemAttribute>();
+            foreach (ItemAttribute attribute in itemConfig.Attributes)
+            {
+                itemConfigSO.Attributes.Add(new ItemAttribute()
+                {
+                    Name = attribute.Name,
+                    Type = attribute.Type,
+                    Value = attribute.Value,
+                    BoolValue = attribute.BoolValue,
+                });
+            }
             itemConfigSO.IsStackable = itemConfig.IsStackable;
             itemConfigSO.HasMaxStackableCount = itemConfig.HasMaxStackableCount;
             itemConfigSO.MaxStackableCount = itemConfig.MaxStackableCount;
@@ -175,11 +185,11 @@ namespace QFramework
                         // Í¬²½
                         if (attribute == null)
                         {
-                            item.Attributes.Add(new ItemAttribute()
+                            attribute = new ItemAttribute()
                             {
                                 Name = attributeDefine.Name,
                                 Type = attributeDefine.Type,
-                            });
+                            };
 
                             item.Attributes.Add(attribute);
                         }
@@ -189,7 +199,7 @@ namespace QFramework
                         }
 
                         // È¥³ýÈßÓà
-                        if (item.Attributes.Count != AttributesDefine.Count)
+                        if (item.Attributes.Count > AttributesDefine.Count)
                         {
                             item.Attributes.RemoveAll(attribute => AttributesDefine.All(g => g.Name != attribute.Name));
                         }
