@@ -92,15 +92,8 @@ namespace QFramework
                             // Items 类试图在其静态字段初始化时直接从 ItemKit.ItemByKey 字典中访问项目
                             // 但这些项目可能还没有被添加到字典中
                             // 为了更便捷地解决这一问题，可以时候用延迟加载
-                            c.Custom($"private static IItem _{itemConfig.Key};");
-                            c.Custom($"public static IItem {itemConfig.Key} " +
-                                $"{{ get\n" +
-                                $"{{ if (_{itemConfig.Key} == null)\n" +
-                                $"_{itemConfig.Key} = ItemKit.ItemByKey[\"{itemConfig.Key}\"];\n" +
-                                $"return _{itemConfig.Key};\n" +
-                                $"}}" +
-                                $"}}");
-                            c.Custom($"public static string {itemConfig.Key}_key = \"{itemConfig.Key}\";");
+                            c.Custom($"public static IItem {itemConfig.Key} => ItemKit.ItemByKey[\"{itemConfig.Key}\"];");
+                            c.Custom($"public static string {itemConfig.Key}_key = \"{itemConfig.Key}\";\n");
 
                             Debug.Log(itemConfig.Key);
                         }

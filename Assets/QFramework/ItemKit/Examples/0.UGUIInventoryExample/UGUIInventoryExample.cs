@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.U2D;
 
 // 1.请在菜单 编辑器扩展/Namespace Settings 里设置命名空间
 // 2.命名空间更改后，生成代码之后，需要把逻辑代码文件（非 Designer）的命名空间手动更改
@@ -75,34 +76,41 @@ namespace QFramework.Example
         {
             // 读取 CSV 文件
             TextAsset itemTextAsset = Resources.Load<TextAsset>("Items");
+            SpriteAtlas iconAtlas = Resources.Load<SpriteAtlas>("IconAtlas");
             string itemString = itemTextAsset.text;
 
             string[] itemRows = itemString.Split("\n");
             int line = 0;
             // key	name	desctiption	icon	stackable	max_count	is_weapon
+            List<MyExcelItem> excelItems = new List<MyExcelItem>();
             foreach (string row in itemRows)
             {
                 if (line > 0)
                 {
-                    string[] itemFields = row.Split(",");
-                    string key = itemFields[0];
-                    string name = itemFields[1];
-                    string description = itemFields[2];
-                    string icon = itemFields[3];
-                    string stackable = itemFields[4];
-                    string maxCount = itemFields[5];
-                    string isWeapon = itemFields[6];
-
-                    MyExcelItem item = new MyExcelItem()
+                    if (row.IsTrimNotNullAndEmpty())
                     {
-                        GetKey = key,
-                        GetName = name,
-                        GetIcon = null,
-                        GetDescription = description,
-                        GetStackable = int.Parse(stackable) == 1,
-                        GetMaxStackableCount = int.Parse(maxCount),
-                        IsWeapon = int.Parse(isWeapon) == 1,
-                    };
+                        string[] itemFields = row.Split(",");
+                        string key = itemFields[0];
+                        string name = itemFields[1];
+                        string description = itemFields[2];
+                        string icon = itemFields[3];
+                        string stackable = itemFields[4];
+                        string maxCount = itemFields[5];
+                        string isWeapon = itemFields[6];
+
+                        MyExcelItem item = new MyExcelItem()
+                        {
+                            GetKey = key,
+                            GetName = name,
+                            GetIcon = iconAtlas.GetSprite(icon),
+                            GetDescription = description,
+                            GetStackable = int.Parse(stackable) == 1,
+                            GetMaxStackableCount = int.Parse(maxCount),
+                            IsWeapon = int.Parse(isWeapon) == 1,
+                        };
+
+                        excelItems.Add(item);
+                    }
                 }
 
                 line++;
@@ -123,9 +131,14 @@ namespace QFramework.Example
             ItemKit.LoadItemDatabase("ExampleItemDatabase");
             ItemKit.LoadItemLanguagePackage("ItemEnglishPackage");
 
+            foreach (var item in excelItems)
+                ItemKit.ItemByKey.Add(item.GetKey, item);
+
             ItemKit.CreateSlotGroup("物品栏")
                 .CreateSlot(Items.item_iron, 1)
                 .CreateSlot(Items.item_green_sword, 1)
+                .CreateSlotByKey("iron_sword", 1)
+                .CreateSlotByKey("shoe", 1)
                 .CreateSlotsByCount(6);
 
             ItemKit.CreateSlotGroup("背包")

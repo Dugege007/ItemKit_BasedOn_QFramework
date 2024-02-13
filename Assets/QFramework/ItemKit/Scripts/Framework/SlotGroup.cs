@@ -30,6 +30,13 @@ namespace QFramework
             return this;
         }
 
+        public SlotGroup CreateSlotByKey(string itemKey, int count = 0)
+        {
+            mSlots.Add(new Slot(ItemKit.ItemByKey[itemKey], count, this));
+            Changed.Trigger();
+            return this;
+        }
+
         public SlotGroup CreateSlotsByCount(int count)
         {
             for (int i = 0; i < count; i++)

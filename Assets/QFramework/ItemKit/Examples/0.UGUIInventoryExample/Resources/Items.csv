@@ -1,3 +1,3 @@
-key	name	desctiption	icon	stackable	max_count	is_weapon
-iron_sword	Ìú½£	ÕâÊÇÒ»°ÑÌú½£	iron_sword	0	1	1
-shoe	Ğ¬×Ó	ÕâÊÇÒ»Ë«Ğ¬×Ó	shoe	0	1	0
+ï»¿key,name,desctiption,icon,stackable,max_count,is_weapon
+iron_sword,é“å‰‘,è¿™æ˜¯ä¸€æŠŠé“å‰‘,iron_sword,0,1,1
+shoe,é‹å­,è¿™æ˜¯ä¸€åŒé‹å­,shoe,0,1,0
