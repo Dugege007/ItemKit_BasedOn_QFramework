@@ -1,11 +1,12 @@
 using QFramework.Example;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 namespace QFramework
 {
-    public class UISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
+    public class UISlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler, ISelectHandler, IDeselectHandler
     {
         public RectTransform IconHolder;
         public Image Icon;
@@ -168,9 +169,29 @@ namespace QFramework
             UIItemTip.Hide();
 
             if (ItemKit.CurrentSlotPointerOn == this)
-            {
                 ItemKit.CurrentSlotPointerOn = null;
-            }
+        }
+
+        public UnityEvent OnSelectEvent;
+        public UnityEvent OnDeselectEvent;
+
+        public void OnSelect(BaseEventData eventData)
+        {
+            UIItemTip.Show(this);
+            ItemKit.CurrentSlotPointerOn = this;
+
+            OnSelectEvent.Invoke();
+            Debug.Log("ÒÑÑ¡Ôñ");
+        }
+
+        public void OnDeselect(BaseEventData eventData)
+        {
+            UIItemTip.Hide();
+            if (ItemKit.CurrentSlotPointerOn == this)
+                ItemKit.CurrentSlotPointerOn = null;
+
+            OnDeselectEvent.Invoke();
+            Debug.Log("Î´Ñ¡Ôñ");
         }
     }
 }

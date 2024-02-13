@@ -346,6 +346,13 @@ namespace QFramework.Example
 
                 UpdateLanguageText();
             });
+
+            // 等一帧后，自动选择一个物品栏
+            ActionKit.NextFrame(() =>
+            {
+                GetComponent<UISlotGroup>().UISlotRoot.GetChild(0).GetComponent<Selectable>().Select();
+
+            }).Start(this);
         }
 
         private void OnApplicationQuit()

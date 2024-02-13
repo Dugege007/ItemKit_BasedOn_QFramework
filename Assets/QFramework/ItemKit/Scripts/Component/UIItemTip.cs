@@ -14,6 +14,8 @@ namespace QFramework
 
         private static UIItemTip mDefault;
 
+        private static UISlot mCurrentSlot = null;
+
         private void Awake()
         {
             mDefault = this;
@@ -43,6 +45,8 @@ namespace QFramework
         {
             if (slot.Data.Item != null && slot.Data.Count > 0)
             {
+                mCurrentSlot = slot;
+
                 mDefault.Icon.sprite = slot.Data.Item.GetIcon;
                 mDefault.NameText.text = slot.Data.Item.GetName;
                 mDefault.DescriptionText.text = slot.Data.Item.GetDescription;
@@ -50,6 +54,10 @@ namespace QFramework
                 UpdatePosition();
 
                 mDefault.TipPanel.Show();
+            }
+            else
+            {
+                mCurrentSlot = null;
             }
         }
 
@@ -60,27 +68,43 @@ namespace QFramework
 
         public static void UpdatePosition()
         {
-            Vector3 mousePos = Input.mousePosition;
-            Vector3[] corners = new Vector3[4];
-            RectTransform rectTrans = mDefault.TipPanel.transform as RectTransform;
+            if (mCurrentSlot != null)
+            {
+                Vector3[] slotCorners = new Vector3[4];
+                RectTransform slotRectTrans = mCurrentSlot.transform as RectTransform;
 
-            // 更新TipPanel内容后，强制刷新布局
-            LayoutRebuilder.ForceRebuildLayoutImmediate(rectTrans);
+                // 获取 TipPanel 的四个角点
+                slotRectTrans.GetWorldCorners(slotCorners);
+                //float slotWidth = slotCorners[3].x - slotCorners[0].x;
+                float slotHeight = slotCorners[1].y - slotCorners[0].y;
 
-            // 获取界面的四个角点
-            rectTrans.GetWorldCorners(corners);
-            float width = corners[3].x - corners[0].x;
-            float height = corners[1].y - corners[0].y;
+                //Vector3 mousePos = Input.mousePosition;
+                Vector3 mousePos = slotRectTrans.position;
+                Vector3[] tipCorners = new Vector3[4];
+                RectTransform tipRectTrans = mDefault.TipPanel.transform as RectTransform;
 
-            // 根据鼠标和屏幕的相对位置，调整生成 TipPanel 的位置
-            if (mousePos.y < height && mousePos.x > width)
-                rectTrans.position = mousePos + 0.51f * height * Vector3.up + 0.51f * width * Vector3.left;
-            else if (mousePos.y > height && mousePos.x < width)
-                rectTrans.position = mousePos + 0.51f * height * Vector3.down + 0.51f * width * Vector3.right;
-            else if (mousePos.y < height && mousePos.x < width)
-                rectTrans.position = mousePos + 0.51f * height * Vector3.up + 0.51f * width * Vector3.right;
-            else
-                rectTrans.position = mousePos + 0.51f * height * Vector3.down + 0.51f * width * Vector3.left;
+                // 更新 TipPanel 内容后，强制刷新布局
+                LayoutRebuilder.ForceRebuildLayoutImmediate(tipRectTrans);
+
+                // 获取 TipPanel 的四个角点
+                tipRectTrans.GetWorldCorners(tipCorners);
+                float tipWidth = tipCorners[3].x - tipCorners[0].x;
+                float tipHeight = tipCorners[1].y - tipCorners[0].y;
+
+                // 根据鼠标和屏幕的相对位置，调整生成 TipPanel 的位置
+                // Slot 位置在 右下，TipPanel 生成在 左上
+                if (mousePos.y < tipHeight && mousePos.x > tipWidth)
+                    tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.up + 0.5f * tipWidth * Vector3.left + 0.5f * slotHeight * Vector3.up;
+                // Slot 位置在 左上，TipPanel 生成在 右下
+                else if (mousePos.y > tipHeight && mousePos.x < tipWidth)
+                    tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.down + 0.5f * tipWidth * Vector3.right + 0.5f * slotHeight * Vector3.down;
+                // Slot 位置在 左下，TipPanel 生成在 右上
+                else if (mousePos.y < tipHeight && mousePos.x < tipWidth)
+                    tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.up + 0.5f * tipWidth * Vector3.right + 0.5f * slotHeight * Vector3.up;
+                // Slot 位置在 右上，TipPanel 生成在 左下
+                else
+                    tipRectTrans.position = mousePos + 0.5f * tipHeight * Vector3.down + 0.5f * tipWidth * Vector3.left + 0.5f * slotHeight * Vector3.down;
+            }
         }
 
         private void OnDestroy()
