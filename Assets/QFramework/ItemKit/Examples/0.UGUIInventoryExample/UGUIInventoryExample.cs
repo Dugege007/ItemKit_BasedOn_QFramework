@@ -166,7 +166,25 @@ namespace QFramework.Example
                 .CreateSlot(Items.item_green_sword, 1)
                 .CreateSlotByKey("iron_sword", 1)
                 .CreateSlotByKey("shoe", 1)
-                .CreateSlotsByCount(6);
+                .CreateSlotsByCount(6)
+                .OnSlotInitWithData(uiSlot =>
+                {
+                    uiSlot.OnPointerClickEvent(_ =>
+                    {
+                        if (uiSlot.Data.Item != null)
+                            Debug.Log(uiSlot.Data.Item.GetName + " 被点击了");
+
+                    }).UnRegisterWhenGameObjectDestroyed(uiSlot.gameObject);
+                })
+                .OnSlotPointerEnter(uiSlot =>
+                {
+                    //UIItemTip.Show(uiSlot);
+                    // 这里展示 UISlot 生命周期的使用，但是我感觉 Tip 的显示还是统一管理比较好
+                })
+                .OnSlotPointerExit(uiSlot =>
+                {
+                    //UIItemTip.Hide();
+                });
 
             ItemKit.CreateSlotGroup("背包")
                 .CreateSlotsByCount(20);

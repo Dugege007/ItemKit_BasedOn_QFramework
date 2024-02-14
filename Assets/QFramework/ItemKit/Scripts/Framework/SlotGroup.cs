@@ -260,5 +260,69 @@ namespace QFramework
         {
             return mCondition(item);
         }
+
+        private Action<UISlot> mOnSlotInitWithData;
+        private Action<UISlot> mOnSlotSelect;
+        private Action<UISlot> mOnSlotDeselect;
+        private Action<UISlot> mOnSlotPointerEnter;
+        private Action<UISlot> mOnSlotPointerExit;
+
+        // 封装触发功能
+        public void TriggerOnSlotInitWithData(UISlot uiSlot)
+        {
+            mOnSlotInitWithData?.Invoke(uiSlot);
+        }
+
+        public void TriggerOnSlotPointerEnter(UISlot uiSlot)
+        {
+            mOnSlotPointerEnter?.Invoke(uiSlot);
+        }
+
+        public void TriggerOnSlotPointerExit(UISlot uiSlot)
+        {
+            mOnSlotPointerExit?.Invoke(uiSlot);
+        }
+
+        public void TriggerOnSlotSelect(UISlot uiSlot)
+        {
+            mOnSlotSelect?.Invoke(uiSlot);
+        }
+
+        public void TriggerOnSlotDeselect(UISlot uiSlot)
+        {
+            mOnSlotDeselect?.Invoke(uiSlot);
+        }
+
+        // 封装事件
+        public SlotGroup OnSlotInitWithData(Action<UISlot> onSlotInitWithData)
+        {
+            mOnSlotInitWithData = onSlotInitWithData;
+            return this;
+        }
+
+        public SlotGroup OnSlotPointerEnter(Action<UISlot> onSlotPointerEnter)
+        {
+            mOnSlotPointerEnter = onSlotPointerEnter;
+            return this;
+        }
+
+        public SlotGroup OnSlotPointerExit(Action<UISlot> onSlotPointerExit)
+        {
+            mOnSlotPointerExit = onSlotPointerExit;
+            return this;
+        }
+
+        // Select 可以支持一些键盘的操控
+        public SlotGroup OnSlotSelect(Action<UISlot> onSlotSelect)
+        {
+            mOnSlotSelect = onSlotSelect;
+            return this;
+        }
+
+        public SlotGroup OnSlotDeselect(Action<UISlot> onSlotDeselect)
+        {
+            mOnSlotDeselect = onSlotDeselect;
+            return this;
+        }
     }
 }

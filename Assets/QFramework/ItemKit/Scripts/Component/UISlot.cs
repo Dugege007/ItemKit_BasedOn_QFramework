@@ -1,4 +1,5 @@
 using QFramework.Example;
+using System;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
@@ -23,6 +24,8 @@ namespace QFramework
             Data = data;
 
             Data.Changed.Register(UpdateView).UnRegisterWhenGameObjectDestroyed(gameObject);
+
+            Data.Group.TriggerOnSlotInitWithData(this);
 
             UpdateView();
 
@@ -159,6 +162,7 @@ namespace QFramework
 
         public void OnPointerEnter(PointerEventData eventData)
         {
+            Data.Group.TriggerOnSlotPointerEnter(this);
             UIItemTip.Show(this);
 
             ItemKit.CurrentSlotPointerOn = this;
@@ -166,6 +170,7 @@ namespace QFramework
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            Data.Group.TriggerOnSlotPointerExit(this);
             UIItemTip.Hide();
 
             if (ItemKit.CurrentSlotPointerOn == this)
@@ -177,7 +182,9 @@ namespace QFramework
 
         public void OnSelect(BaseEventData eventData)
         {
+            Data.Group.TriggerOnSlotSelect(this);
             UIItemTip.Show(this);
+
             ItemKit.CurrentSlotPointerOn = this;
 
             OnSelectEvent.Invoke();
@@ -186,7 +193,9 @@ namespace QFramework
 
         public void OnDeselect(BaseEventData eventData)
         {
+            Data.Group.TriggerOnSlotDeselect(this);
             UIItemTip.Hide();
+
             if (ItemKit.CurrentSlotPointerOn == this)
                 ItemKit.CurrentSlotPointerOn = null;
 
