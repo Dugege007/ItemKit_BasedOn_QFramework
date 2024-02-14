@@ -18,9 +18,9 @@ MonoBehaviour:
   Description: "\u8FD9\u662F\u4E00\u5757\u6728\u5934"
   Key: item_wood
   Attributes:
-  - Name: "\u662F\u6B66\u5668"
+  - Name: "\u6B66\u5668"
     Type: 0
-    Value: false
+    Value: 
     BoolValue: 0
   IsStackable: 1
   HasMaxStackableCount: 1
@@ -43,9 +43,9 @@ MonoBehaviour:
   Description: "\u8FD9\u662F\u4E00\u5F20\u7EB8"
   Key: item_paper
   Attributes:
-  - Name: "\u662F\u6B66\u5668"
+  - Name: "\u6B66\u5668"
     Type: 0
-    Value: false
+    Value: 
     BoolValue: 0
   IsStackable: 1
   HasMaxStackableCount: 1
@@ -68,10 +68,10 @@ MonoBehaviour:
   Description: "\u8FD9\u662F\u4E00\u628A\u7EFF\u8272\u7684\u6BD2\u5C5E\u6027\u5251"
   Key: item_green_sword
   Attributes:
-  - Name: "\u662F\u6B66\u5668"
+  - Name: "\u6B66\u5668"
     Type: 0
-    Value: true
-    BoolValue: 1
+    Value: 
+    BoolValue: 0
   IsStackable: 0
   HasMaxStackableCount: 0
   MaxStackableCount: 99
@@ -90,7 +90,7 @@ MonoBehaviour:
   NameSpace: QFramework.Example
   CodeGenPath: Assets/QFramework/ItemKit/Examples/0.UGUIInventoryExample/Items.cs
   AttributesDefine:
-  - Name: "\u662F\u6B66\u5668"
+  - Name: "\u6B66\u5668"
     Type: 0
   ItemConfigs:
   - {fileID: -4444599809156488681}
@@ -116,9 +116,9 @@ MonoBehaviour:
   Description: "\u8FD9\u662F\u4E00\u4E2A\u94C1\u5757"
   Key: item_iron
   Attributes:
-  - Name: "\u662F\u6B66\u5668"
+  - Name: "\u6B66\u5668"
     Type: 0
-    Value: false
+    Value: 
     BoolValue: 0
   IsStackable: 1
   HasMaxStackableCount: 1
@@ -141,10 +141,10 @@ MonoBehaviour:
   Description: "\u8FD9\u662F\u4E00\u628A\u6728\u5251"
   Key: item_wood_sword
   Attributes:
-  - Name: "\u662F\u6B66\u5668"
+  - Name: "\u6B66\u5668"
     Type: 0
     Value: 
-    BoolValue: 1
+    BoolValue: 0
   IsStackable: 0
   HasMaxStackableCount: 0
   MaxStackableCount: 99

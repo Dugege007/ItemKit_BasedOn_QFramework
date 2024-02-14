@@ -10,8 +10,7 @@ namespace QFramework
     [Serializable]
     public class ItemAttribute
     {
-        [HideLabel]
-        [LabelText("Ãû³Æ"), LabelWidth(42)]
+        [HideLabel, LabelWidth(42)]
         public string Name;
 
         [HideLabel]
