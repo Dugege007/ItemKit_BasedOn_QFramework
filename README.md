@@ -1,2 +1,4 @@
-# ItemKitr_Teacher-LiangXie
- QFramework 系统设计：通用背包系统
+# 基于QFramework的通用背包系统 ItemKit
+v0.11及之前的版本为课程记录，并稍加修改
+v0.11版本之后，为笔者新增内容
+
